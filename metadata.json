@@ -1,0 +1,6 @@
+{
+  "name": "Milletvekili Puanlama",
+  "description": "Türk siyasetinde tartışmalı konularda milletvekillerinin tutumlarına göre kişiselleştirilmiş uyum yüzdesi hesaplama ve puanlama platformu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
