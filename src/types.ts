@@ -23,6 +23,8 @@ export interface Topic {
   category: TopicCategory;
   defaultImportance: number; // 0-10
   contextNote: string;
+  partyScope?: 'all' | 'chp' | 'iyi' | 'akp' | 'mhp' | 'dem' | 'tip';
+  partyScopeLabel?: string;
 }
 
 export type SourceType = 'tweet' | 'news' | 'tv';
@@ -59,19 +61,73 @@ export interface MpTopicStance {
   keyParaphrasedQuote: string;
   lastUpdated: string;
   sources: SourceItem[];
+  isCommunityVerified?: boolean;
 }
 
 export interface MP {
   id: string;
   fullName: string;
   partyId: string;
+  electedPartyId?: string; // e.g. 'chp' if elected from CHP list, but now 'deva' or 'saadet'
   province: string;
+  electoralDistrict?: string; // e.g. '1. Bölge', '2. Bölge', '3. Bölge'
   photoUrl: string;
   term: string;
   title: string;
   bio: string;
   committee?: string;
   stances: Record<string, MpTopicStance>;
+  tbmmProfileUrl?: string;
+}
+
+// Moderation and Contribution System
+export type ContributionType = 'stance_update' | 'new_mp' | 'new_topic';
+export type ContributionStatus = 'pending' | 'approved' | 'rejected';
+
+export interface ContributionProposal {
+  id: string;
+  type: ContributionType;
+  submittedAt: string;
+  submitterName: string;
+  submitterNote?: string;
+  status: ContributionStatus;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  reviewerComment?: string;
+  
+  // For stance updates
+  mpId?: string;
+  mpName?: string;
+  topicId?: string;
+  topicTitle?: string;
+  stanceTag?: StanceTag;
+  stanceLabel?: string;
+  overallSummary?: string;
+  keyParaphrasedQuote?: string;
+  sourceUrl?: string;
+  sourcePlatform?: string;
+  sourceSummary?: string;
+  
+  // For new MP proposals
+  newMpData?: {
+    fullName: string;
+    partyId: string;
+    province: string;
+    photoUrl?: string;
+    title: string;
+    bio: string;
+    tbmmProfileUrl?: string;
+  };
+  
+  // For new Topic proposals
+  newTopicData?: {
+    title: string;
+    description: string;
+    category: TopicCategory;
+    partyScope?: 'all' | 'chp' | 'iyi' | 'akp' | 'mhp' | 'dem' | 'tip';
+    partyScopeLabel?: string;
+    contextNote: string;
+  };
 }
 
 // User Weights: Topic ID -> Importance (0-10, where 10 = %100, 9 = %90 ... 0 = %0)

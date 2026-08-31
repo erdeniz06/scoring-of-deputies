@@ -11,30 +11,53 @@ import {
   Sliders,
   Award,
   RotateCcw,
-  Info
+  Info,
+  Plus,
+  Trash2,
+  CheckCircle2,
+  Link as LinkIcon
 } from 'lucide-react';
 import { getSemanticScoreDescription } from '../utils/calculator';
 
 interface TopicStanceCardProps {
   topic: Topic;
   stance?: MpTopicStance;
+  mpId?: string;
   userImportance: number; // 0-10
   currentScore: number | null | undefined;
+  customSources?: SourceItem[];
   onSetScore: (score: number | undefined) => void;
   onQuickChangeImportance?: (newImportance: number) => void;
+  onAddCustomSource?: (mpId: string, topicId: string, source: Omit<SourceItem, 'id' | 'mpId' | 'topicId'>) => void;
+  onRemoveCustomSource?: (mpId: string, topicId: string, sourceId: string) => void;
 }
 
 export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   topic,
   stance,
+  mpId,
   userImportance,
   currentScore,
+  customSources = [],
   onSetScore,
   onQuickChangeImportance,
+  onAddCustomSource,
+  onRemoveCustomSource,
 }) => {
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [isAddingSource, setIsAddingSource] = useState(false);
+  const [newSourcePlatform, setNewSourcePlatform] = useState('');
+  const [newSourceUrl, setNewSourceUrl] = useState('');
+  const [newSourceSummary, setNewSourceSummary] = useState('');
+  const [newSourceType, setNewSourceType] = useState<'news' | 'tweet' | 'tv'>('news');
+  const [newSourceDate, setNewSourceDate] = useState('');
+
   const isScored = currentScore !== undefined && currentScore !== null;
   const importancePercent = userImportance * 10;
+
+  // Combine standard stance sources with user added custom sources
+  const baseSources = stance?.sources || [];
+  const allSources = [...baseSources, ...customSources];
 
   // Formula contribution
   const nominatorContribution = isScored ? importancePercent * (currentScore as number) : 0;
@@ -72,6 +95,26 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
     } else {
       onSetScore(scoreVal);
     }
+  };
+
+  const handleSaveCustomSource = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mpId || !newSourceUrl.trim() || !newSourcePlatform.trim() || !onAddCustomSource) return;
+
+    onAddCustomSource(mpId, topic.id, {
+      outletOrPlatform: newSourcePlatform.trim(),
+      url: newSourceUrl.trim().startsWith('http') ? newSourceUrl.trim() : `https://${newSourceUrl.trim()}`,
+      summary: newSourceSummary.trim() || 'Kullanıcı tarafından eklenen güvenilir kaynak.',
+      sourceType: newSourceType,
+      publishDate: newSourceDate.trim() || new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' }),
+    });
+
+    setNewSourceUrl('');
+    setNewSourcePlatform('');
+    setNewSourceSummary('');
+    setNewSourceDate('');
+    setIsAddingSource(false);
+    setSourcesOpen(true);
   };
 
   return (
@@ -133,60 +176,195 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
               </div>
             )}
 
-            {/* Verified Sources Accordion */}
-            {stance.sources && stance.sources.length > 0 && (
-              <div className="border border-slate-200/80 rounded-xl overflow-hidden text-xs">
+            {/* Verified Sources Container */}
+            <div className="border border-slate-200/80 rounded-xl overflow-hidden text-xs">
+              <div className="w-full px-3.5 py-2.5 bg-slate-50 flex items-center justify-between text-slate-700 font-medium transition-colors">
                 <button
                   type="button"
                   onClick={() => setSourcesOpen(!sourcesOpen)}
-                  className="w-full px-3.5 py-2 bg-slate-50 hover:bg-slate-100/80 flex items-center justify-between text-slate-700 font-medium transition-colors"
+                  className="flex items-center gap-1.5 font-semibold text-slate-800 hover:text-indigo-600 transition-colors text-left"
                 >
-                  <span className="flex items-center gap-1.5 font-semibold text-slate-800">
-                    <FileText className="w-3.5 h-3.5 text-indigo-600" />
-                    Doğrulanmış Kaynaklar ({stance.sources.length})
-                  </span>
-                  <div className="flex items-center gap-1 text-slate-500 text-[11px]">
-                    <span>{sourcesOpen ? 'Gizle' : 'Tweet / Haber / Video Kaynakları'}</span>
+                  <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Güvenilir Kaynaklar ({allSources.length})</span>
+                  <div className="flex items-center gap-1 text-slate-500 text-[11px] ml-1">
                     {sourcesOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                   </div>
                 </button>
 
-                {sourcesOpen && (
-                  <div className="p-3 bg-white space-y-2 divide-y divide-slate-100">
-                    {stance.sources.map((source: SourceItem) => (
-                      <div key={source.id} className="pt-2 first:pt-0 space-y-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-1.5 text-slate-800 font-semibold">
-                            {source.sourceType === 'tweet' && <MessageSquare className="w-3.5 h-3.5 text-sky-500" />}
-                            {source.sourceType === 'tv' && <Tv className="w-3.5 h-3.5 text-rose-500" />}
-                            {source.sourceType === 'news' && <FileText className="w-3.5 h-3.5 text-slate-600" />}
-                            <span>{source.outletOrPlatform}</span>
-                            {source.timestampInVideo && (
-                              <span className="text-[10px] px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 font-mono font-bold">
-                                ⏱️ {source.timestampInVideo}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-[11px] text-slate-400">{source.publishDate}</span>
-                        </div>
-                        <p className="text-slate-600 text-xs">
-                          {source.summary}
-                        </p>
-                        <a
-                          href={source.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-[11px] font-medium text-indigo-600 hover:text-indigo-800 hover:underline pt-0.5"
-                        >
-                          <span>Kaynağı ve orijinal metni görüntüle</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    ))}
-                  </div>
+                {mpId && onAddCustomSource && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAddingSource(!isAddingSource);
+                      setSourcesOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 px-2 py-1 bg-white hover:bg-indigo-50 border border-indigo-200 rounded-lg transition-colors cursor-pointer"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Kaynak Ekle</span>
+                  </button>
                 )}
               </div>
-            )}
+
+              {/* Inline Add Source Form */}
+              {isAddingSource && (
+                <form onSubmit={handleSaveCustomSource} className="p-3 bg-indigo-50/50 border-t border-indigo-100 space-y-2.5">
+                  <div className="flex items-center justify-between text-indigo-900 font-bold text-xs">
+                    <span className="flex items-center gap-1">
+                      <LinkIcon className="w-3.5 h-3.5 text-indigo-600" />
+                      Doğrulanabilir Güvenilir Kaynak Ekle
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingSource(false)}
+                      className="text-slate-400 hover:text-slate-600 text-[11px]"
+                    >
+                      Vazgeç
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-medium text-slate-600 mb-0.5">Platform / Basın Kuruluşu *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Örn: TBMM Tutanakları, Resmi X Hesabı, Habertürk TV"
+                        value={newSourcePlatform}
+                        onChange={(e) => setNewSourcePlatform(e.target.value)}
+                        className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-medium text-slate-600 mb-0.5">Kaynak URL Bağlantısı *</label>
+                      <input
+                        type="url"
+                        required
+                        placeholder="https://tbmm.gov.tr/... veya https://x.com/..."
+                        value={newSourceUrl}
+                        onChange={(e) => setNewSourceUrl(e.target.value)}
+                        className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-medium text-slate-600 mb-0.5">Kaynak Türü</label>
+                      <select
+                        value={newSourceType}
+                        onChange={(e) => setNewSourceType(e.target.value as any)}
+                        className="w-full text-xs px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      >
+                        <option value="news">Haber / Tutanak Metni</option>
+                        <option value="tweet">Resmi Tweet / Sosyal Medya</option>
+                        <option value="tv">TV Programı / Konuşma Kaydı</option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-[10px] font-medium text-slate-600 mb-0.5">Tarih / Dönem</label>
+                      <input
+                        type="text"
+                        placeholder="Örn: Ekim 2024 veya 28.10.2024"
+                        value={newSourceDate}
+                        onChange={(e) => setNewSourceDate(e.target.value)}
+                        className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-medium text-slate-600 mb-0.5">Kısa Özet / Doğrulama Notu</label>
+                    <textarea
+                      rows={2}
+                      placeholder="Bu kaynaktaki açıklamanın veya beyanın kısa içeriği..."
+                      value={newSourceSummary}
+                      onChange={(e) => setNewSourceSummary(e.target.value)}
+                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-none"
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingSource(false)}
+                      className="px-2.5 py-1 rounded-md text-slate-600 hover:bg-slate-200/60 text-xs"
+                    >
+                      İptal
+                    </button>
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Kaydet ve Listeye Ekle</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Source List */}
+              {sourcesOpen && (
+                <div className="p-3 bg-white space-y-2 divide-y divide-slate-100 border-t border-slate-100">
+                  {allSources.length === 0 ? (
+                    <div className="text-center py-3 text-slate-400 text-xs">
+                      Bu tutum için henüz eklenmiş güvenilir kaynak bağlantısı bulunmuyor. Yukarıdaki "Kaynak Ekle" butonu ile ekleyebilirsiniz.
+                    </div>
+                  ) : (
+                    allSources.map((source: SourceItem) => {
+                      const isCustom = source.id.startsWith('src-usr-');
+                      return (
+                        <div key={source.id} className="pt-2 first:pt-0 space-y-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-1.5 text-slate-800 font-semibold">
+                              {source.sourceType === 'tweet' && <MessageSquare className="w-3.5 h-3.5 text-sky-500" />}
+                              {source.sourceType === 'tv' && <Tv className="w-3.5 h-3.5 text-rose-500" />}
+                              {source.sourceType === 'news' && <FileText className="w-3.5 h-3.5 text-slate-600" />}
+                              <span>{source.outletOrPlatform}</span>
+                              {isCustom && (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 font-bold">
+                                  Kullanıcı Kaynağı
+                                </span>
+                              )}
+                              {source.timestampInVideo && (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 font-mono font-bold">
+                                  ⏱️ {source.timestampInVideo}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[11px] text-slate-400">{source.publishDate}</span>
+                              {isCustom && mpId && onRemoveCustomSource && (
+                                <button
+                                  type="button"
+                                  onClick={() => onRemoveCustomSource(mpId, topic.id, source.id)}
+                                  className="text-rose-500 hover:text-rose-700 p-0.5 rounded hover:bg-rose-50"
+                                  title="Bu kaynağı sil"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-slate-600 text-xs">
+                            {source.summary}
+                          </p>
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-indigo-600 hover:text-indigo-800 hover:underline pt-0.5"
+                          >
+                            <span>Kaynağı ve orijinal metni görüntüle</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <div className="p-4 rounded-xl bg-slate-50 border border-dashed border-slate-200 text-center text-xs text-slate-500">
@@ -355,4 +533,3 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
     </div>
   );
 };
-

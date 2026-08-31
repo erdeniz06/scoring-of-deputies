@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
 import { PARTIES } from '../data/parties';
+import { MpAvatar } from '../components/MpAvatar';
 import { GitCompare, Plus, X, Award, Sliders, ExternalLink, HelpCircle } from 'lucide-react';
 
 interface CompareViewProps {
@@ -70,19 +71,7 @@ export const CompareView: React.FC<CompareViewProps> = ({
                   key={mp.id}
                   className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-slate-900 text-white text-xs font-semibold shadow-xs border border-slate-800"
                 >
-                  <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-800 flex-shrink-0 flex items-center justify-center text-[10px] text-slate-300 font-bold">
-                    <img
-                      src={mp.photoUrl}
-                      alt={mp.fullName}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.style.display = 'none';
-                      }}
-                    />
-                    <span className="select-none">{mp.fullName[0]}</span>
-                  </div>
+                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="xs" />
                   <span>{mp.fullName}</span>
                   <span className="text-amber-400 font-mono">%{res?.compatibilityPercentage || 0}</span>
                   {effectiveMps.length > 2 && (
@@ -158,19 +147,7 @@ export const CompareView: React.FC<CompareViewProps> = ({
                       <div className="space-y-3">
                         {/* MP Header */}
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 flex items-center justify-center text-xs text-slate-500 font-bold shadow-2xs">
-                            <img
-                              src={mp.photoUrl}
-                              alt={mp.fullName}
-                              className="w-full h-full object-cover"
-                              referrerPolicy="no-referrer"
-                              onError={(e) => {
-                                const target = e.currentTarget;
-                                target.style.display = 'none';
-                              }}
-                            />
-                            <span className="select-none">{mp.fullName[0]}</span>
-                          </div>
+                          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="sm" />
                           <div>
                             <span className="font-bold text-sm text-slate-900 block font-serif">
                               {mp.fullName}

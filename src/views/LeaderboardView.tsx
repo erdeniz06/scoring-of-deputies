@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
 import { PARTIES } from '../data/parties';
+import { MpAvatar } from '../components/MpAvatar';
 import { Trophy, Award, Sparkles, ChevronRight, Share2, Download, Check, MapPin, Users } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -93,19 +94,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white border-2 border-amber-400 shadow-md flex items-center justify-center text-slate-400 font-bold text-xl font-serif">
-                  <img
-                    src={topMatch.photoUrl}
-                    alt={topMatch.fullName}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <span className="select-none">{topMatch.fullName.split(' ').map(n => n[0]).join('')}</span>
-                </div>
+                <MpAvatar fullName={topMatch.fullName} partyId={topMatch.partyId} size="lg" className="border-2 border-amber-400 bg-white" />
                 <div className="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md border border-white">
                   👑
                 </div>
@@ -207,20 +196,8 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                     {index + 1}
                   </span>
 
-                  {/* Photo */}
-                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-400 font-bold text-sm font-serif">
-                    <img
-                      src={mp.photoUrl}
-                      alt={mp.fullName}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.style.display = 'none';
-                      }}
-                    />
-                    <span className="select-none">{mp.fullName.split(' ').map(n => n[0]).join('')}</span>
-                  </div>
+                  {/* Avatar */}
+                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="md" />
 
                   {/* Name and Party */}
                   <div className="min-w-0">

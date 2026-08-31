@@ -5,194 +5,79 @@ export const AKP_MPS: MP[] = [
     id: 'mustafa_varank',
     fullName: 'Mustafa Varank',
     partyId: 'akp',
+    electedPartyId: 'akp',
     province: 'Bursa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Mustafa_Varank_2020.jpg/600px-Mustafa_Varank_2020.jpg',
-    term: '28. Dönem (Bursa)',
-    title: 'TBMM Sanayi ve Teknoloji Komisyonu Başkanı & Bursa Milletvekili',
+    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Mustafa_Varank_2022_%28cropped%29.jpg/600px-Mustafa_Varank_2022_%28cropped%29.jpg',
+    term: '28. Dönem (Bursa 2. Bölge)',
+    title: 'TBMM Sanayi Komisyonu Başkanı & Bursa Milletvekili',
     bio: 'Eski Sanayi ve Teknoloji Bakanı, 28. Dönem Bursa Milletvekili, TBMM Sanayi, Ticaret, Enerji, Tabii Kaynaklar, Bilgi ve Teknoloji Komisyonu Başkanı.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#bursa-16',
     stances: {
       '2023_kk_adaylik': {
-        id: 'st_mv_1',
+        id: 'st_mv_kk_aday',
         mpId: 'mustafa_varank',
         topicId: '2023_kk_adaylik',
         stanceTag: 'elestirdi',
-        stanceLabel: '6’lı Masayı ve Adaylığı Eleştirdi',
-        overallSummary: '6’lı masanın pazarlıklar üzerine kurulu olduğunu, Kılıçdaroğlu’nun adaylığının ortaklar arasında kriz yarattığını ve milletin istikrarı tercih edeceğini savundu.',
-        keyParaphrasedQuote: 'Milletimiz kapalı kapılar ardında yapılan bakanlık ve cumhurbaşkanı yardımcılığı pazarlıklarına itibar etmemiştir.',
+        stanceLabel: 'Sert Eleştirdi',
+        overallSummary: '6’lı masanın ve Kemal Kılıçdaroğlu’nun adaylığını istikrarsızlık ve gizli pazarlık projesi olarak nitelendirdi.',
+        keyParaphrasedQuote: 'Milletimiz kapalı kapılar ardında bakanlık dağıtan masaya değil, Cumhurbaşkanımızın eser siyasetine güvenmiştir.',
         lastUpdated: 'Mayıs 2023',
-        sources: [{
-          id: 'src_mv_1',
-          mpId: 'mustafa_varank',
-          topicId: '2023_kk_adaylik',
-          sourceType: 'tv',
-          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-          timestampInVideo: '18:40',
-          outletOrPlatform: 'A Haber',
-          summary: 'Seçim öncesi muhalefetin aday belirleme sürecine dair değerlendirmeleri.',
-          publishDate: '10 Nisan 2023'
-        }]
+        sources: []
       },
       '2023_kk_oo_kurultay': {
-        id: 'st_mv_2',
+        id: 'st_mv_kurultay',
         mpId: 'mustafa_varank',
         topicId: '2023_kk_oo_kurultay',
         stanceTag: 'elestirdi',
-        stanceLabel: 'Koltuk Kavgası Olarak Niteledi',
-        overallSummary: 'CHP’deki kurultay sürecini vizyon değil koltuk kavgası olarak niteledi; yönetim değişse de muhalefetin zihniyetinin değişmediğini savundu.',
-        keyParaphrasedQuote: 'CHP içinde kim genel başkan olursa olsun, yerli ve milli politikalardan uzak anlayışları sürmektedir.',
+        stanceLabel: 'Tabela Değişimi Olarak Niteledi',
+        overallSummary: 'CHP’deki genel başkan değişiminin sadece vitrin yenilemesi olduğunu, zihniyetin değişmediğini savundu.',
+        keyParaphrasedQuote: 'CHP’de genel başkan değişse de milletten kopuk vesayet zihniyeti asla değişmez.',
         lastUpdated: 'Kasım 2023',
-        sources: [{
-          id: 'src_mv_2',
-          mpId: 'mustafa_varank',
-          topicId: '2023_kk_oo_kurultay',
-          sourceType: 'tweet',
-          url: 'https://x.com/varank/status/1721000000000',
-          outletOrPlatform: 'X (Twitter)',
-          summary: 'CHP 38. Kurultayı sonuçlarına dair sosyal medya paylaşımı.',
-          publishDate: '5 Kasım 2023'
-        }]
+        sources: []
       },
       'sokak_kopegi_yasasi': {
-        id: 'st_mv_3',
+        id: 'st_mv_sokak',
         mpId: 'mustafa_varank',
         topicId: 'sokak_kopegi_yasasi',
-        stanceTag: 'destekledi',
-        stanceLabel: 'Yasa Teklifini Destekledi',
-        overallSummary: 'Sokakların çocuklar ve vatandaşlar için güvenli hale getirilmesinin devletin birincil görevi olduğunu belirterek 5199 sayılı kanun teklifine evet oyu verdi.',
-        keyParaphrasedQuote: 'Sokaklar sahipsiz köpeklere terk edilemez; vatandaşlarımızın can güvenliği her şeyden öncedir.',
+        stanceTag: 'savundu',
+        stanceLabel: 'Yasayı Savundu & Muhalefeti Eleştirdi',
+        overallSummary: 'Sokak güvenliğinin sağlanması, başıboş köpek saldırılarının önlenmesi ve belediyelerin sorumluluk alması gerektiğini savundu.',
+        keyParaphrasedQuote: 'Vatandaşımızın ve evlatlarımızın güvenliği önceliğimizdir, belediyeler görevini yapmalıdır.',
         lastUpdated: 'Temmuz 2024',
-        sources: [{
-          id: 'src_mv_3',
-          mpId: 'mustafa_varank',
-          topicId: 'sokak_kopegi_yasasi',
-          sourceType: 'news',
-          url: 'https://www.aa.com.tr/tr/politika/varanktan-sahipsiz-hayvanlar-duzenlemesi-aciklamasi',
-          outletOrPlatform: 'Anadolu Ajansı',
-          summary: 'TBMM Genel Kurulu’nda kabul edilen sahipsiz hayvanlar kanun teklifi üzerine açıklaması.',
-          publishDate: '30 Temmuz 2024'
-        }]
+        sources: []
       },
       'cerceve_yasa': {
-        id: 'st_mv_4',
+        id: 'st_mv_cerceve',
         mpId: 'mustafa_varank',
         topicId: 'cerceve_yasa',
         stanceTag: 'destekledi',
-        stanceLabel: 'Yargı Paketlerini Destekledi',
-        overallSummary: 'Yargı reform paketlerinin cezasızlık algısını yıkmak, hukuki süreçleri hızlandırmak ve kamu düzenini korumak için gerekli olduğunu savundu.',
-        keyParaphrasedQuote: 'Adalet mekanizmasının çağın gereksinimlerine göre yenilenmesi için bu çerçeve düzenlemeler zorunludur.',
-        lastUpdated: 'Haziran 2024',
-        sources: [{
-          id: 'src_mv_4',
-          mpId: 'mustafa_varank',
-          topicId: 'cerceve_yasa',
-          sourceType: 'news',
-          url: 'https://www.trthaber.com/haber/gundem/yargi-paketi-tbmm-gundeminde',
-          outletOrPlatform: 'TRT Haber',
-          summary: 'Meclis grubunda yargı paketleri müzakereleri değerlendirmesi.',
-          publishDate: '25 Haziran 2024'
-        }]
+        stanceLabel: 'Terörsüz Türkiye Hedefini Destekledi',
+        overallSummary: 'Terörün tamamen tasfiyesi ve Türkiye Yüzyılı hedefleri doğrultusunda Cumhur İttifakı’nın milli birlik politikalarını savundu.',
+        keyParaphrasedQuote: 'Terörle mücadelede taviz vermeden, Türkiye’nin bölünmez bütünlüğünü tahkim edeceğiz.',
+        lastUpdated: 'Kasım 2024',
+        sources: []
       },
       'tarikat_cemaatler': {
-        id: 'st_mv_5',
+        id: 'st_mv_tarikat',
         mpId: 'mustafa_varank',
         topicId: 'tarikat_cemaatler',
         stanceTag: 'savundu',
-        stanceLabel: 'Sivil Toplumun Eğitime Katkısı',
-        overallSummary: 'Vakıf ve derneklerin gençlerin milli ve manevi değerlerle yetişmesinde meşru sivil toplum aktörleri olduğunu ve MEB protokollerinin faydalı olduğunu belirtti.',
-        keyParaphrasedQuote: 'Milletimizin değerleriyle barışık sivil toplum kuruluşlarını yaftalamak yerine gençliğe katkılarına bakılmalıdır.',
-        lastUpdated: 'Aralık 2023',
-        sources: [{
-          id: 'src_mv_5',
-          mpId: 'mustafa_varank',
-          topicId: 'tarikat_cemaatler',
-          sourceType: 'tv',
-          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-          timestampInVideo: '42:10',
-          outletOrPlatform: 'TVNET',
-          summary: 'Milli Eğitim protokolleri ve sivil toplum faaliyetleri üzerine televizyon programı.',
-          publishDate: '22 Aralık 2023'
-        }]
-      },
-      'hdp_tutum': {
-        id: 'st_mv_6',
-        mpId: 'mustafa_varank',
-        topicId: 'hdp_tutum',
-        stanceTag: 'karsi_cikti',
-        stanceLabel: 'Terör İltisakına Karşı Net Tavır',
-        overallSummary: 'DEM/HDP’nin terör örgütü PKK ile arasına mesafe koymadığını belirterek kayyum atamalarını Anayasal bir güvenlik tedbiri olarak savundu.',
-        keyParaphrasedQuote: 'Demokrasilerde belediye imkanlarının terör örgütlerine peşkeş çekilmesine izin verilemez.',
-        lastUpdated: 'Kasım 2024',
-        sources: [{
-          id: 'src_mv_6',
-          mpId: 'mustafa_varank',
-          topicId: 'hdp_tutum',
-          sourceType: 'news',
-          url: 'https://www.yenisafak.com/politika/varank-kayyum-aciklamasi',
-          outletOrPlatform: 'Yeni Şafak',
-          summary: 'Belediyelere görevlendirme yapılması sonrası yaptığı basın açıklaması.',
-          publishDate: '6 Kasım 2024'
-        }]
+        stanceLabel: 'Milli-Manevi Değerleri Savundu',
+        overallSummary: 'Sivil toplum örgütleri ve vakıflarla iş birliğinin milli değerler açısından faydalı olduğunu belirtti.',
+        keyParaphrasedQuote: 'Milletimizin değerleriyle barışık sivil toplum çalışmalarını destekliyoruz.',
+        lastUpdated: 'Ocak 2024',
+        sources: []
       },
       'kent_lokantalari': {
-        id: 'st_mv_7',
+        id: 'st_mv_kent',
         mpId: 'mustafa_varank',
         topicId: 'kent_lokantalari',
         stanceTag: 'elestirdi',
-        stanceLabel: 'Göz Boyama & Popülizm Eleştirisi',
-        overallSummary: 'Kent lokantalarının büyükşehirlerin devasa bütçeleri yanında popülist bir PR çalışması olduğunu ve esnafla haksız rekabet yarattığını ifade etti.',
-        keyParaphrasedQuote: 'Milyarlarca liralık belediye bütçesiyle birkaç lokanta açıp bunu büyük başarı gibi sunmak şov siyasetidir.',
-        lastUpdated: 'Mart 2024',
-        sources: [{
-          id: 'src_mv_7',
-          mpId: 'mustafa_varank',
-          topicId: 'kent_lokantalari',
-          sourceType: 'tweet',
-          url: 'https://x.com/varank/status/1769000000000',
-          outletOrPlatform: 'X (Twitter)',
-          summary: 'Büyükşehir belediyelerinin yemek dağıtım projelerine yönelik eleştirel paylaşımı.',
-          publishDate: '15 Mart 2024'
-        }]
-      },
-      'evrim_teorisi': {
-        id: 'st_mv_8',
-        mpId: 'mustafa_varank',
-        topicId: 'evrim_teorisi',
-        stanceTag: 'destekledi',
-        stanceLabel: 'Maarif Modelini Savundu',
-        overallSummary: 'Türkiye Yüzyılı Maarif Modeli’nin yerli, milli ve çağdaş bilimsel temellerle hazırlandığını; gereksiz ideolojik tartışmalar çıkarıldığını belirtti.',
-        keyParaphrasedQuote: 'Yeni müfredat çocuklarımızın analitik düşünme ve teknoloji üretme yetkinliğini artırmayı hedeflemektedir.',
-        lastUpdated: 'Mayıs 2024',
-        sources: [{
-          id: 'src_mv_8',
-          mpId: 'mustafa_varank',
-          topicId: 'evrim_teorisi',
-          sourceType: 'news',
-          url: 'https://www.aksam.com.tr/guncel/varank-yeni-mufredati-anlatti',
-          outletOrPlatform: 'Akşam Gazetesi',
-          summary: 'Bursa’da öğretmenler ve gençlerle buluşmasında yeni müfredat üzerine konuşması.',
-          publishDate: '28 Mayıs 2024'
-        }]
-      },
-      'komedyenler_ifade_ozgurlugu': {
-        id: 'st_mv_9',
-        mpId: 'mustafa_varank',
-        topicId: 'komedyenler_ifade_ozgurlugu',
-        stanceTag: 'elestirdi',
-        stanceLabel: 'Mizah Kılıfıyla Hakarete Karşı',
-        overallSummary: 'Mizah adı altında milli, manevi değerlere ve devlet büyüklerine hakaret edilmesinin kabul edilemez olduğunu, her özgürlüğün bir sorumluluğu bulunduğunu savundu.',
-        keyParaphrasedQuote: 'Kimse sanat veya espri arkasına saklanarak bu milletin inancına ve kutsallarına dil uzatamaz.',
-        lastUpdated: 'Nisan 2024',
-        sources: [{
-          id: 'src_mv_9',
-          mpId: 'mustafa_varank',
-          topicId: 'komedyenler_ifade_ozgurlugu',
-          sourceType: 'tv',
-          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-          timestampInVideo: '27:00',
-          outletOrPlatform: 'Ülke TV',
-          summary: 'Sosyal medya içerikleri ve mizahın sınırları konulu televizyon mülakatı.',
-          publishDate: '18 Nisan 2024'
-        }]
+        stanceLabel: 'Göz Boyama Olarak Eleştirdi',
+        overallSummary: 'CHP’li büyükşehir belediyelerinin vizyon projeler yerine küçük bütçeli lokantalar üzerinden algı siyaseti yaptığını iddia etti.',
+        keyParaphrasedQuote: 'Milyarlarca liralık bütçeleri yönetenler, üç beş lokanta ile büyük hizmet yaptıklarını iddia ediyorlar.',
+        lastUpdated: 'Haziran 2024',
+        sources: []
       }
     }
   },
@@ -200,71 +85,73 @@ export const AKP_MPS: MP[] = [
     id: 'ozlem_zengin',
     fullName: 'Özlem Zengin',
     partyId: 'akp',
-    province: 'İstanbul',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/%C3%96zlem_Zengin.jpg/600px-%C3%96zlem_Zengin.jpg',
-    term: '28. Dönem (İstanbul)',
-    title: 'AK Parti Grup Başkanvekili & İstanbul Milletvekili',
-    bio: 'Hukukçu, avukat. 25, 27 ve 28. Dönem İstanbul ve Tokat Milletvekili. AK Parti TBMM Grup Başkanvekili.',
+    electedPartyId: 'akp',
+    province: 'Tokat',
+    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/%C3%96zlem_Zengin_2023.jpg/600px-%C3%96zlem_Zengin_2023.jpg',
+    term: '28. Dönem (Tokat)',
+    title: 'TBMM AK Parti Grup Başkanvekili & Tokat Milletvekili',
+    bio: 'Hukukçu, avukat, televizyon programcısı. 25. Dönem İstanbul, 27 ve 28. Dönem Tokat Milletvekili. TBMM AK Parti Grup Başkanvekili.',
+    committee: 'TBMM Adalet Komisyonu',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#tokat-60',
     stances: {
       'sokak_kopegi_yasasi': {
-        id: 'st_oz_1',
+        id: 'st_oz_sokak',
         mpId: 'ozlem_zengin',
         topicId: 'sokak_kopegi_yasasi',
-        stanceTag: 'destekledi',
-        stanceLabel: 'Güvenlik & Hayvan Refahı Dengesi',
-        overallSummary: 'Yasa teklifinin amacının katliam değil, sokakları çocuklar ve yaşlılar için güvenli kılmak ve kontrolsüz popülasyonu önlemek olduğunu belirtti.',
-        keyParaphrasedQuote: 'Biz hem hayvanlarımızın refahını hem de insanımızın can güvenliğini korumak zorundayız.',
+        stanceTag: 'savundu',
+        stanceLabel: 'Komisyonda ve Genel Kurulda Savundu',
+        overallSummary: 'Yasa teklifinin hazırlanması ve meclisten geçirilmesi sürecinde partisinin grup sözcülüğünü yürüttü; yasanın önceliğinin insan canı olduğunu savundu.',
+        keyParaphrasedQuote: 'Bir tarafta hayvan sevgisi, diğer tarafta insan hayatı var; önceliğimiz çocuklarımızın ve insanımızın can güvenliğidir.',
         lastUpdated: 'Temmuz 2024',
-        sources: [{
-          id: 'src_oz_1',
-          mpId: 'ozlem_zengin',
-          topicId: 'sokak_kopegi_yasasi',
-          sourceType: 'news',
-          url: 'https://www.ntv.com.tr/turkiye/ozlem-zengin-sokak-kopekleri-kanunu-aciklamasi',
-          outletOrPlatform: 'NTV',
-          summary: 'Meclis kulisinde gazetecilere yaptığı kanun teklifi izahatı.',
-          publishDate: '24 Temmuz 2024'
-        }]
+        sources: []
       },
-      'bireysel_silahlanma': {
-        id: 'st_oz_2',
+      'cerceve_yasa': {
+        id: 'st_oz_cerceve',
         mpId: 'ozlem_zengin',
-        topicId: 'bireysel_silahlanma',
-        stanceTag: 'savundu',
-        stanceLabel: 'Cezaların Artırılması',
-        overallSummary: 'Kadına yönelik şiddet ve maganda kurşunlarına karşı ruhsatsız silah taşıma cezalarının artırılmasını ve denetimlerin güçlendirilmesini destekledi.',
-        keyParaphrasedQuote: 'Ruhsatsız silah bulundurmanın cezai karşılığı caydırıcı hale getirilmelidir.',
-        lastUpdated: 'Mayıs 2024',
-        sources: [{
-          id: 'src_oz_2',
-          mpId: 'ozlem_zengin',
-          topicId: 'bireysel_silahlanma',
-          sourceType: 'news',
-          url: 'https://www.sabah.com.tr/gundem/ozlem-zengin-ruhsatsiz-silah-cezasi',
-          outletOrPlatform: 'Sabah',
-          summary: 'Adalet Bakanlığı ile ortak yürütülen ceza artırımı çalışmaları açıklaması.',
-          publishDate: '14 Mayıs 2024'
-        }]
+        topicId: 'cerceve_yasa',
+        stanceTag: 'destekledi',
+        stanceLabel: 'Grup Adına Destekledi',
+        overallSummary: 'Cumhur İttifakı’nın meclis ortak tavrını ve terörün sonlandırılmasına yönelik stratejik adımları savundu.',
+        keyParaphrasedQuote: 'TBMM çatısı altında Türkiye’nin geleceğini tehdit eden tüm unsurlara karşı ortak duruş sergilenmelidir.',
+        lastUpdated: 'Kasım 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'abdullah_guler',
+    fullName: 'Abdullah Güler',
+    partyId: 'akp',
+    electedPartyId: 'akp',
+    province: 'Sivas',
+    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&fit=crop&q=80',
+    term: '28. Dönem (Sivas)',
+    title: 'TBMM AK Parti Grup Başkanı & Sivas Milletvekili',
+    bio: 'Hukukçu, avukat. 27. Dönem İstanbul, 28. Dönem Sivas Milletvekili. TBMM AK Parti Grup Başkanı.',
+    committee: 'TBMM Adalet Komisyonu',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#sivas-58',
+    stances: {
+      'sokak_kopegi_yasasi': {
+        id: 'st_ag_sokak',
+        mpId: 'abdullah_guler',
+        topicId: 'sokak_kopegi_yasasi',
+        stanceTag: 'kanun_teklifi',
+        stanceLabel: 'Kanun Teklifi İmzacısı ve Sözcüsü',
+        overallSummary: '5199 sayılı Hayvanları Koruma Kanunu’nda değişiklik öngören teklifi TBMM Başkanlığı’na bizzat sunan ve kamuoyuna anlatan isim oldu.',
+        keyParaphrasedQuote: 'Teklifimiz sahipsiz hayvanların bakımevlerine alınmasını, aşılanmasını ve sahiplendirilmesini amaçlamaktadır.',
+        lastUpdated: 'Temmuz 2024',
+        sources: []
       },
-      'milli_bayramlar_ataturk': {
-        id: 'st_oz_3',
-        mpId: 'ozlem_zengin',
-        topicId: 'milli_bayramlar_ataturk',
-        stanceTag: 'savundu',
-        stanceLabel: 'Cumhuriyet ve Milli İrade Vurgusu',
-        overallSummary: 'Cumhuriyet Bayramı ve 23 Nisan törenlerinde Atatürk ve silah arkadaşlarını saygıyla andı; milli egemenlik ve kadın hakları kazanımlarına vurgu yaptı.',
-        keyParaphrasedQuote: 'Gazi Mustafa Kemal Atatürk’ün kurduğu Meclisimizde kadınlarımızın söz sahibi olması cumhuriyetin en büyük kazanımıdır.',
-        lastUpdated: 'Ekim 2024',
-        sources: [{
-          id: 'src_oz_3',
-          mpId: 'ozlem_zengin',
-          topicId: 'milli_bayramlar_ataturk',
-          sourceType: 'tweet',
-          url: 'https://x.com/ozlem_zengin/status/1718600000000',
-          outletOrPlatform: 'X (Twitter)',
-          summary: 'Cumhuriyetin 101. yılı kutlama ve anma beyannamesi.',
-          publishDate: '29 Ekim 2024'
-        }]
+      'cerceve_yasa': {
+        id: 'st_ag_cerceve',
+        mpId: 'abdullah_guler',
+        topicId: 'cerceve_yasa',
+        stanceTag: 'destekledi',
+        stanceLabel: 'Grup Başkanı Olarak Savundu',
+        overallSummary: 'İnfaz düzenlemeleri ve ceza adaleti reformları kapsamında meclis çalışmalarını koordine etti.',
+        keyParaphrasedQuote: 'Adalet sistemimizin etkinliği ve toplum huzuru için gereken yasal düzenlemeleri kararlılıkla hayata geçiriyoruz.',
+        lastUpdated: 'Kasım 2024',
+        sources: []
       }
     }
   }

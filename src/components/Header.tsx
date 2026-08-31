@@ -1,15 +1,17 @@
 import React from 'react';
-import { Landmark, Scale, Users, Trophy, GitCompare, Info, RotateCcw } from 'lucide-react';
+import { Landmark, Scale, Users, Trophy, GitCompare, Info, RotateCcw, ShieldCheck, PlusCircle } from 'lucide-react';
 
-export type NavTab = 'mps' | 'weights' | 'leaderboard' | 'compare' | 'about';
+export type NavTab = 'mps' | 'weights' | 'leaderboard' | 'compare' | 'moderation' | 'about';
 
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   scoredMpCount: number;
   totalMps: number;
+  pendingProposalsCount: number;
   onResetScores: () => void;
   onLoadBenchmark: () => void;
+  onOpenContributionModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,8 +19,10 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
   scoredMpCount,
   totalMps,
+  pendingProposalsCount,
   onResetScores,
   onLoadBenchmark,
+  onOpenContributionModal,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
@@ -67,15 +71,15 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="nav-mps-btn"
               onClick={() => setActiveTab('mps')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'mps'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Users className="w-4 h-4 text-slate-500" />
+              <Users className="w-3.5 h-3.5 text-slate-500" />
               <span>Milletvekilleri</span>
-              <span className="text-xs bg-slate-200 text-slate-700 px-1.5 py-0.2 rounded-full font-mono">
+              <span className="text-2xs bg-slate-200 text-slate-700 px-1.5 py-0.2 rounded-full font-mono">
                 {totalMps}
               </span>
             </button>
@@ -83,29 +87,29 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="nav-weights-btn"
               onClick={() => setActiveTab('weights')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'weights'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Scale className="w-4 h-4 text-amber-600" />
-              <span>Önem Derecesi (Ağırlıklar)</span>
+              <Scale className="w-3.5 h-3.5 text-amber-600" />
+              <span>Önem Dereceleri</span>
             </button>
 
             <button
               id="nav-leaderboard-btn"
               onClick={() => setActiveTab('leaderboard')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'leaderboard'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Trophy className="w-4 h-4 text-indigo-600" />
+              <Trophy className="w-3.5 h-3.5 text-indigo-600" />
               <span>Uyum Sıralaması</span>
               {scoredMpCount > 0 && (
-                <span className="text-xs bg-indigo-100 text-indigo-700 px-1.5 py-0.2 rounded-full font-semibold">
+                <span className="text-2xs bg-indigo-100 text-indigo-700 px-1.5 py-0.2 rounded-full font-semibold">
                   {scoredMpCount}
                 </span>
               )}
@@ -114,46 +118,65 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="nav-compare-btn"
               onClick={() => setActiveTab('compare')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'compare'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <GitCompare className="w-4 h-4 text-teal-600" />
+              <GitCompare className="w-3.5 h-3.5 text-teal-600" />
               <span>Karşılaştır</span>
+            </button>
+
+            <button
+              id="nav-moderation-btn"
+              onClick={() => setActiveTab('moderation')}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                activeTab === 'moderation'
+                  ? 'bg-red-700 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+              }`}
+            >
+              <ShieldCheck className={`w-3.5 h-3.5 ${activeTab === 'moderation' ? 'text-white' : 'text-red-600'}`} />
+              <span>Hakem & Denetim</span>
+              {pendingProposalsCount > 0 && (
+                <span className="text-2xs bg-amber-400 text-slate-900 px-1.5 py-0.2 rounded-full font-bold">
+                  {pendingProposalsCount}
+                </span>
+              )}
             </button>
 
             <button
               id="nav-about-btn"
               onClick={() => setActiveTab('about')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'about'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Info className="w-4 h-4 text-slate-500" />
+              <Info className="w-3.5 h-3.5 text-slate-500" />
               <span>Metodoloji</span>
             </button>
           </nav>
 
           {/* Quick Action / Data Controls */}
           <div className="flex items-center gap-2">
-            <div className="hidden lg:flex flex-col items-end text-right mr-2">
-              <span className="text-xs font-semibold text-slate-800">
-                {scoredMpCount}/{totalMps} Milletvekili
-              </span>
-              <span className="text-[11px] text-slate-500">
-                Puanlandı
-              </span>
-            </div>
+            <button
+              id="btn-header-contribute"
+              onClick={onOpenContributionModal}
+              title="Yeni tutanak veya vekil öner"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-700 hover:bg-red-800 text-white shadow-xs transition-colors cursor-pointer"
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Öneri Gönder</span>
+            </button>
 
             <button
               id="btn-header-benchmark"
               onClick={onLoadBenchmark}
               title="Örnek analiz puanlarını yeniden yükle"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
               <span className="hidden sm:inline">Örnek Veri</span>
@@ -165,7 +188,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex md:hidden overflow-x-auto py-2 gap-1 border-t border-slate-100 no-scrollbar">
           <button
             onClick={() => setActiveTab('mps')}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 ${
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'mps'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-700'
@@ -176,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('weights')}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 ${
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'weights'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-700'
@@ -187,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('leaderboard')}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 ${
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'leaderboard'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-700'
@@ -198,7 +221,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('compare')}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 ${
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'compare'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-700'
@@ -208,8 +231,19 @@ export const Header: React.FC<HeaderProps> = ({
             Karşılaştır
           </button>
           <button
+            onClick={() => setActiveTab('moderation')}
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'moderation'
+                ? 'bg-red-700 text-white'
+                : 'bg-slate-100 text-slate-700'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Denetim ({pendingProposalsCount})
+          </button>
+          <button
             onClick={() => setActiveTab('about')}
-            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 ${
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'about'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-700'

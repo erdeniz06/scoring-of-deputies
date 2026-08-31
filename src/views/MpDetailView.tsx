@@ -1,19 +1,25 @@
-import React, { useState, useMemo } from 'react';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
+import React, { useState, useMemo, useEffect } from 'react';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, SourceItem } from '../types';
 import { PARTIES } from '../data/parties';
+import { MpAvatar } from '../components/MpAvatar';
 import { TopicStanceCard } from '../components/TopicStanceCard';
 import { FormulaExplainer } from '../components/FormulaExplainer';
+import { loadUserCustomSources, addUserCustomSource, removeUserCustomSource, UserCustomSources } from '../utils/storage';
 import { 
   ArrowLeft, 
   MapPin, 
   Sparkles, 
-  CheckCircle2, 
   RotateCcw, 
   Scale, 
-  Award,
-  ChevronRight,
-  GitCompare,
-  Sliders
+  ExternalLink,
+  PlusCircle,
+  Filter,
+  Building,
+  ShieldCheck,
+  Search,
+  SlidersHorizontal,
+  X,
+  Plus
 } from 'lucide-react';
 
 interface MpDetailViewProps {
@@ -27,6 +33,8 @@ interface MpDetailViewProps {
   onResetMpScores: (mpId: string) => void;
   onBack: () => void;
   onGoToWeights: () => void;
+  onOpenContributionModal?: (mp?: MP, topic?: Topic) => void;
+  onOpenTopicManager?: () => void;
   onNextMp?: () => void;
   onPrevMp?: () => void;
 }
@@ -42,11 +50,27 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   onResetMpScores,
   onBack,
   onGoToWeights,
+  onOpenContributionModal,
+  onOpenTopicManager,
   onNextMp,
   onPrevMp,
 }) => {
   const [filterMode, setFilterMode] = useState<'all' | 'unscored' | 'scored'>('all');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [partyScopeFilter, setPartyScopeFilter] = useState<'all_topics' | 'party_relevant_only'>('party_relevant_only');
+  const [searchTopicQuery, setSearchTopicQuery] = useState('');
+  const [customSourcesMap, setCustomSourcesMap] = useState<UserCustomSources>(() => loadUserCustomSources());
+
+  const handleAddCustomSource = (mpId: string, topicId: string, sourceData: Omit<SourceItem, 'id' | 'mpId' | 'topicId'>) => {
+    addUserCustomSource(mpId, topicId, sourceData);
+    setCustomSourcesMap(loadUserCustomSources());
+  };
+
+  const handleRemoveCustomSource = (mpId: string, topicId: string, sourceId: string) => {
+    removeUserCustomSource(mpId, topicId, sourceId);
+    setCustomSourcesMap(loadUserCustomSources());
+  };
+
+  const mpCustomSources = customSourcesMap[mp.id] || {};
 
   const party = PARTIES[mp.partyId] || {
     id: mp.partyId,
@@ -60,16 +84,36 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
 
   const mpScores = userScores[mp.id] || {};
 
-  // Filter topics
+  // Filter topics based on party scope, search query, and score status
   const filteredTopics = useMemo(() => {
     return topics.filter((t) => {
+      // Party scope filter: if party_relevant_only is active and topic has a specific partyScope different from this MP, hide it
+      if (partyScopeFilter === 'party_relevant_only' && t.partyScope && t.partyScope !== mp.partyId) {
+        return false;
+      }
+
+      // Keyword search
+      if (searchTopicQuery.trim()) {
+        const q = searchTopicQuery.toLowerCase().trim();
+        const matchTitle = t.title.toLowerCase().includes(q);
+        const matchDesc = t.description.toLowerCase().includes(q);
+        const matchNote = t.contextNote && t.contextNote.toLowerCase().includes(q);
+        const matchStance = mp.stances[t.id] && (
+          mp.stances[t.id].overallSummary?.toLowerCase().includes(q) ||
+          mp.stances[t.id].keyParaphrasedQuote?.toLowerCase().includes(q) ||
+          mp.stances[t.id].stanceLabel?.toLowerCase().includes(q)
+        );
+        if (!matchTitle && !matchDesc && !matchNote && !matchStance) {
+          return false;
+        }
+      }
+
       const isScored = mpScores[t.id] !== undefined && mpScores[t.id] !== null;
       if (filterMode === 'scored' && !isScored) return false;
       if (filterMode === 'unscored' && isScored) return false;
-      if (selectedCategory !== 'all' && t.category !== selectedCategory) return false;
       return true;
     });
-  }, [topics, mpScores, filterMode, selectedCategory]);
+  }, [topics, mpScores, filterMode, partyScopeFilter, mp.partyId, searchTopicQuery, mp.stances]);
 
   const percentage = calculationResult.compatibilityPercentage;
   const isAnyScored = calculationResult.scoredTopicsCount > 0;
@@ -96,7 +140,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         <button
           id="btn-back-to-mps"
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-2xs transition-colors"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-800 shadow-2xs transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Milletvekili Listesine Dön</span>
@@ -106,7 +150,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
           {onPrevMp && (
             <button
               onClick={onPrevMp}
-              className="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-200 font-medium transition-colors cursor-pointer"
             >
               ← Önceki MV
             </button>
@@ -114,7 +158,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
           {onNextMp && (
             <button
               onClick={onNextMp}
-              className="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-200 font-medium transition-colors cursor-pointer"
             >
               Sonraki MV →
             </button>
@@ -123,23 +167,11 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
       </div>
 
       {/* MP Profile & Live Match Summary Hero */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           {/* MP Info */}
           <div className="flex items-start sm:items-center gap-4 sm:gap-6">
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden bg-slate-100 border-2 border-white shadow-lg flex-shrink-0 flex items-center justify-center text-slate-400 font-bold text-2xl font-serif">
-              <img
-                src={mp.photoUrl}
-                alt={mp.fullName}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  target.style.display = 'none';
-                }}
-              />
-              <span className="select-none">{mp.fullName.split(' ').map(n => n[0]).join('')}</span>
-            </div>
+            <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="xl" />
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
@@ -153,15 +185,28 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                   <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: party.color }} />
                   {party.name} ({party.shortName})
                 </span>
-                <span className="text-xs text-slate-500 font-medium flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-md">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
                   <MapPin className="w-3 h-3 text-slate-400" />
                   {mp.province} • {mp.term}
                 </span>
+
+                {mp.tbmmProfileUrl && (
+                  <a
+                    href={mp.tbmmProfileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-red-700 dark:text-red-400 hover:text-red-800 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 px-2.5 py-1 rounded-md font-semibold inline-flex items-center gap-1 transition-colors"
+                  >
+                    <Building className="w-3 h-3" />
+                    TBMM Resmi Profili
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
+                )}
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-serif">
                 {mp.fullName}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
                 {mp.title}
               </p>
             </div>
@@ -185,7 +230,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
               </span>
               {!isAnyScored && (
                 <span className="text-xs text-slate-400 font-medium">
-                  Henüz konu puanlanmadı
+                  Henüz konu puanlanmadı (Başlangıç: %0)
                 </span>
               )}
             </div>
@@ -199,20 +244,41 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         </div>
 
         {/* MP Bio */}
-        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
           {mp.bio}
         </p>
 
         {/* Action Controls Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={onGoToWeights}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800/60 text-xs font-semibold transition-colors cursor-pointer"
             >
-              <Scale className="w-3.5 h-3.5 text-amber-700" />
-              <span>Konu Ağırlıklarınızı Değiştirin</span>
+              <Scale className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+              <span>Konu Ağırlıklarını Düzenle</span>
             </button>
+
+            {onOpenTopicManager && (
+              <button
+                onClick={onOpenTopicManager}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-red-400" />
+                <span>Konu Havuzu & Arama ({topics.length})</span>
+              </button>
+            )}
+
+            {onOpenContributionModal && (
+              <button
+                id="suggest-stance-for-mp-btn"
+                onClick={() => onOpenContributionModal(mp)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/60 text-xs font-semibold transition-colors cursor-pointer"
+              >
+                <PlusCircle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
+                <span>Tutum / Tutanak Öner</span>
+              </button>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -220,10 +286,10 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
               <button
                 id="btn-reset-mp-scores"
                 onClick={() => onResetMpScores(mp.id)}
-                className="inline-flex items-center gap-1 text-xs text-rose-600 hover:text-rose-800 font-medium px-2.5 py-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                className="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-800 font-medium px-2.5 py-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Bu MV İçin Puanları Sıfırla</span>
+                <span>Puanları Sıfırla</span>
               </button>
             )}
           </div>
@@ -236,69 +302,142 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         mpName={mp.fullName}
       />
 
-      {/* Filter and Category Pills */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          {/* Status Filter */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+      {/* Search Bar & Filter and Category Pills */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-xs space-y-3">
+        {/* Inline Topic Keyword Search Bar */}
+        <div className="relative">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Bu vekilin tutumlarında konu ara (örn: Kürt sorunu, referandum, deniz gezmiş, infaz, silah, sokak hayvanları)..."
+            value={searchTopicQuery}
+            onChange={(e) => setSearchTopicQuery(e.target.value)}
+            className="w-full pl-9 pr-8 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 transition-colors"
+          />
+          {searchTopicQuery && (
             <button
-              onClick={() => setFilterMode('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                filterMode === 'all'
-                  ? 'bg-white text-slate-900 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
+              onClick={() => setSearchTopicQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             >
-              Tüm Konular ({topics.length})
+              <X className="w-3.5 h-3.5" />
             </button>
-            <button
-              onClick={() => setFilterMode('scored')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                filterMode === 'scored'
-                  ? 'bg-white text-slate-900 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Puanlananlar ({calculationResult.scoredTopicsCount})
-            </button>
-            <button
-              onClick={() => setFilterMode('unscored')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                filterMode === 'unscored'
-                  ? 'bg-white text-slate-900 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              Kalanlar ({topics.length - calculationResult.scoredTopicsCount})
-            </button>
+          )}
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
+          {/* Status & Scope Filter */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+              <button
+                onClick={() => setFilterMode('all')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  filterMode === 'all'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                }`}
+              >
+                Tümü ({topics.length})
+              </button>
+              <button
+                onClick={() => setFilterMode('scored')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  filterMode === 'scored'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                }`}
+              >
+                Puanlananlar ({calculationResult.scoredTopicsCount})
+              </button>
+              <button
+                onClick={() => setFilterMode('unscored')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  filterMode === 'unscored'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                }`}
+              >
+                Kalanlar ({topics.length - calculationResult.scoredTopicsCount})
+              </button>
+            </div>
+
+            {/* Party Scope Toggle */}
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+              <button
+                id="scope-toggle-relevant"
+                onClick={() => setPartyScopeFilter('party_relevant_only')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  partyScopeFilter === 'party_relevant_only'
+                    ? 'bg-red-700 text-white shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                }`}
+                title="Sadece bu partiyle ilgili iç tartışmaları ve genel Türkiye meselelerini gösterir"
+              >
+                {mp.partyId.toUpperCase()} İlgili & Genel Konular
+              </button>
+              <button
+                id="scope-toggle-all"
+                onClick={() => setPartyScopeFilter('all_topics')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  partyScopeFilter === 'all_topics'
+                    ? 'bg-slate-800 text-white shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                }`}
+              >
+                Tüm Konuları Göster
+              </button>
+            </div>
           </div>
 
-          <span className="text-xs text-slate-500 font-medium">
-            Her konunun altındaki <strong>0-10</strong> butonlarına tıklayarak puanınızı kaydedin.
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            Önem derecesini şemadan ayarlayın, tutuma göre <strong>0-10</strong> puan verin veya iptal için tekrar tıklayın.
           </span>
         </div>
       </div>
 
       {/* Topic Stance Cards List */}
       <div className="space-y-4">
-        {filteredTopics.map((topic) => {
-          const stance = mp.stances[topic.id];
-          const userImportance = userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance;
-          const currentScore = mpScores[topic.id];
+        {filteredTopics.length === 0 ? (
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-3">
+            <Search className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              "{searchTopicQuery}" ile eşleşen bir konu bulunamadı.
+            </p>
+            <div className="flex items-center justify-center gap-2 pt-1">
+              {onOpenTopicManager && (
+                <button
+                  onClick={onOpenTopicManager}
+                  className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                >
+                  Tüm Konu Havuzunu Aç / Yeni Konu Ekle
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
+          filteredTopics.map((topic) => {
+            const stance = mp.stances[topic.id];
+            const userImportance = userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance;
+            const currentScore = mpScores[topic.id];
 
-          return (
-            <TopicStanceCard
-              key={topic.id}
-              topic={topic}
-              stance={stance}
-              userImportance={userImportance}
-              currentScore={currentScore}
-              onSetScore={(score) => onSetTopicScore(mp.id, topic.id, score)}
-              onQuickChangeImportance={(newImp) => onQuickChangeImportance(topic.id, newImp)}
-            />
-          );
-        })}
+            return (
+              <TopicStanceCard
+                key={topic.id}
+                topic={topic}
+                stance={stance}
+                mpId={mp.id}
+                userImportance={userImportance}
+                currentScore={currentScore}
+                customSources={mpCustomSources[topic.id] || []}
+                onSetScore={(score) => onSetTopicScore(mp.id, topic.id, score)}
+                onQuickChangeImportance={(newImp) => onQuickChangeImportance(topic.id, newImp)}
+                onAddCustomSource={handleAddCustomSource}
+                onRemoveCustomSource={handleRemoveCustomSource}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
 };
+

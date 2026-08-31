@@ -42,7 +42,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedParty, setSelectedParty] = useState<string>('all');
+  const [selectedProvince, setSelectedProvince] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'highest_match' | 'lowest_match' | 'most_scored' | 'name' | 'province'>('highest_match');
+
+  // Distinct provinces from mps
+  const availableProvinces = useMemo(() => {
+    const set = new Set<string>();
+    mps.forEach(m => {
+      if (m.province) set.add(m.province);
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, 'tr'));
+  }, [mps]);
 
   // Stats calculation
   const totalScoredMps = useMemo(() => {
@@ -73,7 +83,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       // Party match
       const matchParty = selectedParty === 'all' || mp.partyId === selectedParty;
 
-      return matchSearch && matchParty;
+      // Province match
+      const matchProvince = selectedProvince === 'all' || mp.province === selectedProvince;
+
+      return matchSearch && matchParty && matchProvince;
     }).sort((a, b) => {
       const resA = mpCalculationResults[a.id];
       const resB = mpCalculationResults[b.id];
@@ -172,24 +185,50 @@ export const HomeView: React.FC<HomeViewProps> = ({
             )}
           </div>
 
-          {/* Sort Selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-500 whitespace-nowrap flex items-center gap-1">
-              <ArrowUpDown className="w-3.5 h-3.5" />
-              Sırala:
-            </span>
-            <select
-              id="sort-mps-select"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 focus:outline-none focus:border-slate-800 cursor-pointer"
-            >
-              <option value="highest_match">En Yüksek Uyum (%)</option>
-              <option value="lowest_match">En Düşük Uyum (%)</option>
-              <option value="most_scored">En Çok Puanlanan Konu</option>
-              <option value="name">İsim (A-Z)</option>
-              <option value="province">İl (A-Z)</option>
-            </select>
+          {/* Province and Sort Selectors */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Province Selector */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">
+                İl:
+              </span>
+              <select
+                id="filter-province-select"
+                value={selectedProvince}
+                onChange={(e) => setSelectedProvince(e.target.value)}
+                className="px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 focus:outline-none focus:border-slate-800 cursor-pointer"
+              >
+                <option value="all">Tüm İller ({mps.length})</option>
+                {availableProvinces.map((prov) => {
+                  const provCount = mps.filter(m => m.province === prov).length;
+                  return (
+                    <option key={prov} value={prov}>
+                      {prov} ({provCount})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            {/* Sort Selector */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-slate-500 whitespace-nowrap flex items-center gap-1">
+                <ArrowUpDown className="w-3.5 h-3.5" />
+                Sırala:
+              </span>
+              <select
+                id="sort-mps-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 focus:outline-none focus:border-slate-800 cursor-pointer"
+              >
+                <option value="highest_match">En Yüksek Uyum (%)</option>
+                <option value="lowest_match">En Düşük Uyum (%)</option>
+                <option value="most_scored">En Çok Puanlanan Konu</option>
+                <option value="name">İsim (A-Z)</option>
+                <option value="province">İl (A-Z)</option>
+              </select>
+            </div>
           </div>
         </div>
 

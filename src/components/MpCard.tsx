@@ -1,6 +1,7 @@
 import React from 'react';
 import { MP, ScoreCalculationResult } from '../types';
 import { PARTIES } from '../data/parties';
+import { MpAvatar } from './MpAvatar';
 import { ChevronRight, CheckCircle2, GitCompare, MapPin, Sparkles } from 'lucide-react';
 
 interface MpCardProps {
@@ -64,22 +65,30 @@ export const MpCard: React.FC<MpCardProps> = ({
     >
       {/* Card Header & MP Profile */}
       <div className="p-5 flex-1">
-        <div className="flex items-start justify-between gap-3 mb-3.5">
+        <div className="flex items-start justify-between gap-3 mb-3.5 flex-wrap">
           {/* Party Tag */}
-          <span 
-            className="text-xs font-bold px-2.5 py-1 rounded-md border tracking-wide inline-flex items-center gap-1.5 shadow-2xs"
-            style={{
-              backgroundColor: party.bgColor,
-              borderColor: party.borderColor,
-              color: party.color,
-            }}
-          >
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span 
-              className="w-2 h-2 rounded-full inline-block"
-              style={{ backgroundColor: party.color }}
-            />
-            {party.shortName}
-          </span>
+              className="text-xs font-bold px-2.5 py-1 rounded-md border tracking-wide inline-flex items-center gap-1.5 shadow-2xs"
+              style={{
+                backgroundColor: party.bgColor,
+                borderColor: party.borderColor,
+                color: party.color,
+              }}
+            >
+              <span 
+                className="w-2 h-2 rounded-full inline-block"
+                style={{ backgroundColor: party.color }}
+              />
+              {party.shortName}
+            </span>
+
+            {mp.electedPartyId && mp.electedPartyId !== mp.partyId && PARTIES[mp.electedPartyId] && (
+              <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200 font-medium" title={`${PARTIES[mp.electedPartyId].name} listesinden seçildi`}>
+                {PARTIES[mp.electedPartyId].shortName}’den Geçti
+              </span>
+            )}
+          </div>
 
           {/* Compatibility Percentage Badge */}
           <div className={`px-3 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 shadow-2xs ${badgeColor}`}>
@@ -88,22 +97,9 @@ export const MpCard: React.FC<MpCardProps> = ({
           </div>
         </div>
 
-        {/* MP Info & Photo */}
+        {/* MP Info & Monogram Avatar */}
         <div className="flex items-center gap-4 mb-4">
-          <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-2xl overflow-hidden bg-slate-100 border-2 border-white shadow-md flex-shrink-0 flex items-center justify-center text-slate-400 font-bold text-lg font-serif">
-            <img
-              src={mp.photoUrl}
-              alt={mp.fullName}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              referrerPolicy="no-referrer"
-              loading="lazy"
-              onError={(e) => {
-                const target = e.currentTarget;
-                target.style.display = 'none';
-              }}
-            />
-            <span className="select-none">{mp.fullName.split(' ').map(n => n[0]).join('')}</span>
-          </div>
+          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="lg" />
           <div className="min-w-0 flex-1">
             <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate font-serif">
               {mp.fullName}
