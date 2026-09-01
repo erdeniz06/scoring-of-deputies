@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
 import { PARTIES } from '../data/parties';
 import { MpCard } from '../components/MpCard';
-import { FormulaExplainer } from '../components/FormulaExplainer';
 import { 
   Search, 
   Filter, 
@@ -157,9 +156,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Formula Explainer Widget */}
-      <FormulaExplainer />
 
       {/* Filter and Search Controls */}
       <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs space-y-4">

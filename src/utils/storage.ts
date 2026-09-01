@@ -12,7 +12,97 @@ const STORAGE_KEYS = {
   CUSTOM_SOURCES: 'mv_puanlama_custom_sources_v1',
   CUSTOM_TOPICS: 'mv_puanlama_custom_topics_v1',
   SELECTED_TOPIC_IDS: 'mv_puanlama_selected_topic_ids_v1',
+  USER_ROLE: 'mv_puanlama_user_role_v1',
+  APPROVED_CUSTOM_STANCES: 'mv_puanlama_approved_custom_stances_v1',
 };
+
+// User Role (Founder vs Normal Contributor)
+export type AppUserRole = 'founder' | 'contributor';
+
+export function loadUserRole(): AppUserRole {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.USER_ROLE);
+    if (raw === 'contributor' || raw === 'founder') {
+      return raw;
+    }
+  } catch (e) {
+    console.error('Failed to load user role:', e);
+  }
+  return 'founder'; // Default to Founder as requested by user
+}
+
+export function saveUserRole(role: AppUserRole): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.USER_ROLE, role);
+  } catch (e) {
+    console.error('Failed to save user role:', e);
+  }
+}
+
+// Live Approved Custom Stances Storage (mpId -> { topicId -> MpTopicStance })
+export type ApprovedCustomStances = Record<string, Record<string, import('../types').MpTopicStance>>;
+
+export function loadApprovedCustomStances(): ApprovedCustomStances {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.APPROVED_CUSTOM_STANCES);
+    if (raw) {
+      return JSON.parse(raw);
+    }
+  } catch (e) {
+    console.error('Failed to load approved custom stances:', e);
+  }
+  return {};
+}
+
+export function saveApprovedCustomStances(stances: ApprovedCustomStances): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.APPROVED_CUSTOM_STANCES, JSON.stringify(stances));
+  } catch (e) {
+    console.error('Failed to save approved custom stances:', e);
+  }
+}
+
+export function addApprovedCustomStance(
+  mpId: string, 
+  topicId: string, 
+  stance: import('../types').MpTopicStance
+): void {
+  const current = loadApprovedCustomStances();
+  if (!current[mpId]) {
+    current[mpId] = {};
+  }
+  current[mpId][topicId] = stance;
+  saveApprovedCustomStances(current);
+}
+
+export function removeApprovedCustomStance(mpId: string, topicId: string): void {
+  const current = loadApprovedCustomStances();
+  if (current[mpId] && current[mpId][topicId]) {
+    delete current[mpId][topicId];
+    saveApprovedCustomStances(current);
+  }
+}
+
+export function mergeMpWithCustomStances(mp: import('../types').MP, approvedStances?: ApprovedCustomStances): import('../types').MP {
+  const allApproved = approvedStances || loadApprovedCustomStances();
+  const mpCustomStances = allApproved[mp.id];
+  if (!mpCustomStances || Object.keys(mpCustomStances).length === 0) {
+    return mp;
+  }
+  return {
+    ...mp,
+    stances: {
+      ...mp.stances,
+      ...mpCustomStances,
+    },
+  };
+}
+
+export function mergeAllMpsWithCustomStances(mps: import('../types').MP[]): import('../types').MP[] {
+  const approved = loadApprovedCustomStances();
+  if (Object.keys(approved).length === 0) return mps;
+  return mps.map((m) => mergeMpWithCustomStances(m, approved));
+}
 
 // Custom User Added Topics
 export function loadUserCustomTopics(): import('../types').Topic[] {
@@ -237,6 +327,52 @@ export function addProposal(proposalData: Omit<ContributionProposal, 'id' | 'sub
   return newProposal;
 }
 
+export function addDirectlyApprovedFounderProposal(
+  proposalData: Omit<ContributionProposal, 'id' | 'submittedAt' | 'status' | 'reviewedBy' | 'reviewedAt' | 'reviewerComment'>
+): ContributionProposal {
+  const proposals = loadProposals();
+  const newProposal: ContributionProposal = {
+    ...proposalData,
+    id: `prop-fnd-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    submittedAt: new Date().toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' }),
+    status: 'approved',
+    reviewedBy: 'Erdeniz Taşlıçukur (Kurucu)',
+    reviewedAt: new Date().toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' }),
+    reviewerComment: '👑 Kurucu doğrudan onay yetkisi ile anında canlıya alındı.',
+  };
+  proposals.unshift(newProposal);
+  saveProposals(proposals);
+
+  // Sync to live approved custom stances if it's a stance update
+  if (newProposal.mpId && newProposal.topicId && newProposal.stanceTag) {
+    addApprovedCustomStance(newProposal.mpId, newProposal.topicId, {
+      id: `st-custom-${newProposal.mpId}-${newProposal.topicId}`,
+      mpId: newProposal.mpId,
+      topicId: newProposal.topicId,
+      stanceTag: newProposal.stanceTag,
+      stanceLabel: newProposal.stanceLabel || 'Doğrulanmış Tutanak / Demeç',
+      overallSummary: newProposal.overallSummary || '',
+      keyParaphrasedQuote: newProposal.keyParaphrasedQuote || '',
+      lastUpdated: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }),
+      isCommunityVerified: true,
+      sources: newProposal.sourceUrl ? [
+        {
+          id: `src-prop-${Date.now()}`,
+          mpId: newProposal.mpId,
+          topicId: newProposal.topicId,
+          sourceType: 'news',
+          url: newProposal.sourceUrl,
+          outletOrPlatform: newProposal.sourcePlatform || 'Doğrulanmış Kaynak',
+          summary: newProposal.sourceSummary || 'Kurucu tarafından doğrulanan kaynak.',
+          publishDate: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }),
+        }
+      ] : [],
+    });
+  }
+
+  return newProposal;
+}
+
 export function updateProposalStatus(
   proposalId: string,
   status: 'approved' | 'rejected',
@@ -245,9 +381,11 @@ export function updateProposalStatus(
   modifiedData?: Partial<ContributionProposal>
 ): ContributionProposal[] {
   const proposals = loadProposals();
+  let targetProposal: ContributionProposal | undefined;
+
   const updated = proposals.map((p) => {
     if (p.id === proposalId) {
-      return {
+      targetProposal = {
         ...p,
         ...(modifiedData || {}),
         status,
@@ -255,10 +393,40 @@ export function updateProposalStatus(
         reviewedAt: new Date().toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' }),
         reviewerComment: reviewerComment || (status === 'approved' ? 'Teyit edildi ve yayına alındı.' : 'Yetersiz kaynak/uyumsuzluk gerekçesiyle reddedildi.'),
       };
+      return targetProposal;
     }
     return p;
   });
+
   saveProposals(updated);
+
+  // If approved, dynamically inject into live MP stances
+  if (status === 'approved' && targetProposal && targetProposal.mpId && targetProposal.topicId && targetProposal.stanceTag) {
+    addApprovedCustomStance(targetProposal.mpId, targetProposal.topicId, {
+      id: `st-custom-${targetProposal.mpId}-${targetProposal.topicId}`,
+      mpId: targetProposal.mpId,
+      topicId: targetProposal.topicId,
+      stanceTag: targetProposal.stanceTag,
+      stanceLabel: targetProposal.stanceLabel || 'Hakem Onaylı Tutanak / Demeç',
+      overallSummary: targetProposal.overallSummary || '',
+      keyParaphrasedQuote: targetProposal.keyParaphrasedQuote || '',
+      lastUpdated: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }),
+      isCommunityVerified: true,
+      sources: targetProposal.sourceUrl ? [
+        {
+          id: `src-prop-${Date.now()}`,
+          mpId: targetProposal.mpId,
+          topicId: targetProposal.topicId,
+          sourceType: 'news',
+          url: targetProposal.sourceUrl,
+          outletOrPlatform: targetProposal.sourcePlatform || 'Doğrulanmış Kaynak',
+          summary: targetProposal.sourceSummary || 'Hakem heyeti tarafından doğrulanmış kaynak.',
+          publishDate: new Date().toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }),
+        }
+      ] : [],
+    });
+  }
+
   return updated;
 }
 

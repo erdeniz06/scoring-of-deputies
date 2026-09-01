@@ -14,7 +14,11 @@ import {
   addUserCustomTopic,
   removeUserCustomTopic,
   loadUserSelectedTopicIds,
-  saveUserSelectedTopicIds
+  saveUserSelectedTopicIds,
+  loadUserRole,
+  saveUserRole,
+  AppUserRole,
+  mergeAllMpsWithCustomStances
 } from './utils/storage';
 import { Header, NavTab } from './components/Header';
 import { HomeView } from './views/HomeView';
@@ -26,7 +30,8 @@ import { ModerationView } from './views/ModerationView';
 import { AboutView } from './views/AboutView';
 import { ContributionModal } from './components/ContributionModal';
 import { TopicManagerModal } from './components/TopicManagerModal';
-import { Landmark } from 'lucide-react';
+import { AddStanceProposalModal } from './components/AddStanceProposalModal';
+import { Landmark, CheckCircle2, ShieldAlert, Crown, X } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('mps');
@@ -35,6 +40,37 @@ export default function App() {
   const [userScores, setUserScores] = useState<UserScores>(loadUserScores);
   const [comparedMpIds, setComparedMpIds] = useState<string[]>(['ozgur_ozel', 'mustafa_varank']);
   
+  // User Role State: 'founder' (Erdeniz Taşlıçukur) vs 'contributor'
+  const [userRole, setUserRole] = useState<AppUserRole>(() => loadUserRole());
+
+  const handleToggleUserRole = () => {
+    const nextRole: AppUserRole = userRole === 'founder' ? 'contributor' : 'founder';
+    setUserRole(nextRole);
+    saveUserRole(nextRole);
+  };
+
+  // Custom Stances & Live Merged MPs
+  const [customStancesVersion, setCustomStancesVersion] = useState(0);
+  const liveMps = useMemo(() => {
+    return mergeAllMpsWithCustomStances(ALL_MPS);
+  }, [customStancesVersion]);
+
+  // Toast notification state
+  const [toastMessage, setToastMessage] = useState<{
+    type: 'success' | 'info';
+    title: string;
+    description: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
   // Custom Topics & Selection State
   const [customTopics, setCustomTopics] = useState<Topic[]>(() => loadUserCustomTopics());
   
@@ -67,7 +103,6 @@ export default function App() {
   const handleToggleTopic = (topicId: string) => {
     setSelectedTopicIds(prev => {
       if (prev.includes(topicId)) {
-        // keep at least 1
         if (prev.length <= 1) return prev;
         return prev.filter(id => id !== topicId);
       } else {
@@ -81,7 +116,6 @@ export default function App() {
   };
 
   const handleDeselectAllTopics = () => {
-    // Keep first topic to prevent division by zero
     if (allCombinedTopics.length > 0) {
       setSelectedTopicIds([allCombinedTopics[0].id]);
     }
@@ -90,9 +124,7 @@ export default function App() {
   const handleAddNewTopic = (topicData: Omit<Topic, 'id'>) => {
     const newTopic = addUserCustomTopic(topicData);
     setCustomTopics(loadUserCustomTopics());
-    // Auto select the new topic
     setSelectedTopicIds(prev => [...prev, newTopic.id]);
-    // Set default weight
     setUserWeights(prev => ({
       ...prev,
       [newTopic.id]: newTopic.defaultImportance,
@@ -111,6 +143,39 @@ export default function App() {
   const [modalInitialMp, setModalInitialMp] = useState<MP | undefined>(undefined);
   const [modalInitialTopic, setModalInitialTopic] = useState<Topic | undefined>(undefined);
 
+  // Dedicated '+' Add Stance Proposal Modal State
+  const [isAddStanceModalOpen, setIsAddStanceModalOpen] = useState(false);
+  const [addStanceTargetMpId, setAddStanceTargetMpId] = useState<string | undefined>(undefined);
+  const [addStanceTargetTopicId, setAddStanceTargetTopicId] = useState<string | undefined>(undefined);
+
+  const handleOpenAddStance = (topicId?: string, mpId?: string) => {
+    setAddStanceTargetTopicId(topicId);
+    setAddStanceTargetMpId(mpId || selectedMpId || undefined);
+    setIsAddStanceModalOpen(true);
+  };
+
+  const handleProposalSubmitted = (isDirectlyApproved: boolean, targetMpId: string, targetTopicId: string) => {
+    setProposalsVersion(v => v + 1);
+    setCustomStancesVersion(v => v + 1);
+
+    const targetMp = liveMps.find(m => m.id === targetMpId);
+    const targetTopic = allCombinedTopics.find(t => t.id === targetTopicId);
+
+    if (isDirectlyApproved) {
+      setToastMessage({
+        type: 'success',
+        title: '👑 Kurucu Yetkisiyle Doğrudan Canlıya Alındı!',
+        description: `${targetMp?.fullName || 'Vekil'} için "${targetTopic?.title || 'Seçili Konu'}" demeci ve tutanağı onaylanarak anında profile işlendi.`
+      });
+    } else {
+      setToastMessage({
+        type: 'info',
+        title: '🛡️ Demeç Hakem İnceleme Havuzuna Gönderildi',
+        description: `Öneriniz kaydedildi. Bağımsız hakem denetiminden geçtikten sonra canlıya alınacaktır.`
+      });
+    }
+  };
+
   // Sync state to local storage
   useEffect(() => {
     saveUserWeights(userWeights);
@@ -125,21 +190,21 @@ export default function App() {
     return proposals.filter((p) => p.status === 'pending').length;
   }, [proposalsVersion]);
 
-  // Compute live scores for all MPs using activeTopics
+  // Compute live scores for all MPs using activeTopics and liveMps
   const mpCalculationResults = useMemo(() => {
     const results: Record<string, ScoreCalculationResult> = {};
-    ALL_MPS.forEach((mp) => {
+    liveMps.forEach((mp) => {
       results[mp.id] = calculateMpScore(mp, activeTopics, userWeights, userScores);
     });
     return results;
-  }, [userWeights, userScores, activeTopics]);
+  }, [userWeights, userScores, activeTopics, liveMps]);
 
   // Count scored MPs
   const scoredMpCount = useMemo(() => {
     return (Object.values(mpCalculationResults) as ScoreCalculationResult[]).filter(r => r.scoredTopicsCount > 0).length;
   }, [mpCalculationResults]);
 
-  // Handler: Set Topic Score for an MP (or toggle off/remove if score is undefined or matches existing)
+  // Handler: Set Topic Score for an MP
   const handleSetTopicScore = (mpId: string, topicId: string, score: number | undefined) => {
     setUserScores((prev) => {
       const mpScores = { ...(prev[mpId] || {}) };
@@ -213,24 +278,51 @@ export default function App() {
     setIsContributionModalOpen(true);
   };
 
-  // Find active MP for detail view
-  const activeMp = selectedMpId ? ALL_MPS.find(m => m.id === selectedMpId) : null;
-  const activeMpIndex = activeMp ? ALL_MPS.findIndex(m => m.id === activeMp.id) : -1;
+  // Find active MP for detail view from liveMps
+  const activeMp = selectedMpId ? liveMps.find(m => m.id === selectedMpId) : null;
+  const activeMpIndex = activeMp ? liveMps.findIndex(m => m.id === activeMp.id) : -1;
 
   const handleNextMp = () => {
-    if (activeMpIndex >= 0 && activeMpIndex < ALL_MPS.length - 1) {
-      setSelectedMpId(ALL_MPS[activeMpIndex + 1].id);
+    if (activeMpIndex >= 0 && activeMpIndex < liveMps.length - 1) {
+      setSelectedMpId(liveMps[activeMpIndex + 1].id);
     }
   };
 
   const handlePrevMp = () => {
     if (activeMpIndex > 0) {
-      setSelectedMpId(ALL_MPS[activeMpIndex - 1].id);
+      setSelectedMpId(liveMps[activeMpIndex - 1].id);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans antialiased text-slate-900">
+      {/* Toast Alert Banner */}
+      {toastMessage && (
+        <div className="fixed bottom-5 right-5 z-50 max-w-md animate-slideUp">
+          <div className={`p-4 rounded-2xl shadow-2xl border flex items-start gap-3 text-xs ${
+            toastMessage.type === 'success'
+              ? 'bg-emerald-950 text-emerald-100 border-emerald-500 shadow-emerald-950/40'
+              : 'bg-slate-900 text-slate-100 border-amber-500 shadow-slate-950/40'
+          }`}>
+            {toastMessage.type === 'success' ? (
+              <Crown className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            ) : (
+              <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            )}
+            <div className="space-y-1 grow">
+              <div className="font-bold text-sm text-white">{toastMessage.title}</div>
+              <p className="text-slate-300 leading-relaxed">{toastMessage.description}</p>
+            </div>
+            <button
+              onClick={() => setToastMessage(null)}
+              className="text-slate-400 hover:text-white p-1"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header Navigation */}
       <Header
         activeTab={activeTab}
@@ -239,11 +331,14 @@ export default function App() {
           setSelectedMpId(null);
         }}
         scoredMpCount={scoredMpCount}
-        totalMps={ALL_MPS.length}
+        totalMps={liveMps.length}
         pendingProposalsCount={pendingProposalsCount}
+        userRole={userRole}
+        onToggleUserRole={handleToggleUserRole}
         onResetScores={handleResetAllScores}
         onLoadBenchmark={handleLoadBenchmark}
         onOpenContributionModal={() => handleOpenContribution()}
+        onOpenAddStanceModal={() => handleOpenAddStance()}
       />
 
       {/* Main Content Area */}
@@ -265,14 +360,15 @@ export default function App() {
             }}
             onOpenContributionModal={handleOpenContribution}
             onOpenTopicManager={() => setIsTopicManagerOpen(true)}
-            onNextMp={activeMpIndex < ALL_MPS.length - 1 ? handleNextMp : undefined}
+            onOpenAddStance={handleOpenAddStance}
+            onNextMp={activeMpIndex < liveMps.length - 1 ? handleNextMp : undefined}
             onPrevMp={activeMpIndex > 0 ? handlePrevMp : undefined}
           />
         ) : (
           <>
             {activeTab === 'mps' && (
               <HomeView
-                mps={ALL_MPS}
+                mps={liveMps}
                 topics={activeTopics}
                 userWeights={userWeights}
                 userScores={userScores}
@@ -299,7 +395,7 @@ export default function App() {
 
             {activeTab === 'leaderboard' && (
               <LeaderboardView
-                mps={ALL_MPS}
+                mps={liveMps}
                 topics={activeTopics}
                 userWeights={userWeights}
                 userScores={userScores}
@@ -311,7 +407,7 @@ export default function App() {
 
             {activeTab === 'compare' && (
               <CompareView
-                allMps={ALL_MPS}
+                allMps={liveMps}
                 topics={activeTopics}
                 comparedMpIds={comparedMpIds}
                 onToggleCompare={handleToggleCompare}
@@ -324,10 +420,13 @@ export default function App() {
 
             {activeTab === 'moderation' && (
               <ModerationView
-                allMps={ALL_MPS}
+                allMps={liveMps}
                 allTopics={allCombinedTopics}
                 onOpenContributionModal={() => handleOpenContribution()}
-                onProposalsUpdated={() => setProposalsVersion((v) => v + 1)}
+                onProposalsUpdated={() => {
+                  setProposalsVersion((v) => v + 1);
+                  setCustomStancesVersion((v) => v + 1);
+                }}
               />
             )}
 
@@ -335,6 +434,19 @@ export default function App() {
           </>
         )}
       </main>
+
+      {/* Dedicated '+' Stance / Speech Addition Modal */}
+      <AddStanceProposalModal
+        isOpen={isAddStanceModalOpen}
+        onClose={() => setIsAddStanceModalOpen(false)}
+        allMps={liveMps}
+        allTopics={allCombinedTopics}
+        userRole={userRole}
+        onToggleUserRole={handleToggleUserRole}
+        initialMpId={addStanceTargetMpId}
+        initialTopicId={addStanceTargetTopicId}
+        onProposalSubmitted={handleProposalSubmitted}
+      />
 
       {/* Topic Selection & Search Engine / Manager Modal */}
       <TopicManagerModal
@@ -355,9 +467,12 @@ export default function App() {
         onClose={() => setIsContributionModalOpen(false)}
         initialMp={modalInitialMp}
         initialTopic={modalInitialTopic}
-        allMps={ALL_MPS}
+        allMps={liveMps}
         allTopics={allCombinedTopics}
-        onSubmitted={() => setProposalsVersion((v) => v + 1)}
+        onSubmitted={() => {
+          setProposalsVersion((v) => v + 1);
+          setCustomStancesVersion((v) => v + 1);
+        }}
       />
 
       {/* Footer */}

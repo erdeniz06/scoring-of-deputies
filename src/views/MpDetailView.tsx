@@ -3,7 +3,7 @@ import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, SourceItem 
 import { PARTIES } from '../data/parties';
 import { MpAvatar } from '../components/MpAvatar';
 import { TopicStanceCard } from '../components/TopicStanceCard';
-import { FormulaExplainer } from '../components/FormulaExplainer';
+import { isTopicApplicableToMp } from '../data/topics';
 import { loadUserCustomSources, addUserCustomSource, removeUserCustomSource, UserCustomSources } from '../utils/storage';
 import { 
   ArrowLeft, 
@@ -35,6 +35,7 @@ interface MpDetailViewProps {
   onGoToWeights: () => void;
   onOpenContributionModal?: (mp?: MP, topic?: Topic) => void;
   onOpenTopicManager?: () => void;
+  onOpenAddStance?: (topicId?: string, mpId?: string) => void;
   onNextMp?: () => void;
   onPrevMp?: () => void;
 }
@@ -52,6 +53,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   onGoToWeights,
   onOpenContributionModal,
   onOpenTopicManager,
+  onOpenAddStance,
   onNextMp,
   onPrevMp,
 }) => {
@@ -87,8 +89,8 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   // Filter topics based on party scope, search query, and score status
   const filteredTopics = useMemo(() => {
     return topics.filter((t) => {
-      // Party scope filter: if party_relevant_only is active and topic has a specific partyScope different from this MP, hide it
-      if (partyScopeFilter === 'party_relevant_only' && t.partyScope && t.partyScope !== mp.partyId) {
+      // Party scope filter: if party_relevant_only is active, check isTopicApplicableToMp(t, mp)
+      if (partyScopeFilter === 'party_relevant_only' && !isTopicApplicableToMp(t, mp)) {
         return false;
       }
 
@@ -113,7 +115,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
       if (filterMode === 'unscored' && isScored) return false;
       return true;
     });
-  }, [topics, mpScores, filterMode, partyScopeFilter, mp.partyId, searchTopicQuery, mp.stances]);
+  }, [topics, mpScores, filterMode, partyScopeFilter, mp, searchTopicQuery]);
 
   const percentage = calculationResult.compatibilityPercentage;
   const isAnyScored = calculationResult.scoredTopicsCount > 0;
@@ -269,6 +271,18 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
               </button>
             )}
 
+            {onOpenAddStance && (
+              <button
+                id="add-speech-for-mp-top-btn"
+                onClick={() => onOpenAddStance(undefined, mp.id)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-xs transition-all hover:scale-105 cursor-pointer"
+                title="Bu milletvekiline yeni bir demeç veya tutanak ekleyin"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5]" />
+                <span>+ Demeç / Tutanak Ekle</span>
+              </button>
+            )}
+
             {onOpenContributionModal && (
               <button
                 id="suggest-stance-for-mp-btn"
@@ -295,12 +309,6 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Formula Explainer */}
-      <FormulaExplainer 
-        calculationResult={calculationResult}
-        mpName={mp.fullName}
-      />
 
       {/* Search Bar & Filter and Category Pills */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-xs space-y-3">
@@ -425,6 +433,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                 topic={topic}
                 stance={stance}
                 mpId={mp.id}
+                mpName={mp.fullName}
                 userImportance={userImportance}
                 currentScore={currentScore}
                 customSources={mpCustomSources[topic.id] || []}
@@ -432,6 +441,13 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                 onQuickChangeImportance={(newImp) => onQuickChangeImportance(topic.id, newImp)}
                 onAddCustomSource={handleAddCustomSource}
                 onRemoveCustomSource={handleRemoveCustomSource}
+                onOpenAddStance={(topicId) => {
+                  if (onOpenAddStance) {
+                    onOpenAddStance(topicId, mp.id);
+                  } else if (onOpenContributionModal) {
+                    onOpenContributionModal(mp, topic);
+                  }
+                }}
               />
             );
           })

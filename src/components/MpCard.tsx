@@ -98,10 +98,13 @@ export const MpCard: React.FC<MpCardProps> = ({
         </div>
 
         {/* MP Info & Monogram Avatar */}
-        <div className="flex items-center gap-4 mb-4">
+        <div 
+          onClick={() => onSelect(mp.id)}
+          className="flex items-center gap-4 mb-4 cursor-pointer group/name"
+        >
           <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="lg" />
           <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate font-serif">
+            <h3 className="font-bold text-base sm:text-lg text-slate-900 group-hover/name:text-red-700 truncate font-serif transition-colors">
               {mp.fullName}
             </h3>
             <div className="flex items-center gap-1 text-xs text-slate-500 mt-0.5">

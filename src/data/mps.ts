@@ -9,6 +9,9 @@ import { PROVINCES_NEW_MPS } from './mps/provincesNewMps';
 import { PROVINCES_NEW_MPS_2 } from './mps/provincesNewMps2';
 import { PROVINCES_NEW_MPS_3 } from './mps/provincesNewMps3';
 import { PROVINCES_NEW_MPS_4 } from './mps/provincesNewMps4';
+import { PROVINCES_NEW_MPS_5 } from './mps/provincesNewMps5';
+import { PROVINCES_NEW_MPS_6 } from './mps/provincesNewMps6';
+import { PROVINCES_NEW_MPS_7 } from './mps/provincesNewMps7';
 
 // Combine all datasets with deduplication by id
 const combinedMps = [
@@ -22,6 +25,9 @@ const combinedMps = [
   ...PROVINCES_NEW_MPS_2,
   ...PROVINCES_NEW_MPS_3,
   ...PROVINCES_NEW_MPS_4,
+  ...PROVINCES_NEW_MPS_5,
+  ...PROVINCES_NEW_MPS_6,
+  ...PROVINCES_NEW_MPS_7,
 ];
 
 const uniqueMpMap = new Map<string, MP>();

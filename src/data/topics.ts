@@ -28,6 +28,22 @@ export const TOPIC_CATEGORIES: Record<TopicCategory, { label: string; icon: stri
   },
 };
 
+export const OPPOSITION_PARTIES = ['chp', 'iyi', 'dem', 'deva', 'gelecek', 'saadet', 'tip', 'emep', 'dp', 'zafer', 'yrp'];
+
+export function isTopicApplicableToMp(topic: Topic, mp: { partyId: string; electedPartyId?: string }): boolean {
+  if (!topic.partyScope || topic.partyScope === 'all') return true;
+  if (topic.partyScope === 'opposition') {
+    return OPPOSITION_PARTIES.includes(mp.partyId) || (!!mp.electedPartyId && OPPOSITION_PARTIES.includes(mp.electedPartyId));
+  }
+  if (topic.partyScope === 'chp') {
+    return mp.partyId === 'chp' || mp.electedPartyId === 'chp';
+  }
+  if (topic.partyScope === 'iyi') {
+    return mp.partyId === 'iyi' || mp.electedPartyId === 'iyi';
+  }
+  return topic.partyScope === mp.partyId || topic.partyScope === mp.electedPartyId;
+}
+
 export const TOPICS: Topic[] = [
   {
     id: '2023_kk_adaylik',
@@ -36,8 +52,8 @@ export const TOPICS: Topic[] = [
     category: 'siyaset',
     defaultImportance: 8,
     contextNote: '6’lı masa müzakereleri, aday belirleme süreci ve kamuoyuna yapılan ortak/bireysel açıklamalar.',
-    partyScope: 'all',
-    partyScopeLabel: 'Genel Seçim / İttifak',
+    partyScope: 'opposition',
+    partyScopeLabel: 'Tüm Muhalefet Milletvekilleri',
   },
   {
     id: '2023_kk_oo_kurultay',
@@ -47,7 +63,7 @@ export const TOPICS: Topic[] = [
     defaultImportance: 8,
     contextNote: 'Parti içi değişim hareketi, imza süreçleri ve kurultay salonundaki açık duruşlar.',
     partyScope: 'chp',
-    partyScopeLabel: 'CHP İçi Kurultay / Dinamik',
+    partyScopeLabel: 'CHP Milletvekilleri',
   },
   {
     id: '2024_iyi_parti_kurultay',
@@ -57,7 +73,7 @@ export const TOPICS: Topic[] = [
     defaultImportance: 7,
     contextNote: 'Genel başkanlık seçimi, parti politikalarında yön değişimi ve istifa/destek açıklamaları.',
     partyScope: 'iyi',
-    partyScopeLabel: 'İYİ Parti İçi Kurultay / Dinamik',
+    partyScopeLabel: 'İYİ Parti Milletvekilleri',
   },
   {
     id: 'sokak_kopegi_yasasi',
@@ -67,7 +83,7 @@ export const TOPICS: Topic[] = [
     defaultImportance: 9,
     contextNote: 'TBMM Tarım Komisyonu ve Genel Kurul oylamalarındaki oy, tutanak konuşmaları ve basın açıklamaları.',
     partyScope: 'all',
-    partyScopeLabel: 'Genel Meclis Gündemi',
+    partyScopeLabel: 'Genel (Tüm Milletvekilleri)',
   },
   {
     id: 'cerceve_yasa',

@@ -23,7 +23,7 @@ export interface Topic {
   category: TopicCategory;
   defaultImportance: number; // 0-10
   contextNote: string;
-  partyScope?: 'all' | 'chp' | 'iyi' | 'akp' | 'mhp' | 'dem' | 'tip';
+  partyScope?: 'all' | 'opposition' | 'chp' | 'iyi' | 'akp' | 'mhp' | 'dem' | 'tip' | string;
   partyScopeLabel?: string;
 }
 

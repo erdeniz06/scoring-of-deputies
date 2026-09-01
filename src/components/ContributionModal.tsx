@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, ShieldCheck, Link2, User, BookOpen, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { X, Send, ShieldCheck, Link2, User, BookOpen, AlertCircle, CheckCircle2, Quote } from 'lucide-react';
 import { MP, Topic, ContributionType } from '../types';
 import { addProposal } from '../utils/storage';
 
@@ -58,38 +58,59 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
     e.preventDefault();
     setErrorMsg('');
 
-    if (!submitterName.trim()) {
-      setErrorMsg('Lütfen adınızı veya takma adınızı belirtin.');
-      return;
-    }
+    const finalSubmitter = submitterName.trim() || 'Gönüllü Katılımcı';
 
     if (type === 'stance_update' || type === 'source_link') {
       if (!sourceUrl.trim()) {
-        setErrorMsg('Lütfen geçerli bir TBMM tutanağı, haber veya video kaynak linki ekleyin.');
+        setErrorMsg('Lütfen geçerli bir TBMM tutanağı, haber veya video kaynak linki (URL) ekleyin.');
         return;
       }
-      if (!overallSummary.trim()) {
-        setErrorMsg('Lütfen vekilin tutumuna dair kısa bir özet açıklama yazın.');
+      if (!keyParaphrasedQuote.trim() && type === 'stance_update') {
+        setErrorMsg('Lütfen vekilin söylediği veya tutanakta geçen alıntı cümlesini ekleyin.');
         return;
       }
     }
+
+    const defaultLabel = stanceLabel.trim() || (
+      stanceTag === 'destekledi' || stanceTag === 'savundu' ? 'Savundu / Kabul Oyu Verdi' :
+      stanceTag === 'karsi_cikti' ? 'Karşı Çıktı / Ret Oyu Verdi' :
+      stanceTag === 'elestirdi' ? 'Eleştirdi' :
+      stanceTag === 'kanun_teklifi' ? 'Kanun Teklifi / Önerge Verdi' : 'Tutum Bildirdi'
+    );
+
+    const finalSummary = overallSummary.trim() || (
+      keyParaphrasedQuote.trim()
+        ? `"${keyParaphrasedQuote.trim()}"`
+        : 'Tutanak ve beyan kaydı.'
+    );
+
+    let extractedPlatform = sourcePlatform.trim();
+    if (!extractedPlatform && sourceUrl.trim()) {
+      try {
+        const urlObj = new URL(sourceUrl.trim());
+        extractedPlatform = urlObj.hostname.replace('www.', '');
+      } catch {
+        extractedPlatform = 'Web Kaynağı';
+      }
+    }
+    if (!extractedPlatform) extractedPlatform = 'TBMM Tutanak Kaydı';
 
     try {
       addProposal({
         type,
-        submitterName: submitterName.trim(),
-        submitterNote: submitterNote.trim(),
+        submitterName: finalSubmitter,
+        submitterNote: submitterNote.trim() || 'Kullanıcı tutanak katkısı.',
         mpId: type === 'new_mp' ? undefined : (currentMp?.id || selectedMpId),
         mpName: type === 'new_mp' ? customMpName : currentMp?.fullName,
         topicId: type === 'new_topic' ? undefined : (currentTopic?.id || selectedTopicId),
         topicTitle: type === 'new_topic' ? customTopicTitle : currentTopic?.title,
         stanceTag,
-        stanceLabel,
-        overallSummary,
-        keyParaphrasedQuote,
-        sourceUrl,
-        sourcePlatform,
-        sourceSummary,
+        stanceLabel: defaultLabel,
+        overallSummary: finalSummary,
+        keyParaphrasedQuote: keyParaphrasedQuote.trim(),
+        sourceUrl: sourceUrl.trim(),
+        sourcePlatform: extractedPlatform,
+        sourceSummary: sourceSummary.trim() || 'Doğrulanabilir kaynak bağlantısı.',
       });
 
       setIsSuccess(true);
@@ -310,11 +331,10 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Tutum Kısa Başlığı
+                  Tutum Kısa Başlığı (İsteğe Bağlı)
                 </label>
                 <input
                   type="text"
-                  required
                   placeholder="Örn: Komisyonda Ret Oyu Verdi"
                   value={stanceLabel}
                   onChange={(e) => setStanceLabel(e.target.value)}
@@ -323,59 +343,70 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
               </div>
             </div>
 
-            {/* Summary & Quote */}
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Tutum Açıklaması ve Özeti <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                rows={3}
+            {/* 1. REQUIRED: Source URL */}
+            <div className="p-3.5 bg-amber-50/50 dark:bg-amber-950/20 border-2 border-amber-300 dark:border-amber-700/60 rounded-xl space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                  <Link2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <span>Kaynak URL Bağlantısı</span>
+                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-red-600 text-white">Zorunlu *</span>
+                </label>
+                <span className="text-[11px] text-slate-500">TBMM Tutanak, Haber, X veya Video</span>
+              </div>
+              <input
+                type="url"
                 required
-                placeholder="Milletvekilinin bu konudaki beyanını, Meclis oyunu veya komisyon tavrını tarafsız bir dille özetleyin..."
-                value={overallSummary}
-                onChange={(e) => setOverallSummary(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400"
+                placeholder="https://www.tbmm.gov.tr/... veya haber/video linki"
+                value={sourceUrl}
+                onChange={(e) => setSourceUrl(e.target.value)}
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-600 rounded-lg text-sm text-slate-900 dark:text-white font-mono"
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Önemli / Vurgulu Alıntı (Varsa)
-              </label>
+            {/* 2. REQUIRED: Key Quote */}
+            <div className="p-3.5 bg-amber-50/50 dark:bg-amber-950/20 border-2 border-amber-300 dark:border-amber-700/60 rounded-xl space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                  <Quote className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <span>Vekilin Demeç / Tutanak Alıntı Cümlesi</span>
+                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-red-600 text-white">Zorunlu *</span>
+                </label>
+                <span className="text-[11px] text-slate-500">Tutanak alıntısı</span>
+              </div>
               <input
                 type="text"
+                required
                 placeholder="Örn: 'Bu teklif milletimizin adalet duygusuna aykırıdır.'"
                 value={keyParaphrasedQuote}
                 onChange={(e) => setKeyParaphrasedQuote(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-600 rounded-lg text-sm text-slate-900 dark:text-white font-serif italic"
               />
             </div>
 
-            {/* Verification Source Link */}
-            <div className="p-4 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                <Link2 className="w-4 h-4 text-red-600" />
-                Doğrulama & Kaynak Bilgisi (Zorunlu)
+            {/* Optional Summary & Platform */}
+            <div className="p-3.5 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Ek Açıklamalar (İsteğe Bağlı)</span>
+                <span className="text-[10px] text-slate-500 bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded">Opsiyonel</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    Kaynak Linki (URL) <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="url"
-                    required
-                    placeholder="https://www.tbmm.gov.tr/... veya haber/video linki"
-                    value={sourceUrl}
-                    onChange={(e) => setSourceUrl(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                  />
-                </div>
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                  Tutum Açıklaması ve Özeti (Boş bırakılırsa alıntıdan oluşturulur)
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="Milletvekilinin tutumunun özeti (isteğe bağlı)..."
+                  value={overallSummary}
+                  onChange={(e) => setOverallSummary(e.target.value)}
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 resize-none"
+                />
+              </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    Yayın / Platform
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Yayın / Platform Adı (İsteğe Bağlı)
                   </label>
                   <input
                     type="text"
@@ -385,24 +416,21 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                     className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Adınız / Raportör İsmi (İsteğe Bağlı)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Gönüllü Katılımcı"
+                    value={submitterName}
+                    onChange={(e) => setSubmitterName(e.target.value)}
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                  />
+                </div>
               </div>
             </div>
-
-            {/* Submitter Info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Adınız / Takma Adınız <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Örn: Av. Selin / Gözlemci"
-                  value={submitterName}
-                  onChange={(e) => setSubmitterName(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                />
-              </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
@@ -416,7 +444,6 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
                 />
               </div>
-            </div>
 
             {/* Actions */}
             <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3">

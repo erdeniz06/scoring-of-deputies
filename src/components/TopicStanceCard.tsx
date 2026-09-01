@@ -23,6 +23,7 @@ interface TopicStanceCardProps {
   topic: Topic;
   stance?: MpTopicStance;
   mpId?: string;
+  mpName?: string;
   userImportance: number; // 0-10
   currentScore: number | null | undefined;
   customSources?: SourceItem[];
@@ -30,12 +31,14 @@ interface TopicStanceCardProps {
   onQuickChangeImportance?: (newImportance: number) => void;
   onAddCustomSource?: (mpId: string, topicId: string, source: Omit<SourceItem, 'id' | 'mpId' | 'topicId'>) => void;
   onRemoveCustomSource?: (mpId: string, topicId: string, sourceId: string) => void;
+  onOpenAddStance?: (topicId: string, mpId?: string) => void;
 }
 
 export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   topic,
   stance,
   mpId,
+  mpName,
   userImportance,
   currentScore,
   customSources = [],
@@ -43,6 +46,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   onQuickChangeImportance,
   onAddCustomSource,
   onRemoveCustomSource,
+  onOpenAddStance,
 }) => {
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [isAddingSource, setIsAddingSource] = useState(false);
@@ -133,6 +137,21 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
             <h3 className="font-bold text-base text-slate-900 font-serif">
               {topic.title}
             </h3>
+
+            {/* Quick Add Stance / Speech '+' button right next to topic title */}
+            {onOpenAddStance && (
+              <button
+                type="button"
+                id={`add-speech-btn-${topic.id}`}
+                onClick={() => onOpenAddStance(topic.id, mpId)}
+                className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-2xs transition-all hover:scale-105 cursor-pointer"
+                title={`"${topic.title}" konusunda bu vekil için yeni demeç veya tutanak ekle`}
+              >
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>Demeç / Tutanak Ekle</span>
+              </button>
+            )}
+
             {stance && (
               <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border shadow-2xs ${tagColor}`}>
                 {stance.stanceLabel || stance.stanceTag}
@@ -367,8 +386,20 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
             </div>
           </>
         ) : (
-          <div className="p-4 rounded-xl bg-slate-50 border border-dashed border-slate-200 text-center text-xs text-slate-500">
-            Bu milletvekilinin ilgili konu başlığında henüz arşivlenmiş açık bir tutanak beyanı bulunmuyor. Genel parti çizgisine göre puan verebilirsiniz.
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center space-y-3">
+            <p className="text-xs text-slate-600 leading-relaxed max-w-lg mx-auto">
+              Bu milletvekilinin <strong>"{topic.title}"</strong> başlığında henüz arşivlenmiş açık bir tutanak beyanı bulunmuyor. Genel parti çizgisine göre puan verebilir veya vekilin bilinen bir demecini ekleyebilirsiniz.
+            </p>
+            {onOpenAddStance && (
+              <button
+                type="button"
+                onClick={() => onOpenAddStance(topic.id, mpId)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5]" />
+                <span>+ Bu Vekile Demeç / Tutanak Ekle</span>
+              </button>
+            )}
           </div>
         )}
 

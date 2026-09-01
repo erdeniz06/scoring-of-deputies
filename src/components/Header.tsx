@@ -1,5 +1,6 @@
 import React from 'react';
-import { Landmark, Scale, Users, Trophy, GitCompare, Info, RotateCcw, ShieldCheck, PlusCircle } from 'lucide-react';
+import { Landmark, Scale, Users, Trophy, GitCompare, Info, RotateCcw, ShieldCheck, PlusCircle, Crown, Plus, UserCheck } from 'lucide-react';
+import { AppUserRole } from '../utils/storage';
 
 export type NavTab = 'mps' | 'weights' | 'leaderboard' | 'compare' | 'moderation' | 'about';
 
@@ -9,9 +10,12 @@ interface HeaderProps {
   scoredMpCount: number;
   totalMps: number;
   pendingProposalsCount: number;
+  userRole: AppUserRole;
+  onToggleUserRole: () => void;
   onResetScores: () => void;
   onLoadBenchmark: () => void;
   onOpenContributionModal: () => void;
+  onOpenAddStanceModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -20,27 +24,49 @@ export const Header: React.FC<HeaderProps> = ({
   scoredMpCount,
   totalMps,
   pendingProposalsCount,
+  userRole,
+  onToggleUserRole,
   onResetScores,
   onLoadBenchmark,
   onOpenContributionModal,
+  onOpenAddStanceModal,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-      {/* Top Pre-header Announcement / Legislative Theme Bar */}
-      <div className="bg-slate-900 text-slate-300 text-xs px-4 py-1.5 flex justify-between items-center border-b border-slate-800">
+      {/* Top Announcement & Role Status Bar */}
+      <div className="bg-slate-900 text-slate-300 text-xs px-4 py-1.5 flex flex-wrap justify-between items-center gap-2 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span className="font-medium text-slate-200">TBMM 28. Dönem Yasama Takip & Kişisel Uyum Analizi</span>
         </div>
-        <div className="hidden sm:flex items-center gap-4 text-slate-400">
-          <span>Formül: <span className="text-slate-200 font-mono">Σ(Önem% × Puan) / Σ(Önem% × 10)</span></span>
-          <span className="text-slate-600">|</span>
-          <span>18 Temel Konu Başlığı</span>
+
+        {/* User Role Badge & Switcher */}
+        <div className="flex items-center gap-2">
+          {userRole === 'founder' ? (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold">
+              <Crown className="w-3 h-3 text-amber-400" />
+              <span>Kurucu (Erdeniz Taşlıçukur) • Doğrudan Onay Yetkisi Aktif</span>
+            </div>
+          ) : (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-900/60 border border-amber-500/40 text-amber-300 text-[11px] font-semibold">
+              <UserCheck className="w-3 h-3 text-amber-300" />
+              <span>Katılımcı Modu • Hakem Heyeti Denetimi</span>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={onToggleUserRole}
+            className="text-[10px] text-slate-400 hover:text-white underline px-1 cursor-pointer transition-colors"
+            title="Rolü değiştirerek her iki deneyimi test edebilirsiniz"
+          >
+            ({userRole === 'founder' ? 'Katılımcı Ol' : 'Kurucu Ol'})
+          </button>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between py-3 sm:py-4 min-h-[72px]">
           {/* Logo and Brand */}
           <div 
             id="brand-logo-btn"
@@ -51,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center text-amber-400 shadow-md border border-slate-700/60 group-hover:scale-105 transition-transform">
               <Landmark className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.8]" />
             </div>
-            <div>
+            <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="font-bold text-lg sm:text-xl text-slate-900 tracking-tight font-serif">
                   Milletvekili Puanlama
@@ -162,14 +188,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Quick Action / Data Controls */}
           <div className="flex items-center gap-2">
+            {/* Direct Add Stance '+' Button */}
             <button
-              id="btn-header-contribute"
-              onClick={onOpenContributionModal}
-              title="Yeni tutanak veya vekil öner"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-700 hover:bg-red-800 text-white shadow-xs transition-colors cursor-pointer"
+              id="btn-header-add-stance"
+              onClick={onOpenAddStanceModal}
+              title="Bir milletvekiline yeni tutanak veya demeç ekle"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-xs transition-all hover:scale-105 cursor-pointer"
             >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Öneri Gönder</span>
+              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <span>Demeç / Tutanak Ekle</span>
             </button>
 
             <button
