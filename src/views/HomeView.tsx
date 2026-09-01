@@ -21,10 +21,6 @@ interface HomeViewProps {
   userScores: UserScores;
   mpCalculationResults: Record<string, ScoreCalculationResult>;
   onSelectMp: (mpId: string) => void;
-  onGoToWeights: () => void;
-  comparedMpIds: string[];
-  onToggleCompare: (mpId: string) => void;
-  onOpenCompare: () => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -34,10 +30,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
   userScores,
   mpCalculationResults,
   onSelectMp,
-  onGoToWeights,
-  comparedMpIds,
-  onToggleCompare,
-  onOpenCompare,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedParty, setSelectedParty] = useState<string>('all');
@@ -144,15 +136,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
               <span>Ortalama Uyum: <strong className="font-mono text-emerald-300">%{averageMatchPercent}</strong></span>
             </div>
-
-            <button
-              id="btn-hero-weights"
-              onClick={onGoToWeights}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-all shadow-sm"
-            >
-              <Scale className="w-4 h-4" />
-              <span>Konu Ağırlıklarınızı Ayarlayın</span>
-            </button>
           </div>
         </div>
       </div>
@@ -272,24 +255,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </div>
 
-      {/* Floating Compare Bar if MPs are selected */}
-      {comparedMpIds.length > 0 && (
-        <div className="sticky top-20 z-30 bg-teal-900 text-white p-3.5 rounded-2xl shadow-xl flex items-center justify-between gap-3 border border-teal-700 animate-in fade-in slide-in-from-top-2">
-          <div className="flex items-center gap-2 text-xs sm:text-sm">
-            <span className="w-2 h-2 rounded-full bg-teal-300 animate-pulse"></span>
-            <span><strong>{comparedMpIds.length}</strong> Milletvekili karşılaştırma için seçildi.</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onOpenCompare}
-              className="px-3.5 py-1.5 rounded-xl bg-teal-400 hover:bg-teal-300 text-teal-950 text-xs font-bold transition-colors shadow-xs"
-            >
-              Yan Yana Karşılaştır
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* MP Cards Grid */}
       {filteredMps.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -299,8 +264,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
               mp={mp}
               calculationResult={mpCalculationResults[mp.id]}
               onSelect={onSelectMp}
-              isCompared={comparedMpIds.includes(mp.id)}
-              onToggleCompare={onToggleCompare}
             />
           ))}
         </div>

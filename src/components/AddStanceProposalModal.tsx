@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { MP, StanceTag, Topic } from '../types';
-import { AppUserRole, addDirectlyApprovedFounderProposal, addProposal } from '../utils/storage';
+import React, { useState, useEffect, useMemo } from 'react';
+import { MP, MpTopicStance, StanceTag, Topic } from '../types';
+import { 
+  AppUserRole, 
+  addDirectlyApprovedFounderProposal, 
+  addProposal,
+  isStanceCustomOrEdited,
+  removeApprovedCustomStance
+} from '../utils/storage';
 import { 
   X, 
   Plus, 
@@ -12,7 +18,15 @@ import {
   FileText, 
   Quote, 
   Sparkles,
-  Info
+  Edit3,
+  RotateCcw,
+  Trash2,
+  Search,
+  Users,
+  BookOpen,
+  Check,
+  HelpCircle,
+  ExternalLink
 } from 'lucide-react';
 
 interface AddStanceProposalModalProps {
@@ -24,7 +38,10 @@ interface AddStanceProposalModalProps {
   onToggleUserRole: () => void;
   initialMpId?: string;
   initialTopicId?: string;
+  initialStance?: MpTopicStance;
+  mode?: 'add' | 'edit';
   onProposalSubmitted: (isDirectlyApproved: boolean, mpId: string, topicId: string) => void;
+  onRevertToDefault?: (mpId: string, topicId: string) => void;
 }
 
 export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
@@ -36,8 +53,12 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
   onToggleUserRole,
   initialMpId,
   initialTopicId,
+  initialStance,
+  mode = 'add',
   onProposalSubmitted,
+  onRevertToDefault,
 }) => {
+  const isEditMode = mode === 'edit' || !!initialStance;
   const [selectedMpId, setSelectedMpId] = useState<string>(initialMpId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>(initialTopicId || '');
   const [stanceTag, setStanceTag] = useState<StanceTag>('destekledi');
@@ -50,6 +71,8 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
   const [submitterName, setSubmitterName] = useState<string>(userRole === 'founder' ? 'Erdeniz Taşlıçukur (Kurucu)' : 'Gönüllü Tutanak Denetçisi');
   const [submitterNote, setSubmitterNote] = useState<string>('');
   const [mpSearch, setMpSearch] = useState<string>('');
+  const [topicSearch, setTopicSearch] = useState<string>('');
+  const [partyFilter, setPartyFilter] = useState<string>('all');
 
   useEffect(() => {
     if (isOpen) {
@@ -60,22 +83,90 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
       else if (!selectedTopicId && allTopics.length > 0) setSelectedTopicId(allTopics[0].id);
 
       setSubmitterName(userRole === 'founder' ? 'Erdeniz Taşlıçukur (Kurucu)' : 'Gönüllü Tutanak Denetçisi');
+
+      if (initialStance) {
+        setStanceTag(initialStance.stanceTag || 'destekledi');
+        setStanceLabel(initialStance.stanceLabel || '');
+        setOverallSummary(initialStance.overallSummary || '');
+        setKeyParaphrasedQuote(initialStance.keyParaphrasedQuote || '');
+        if (initialStance.sources && initialStance.sources.length > 0) {
+          setSourceUrl(initialStance.sources[0].url || '');
+          setSourcePlatform(initialStance.sources[0].outletOrPlatform || 'TBMM Tutanakları');
+          setSourceSummary(initialStance.sources[0].summary || '');
+        } else {
+          setSourceUrl('');
+          setSourcePlatform('TBMM Tutanakları');
+          setSourceSummary('');
+        }
+        setSubmitterNote(isEditMode ? 'Demeç ve tutanak içeriği güncellendi.' : '');
+      } else {
+        setStanceTag('destekledi');
+        setStanceLabel('');
+        setOverallSummary('');
+        setKeyParaphrasedQuote('');
+        setSourceUrl('');
+        setSourcePlatform('TBMM Tutanakları');
+        setSourceSummary('');
+        setSubmitterNote('');
+      }
     }
-  }, [isOpen, initialMpId, initialTopicId, userRole, allMps, allTopics]);
+  }, [isOpen, initialMpId, initialTopicId, initialStance, isEditMode, userRole, allMps, allTopics]);
+
+  // Alphabetically sorted full MP list
+  const sortedAllMps = useMemo(() => {
+    return [...allMps].sort((a, b) => a.fullName.localeCompare(b.fullName, 'tr'));
+  }, [allMps]);
+
+  // Filtered MPs based on search and party
+  const filteredMps = useMemo(() => {
+    let result = sortedAllMps;
+    if (partyFilter !== 'all') {
+      result = result.filter(m => m.partyId.toLowerCase() === partyFilter.toLowerCase());
+    }
+    if (mpSearch.trim()) {
+      const q = mpSearch.toLowerCase();
+      result = result.filter(m => 
+        m.fullName.toLowerCase().includes(q) ||
+        m.province.toLowerCase().includes(q) ||
+        m.partyId.toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [sortedAllMps, mpSearch, partyFilter]);
+
+  // Filtered topics
+  const filteredTopics = useMemo(() => {
+    if (!topicSearch.trim()) return allTopics;
+    const q = topicSearch.toLowerCase();
+    return allTopics.filter(t => 
+      t.title.toLowerCase().includes(q) ||
+      (t.shortTitle && t.shortTitle.toLowerCase().includes(q)) ||
+      (t.category && t.category.toLowerCase().includes(q))
+    );
+  }, [allTopics, topicSearch]);
 
   if (!isOpen) return null;
 
   const currentMp = allMps.find((m) => m.id === selectedMpId);
   const currentTopic = allTopics.find((t) => t.id === selectedTopicId);
+  const isCustomEdited = selectedMpId && selectedTopicId ? isStanceCustomOrEdited(selectedMpId, selectedTopicId) : false;
 
-  // Filtered MPs for select dropdown
-  const filteredMps = mpSearch.trim() === ''
-    ? allMps.slice(0, 50)
-    : allMps.filter((m) => 
-        m.fullName.toLowerCase().includes(mpSearch.toLowerCase()) ||
-        m.province.toLowerCase().includes(mpSearch.toLowerCase()) ||
-        m.partyId.toLowerCase().includes(mpSearch.toLowerCase())
-      ).slice(0, 50);
+  // Check if the currently chosen MP has an existing recorded stance on the chosen topic
+  const existingStanceInMp = currentMp?.stances?.[selectedTopicId];
+
+  const handleLoadExistingStance = () => {
+    if (existingStanceInMp) {
+      setStanceTag(existingStanceInMp.stanceTag || 'destekledi');
+      setStanceLabel(existingStanceInMp.stanceLabel || '');
+      setOverallSummary(existingStanceInMp.overallSummary || '');
+      setKeyParaphrasedQuote(existingStanceInMp.keyParaphrasedQuote || '');
+      if (existingStanceInMp.sources && existingStanceInMp.sources.length > 0) {
+        setSourceUrl(existingStanceInMp.sources[0].url || '');
+        setSourcePlatform(existingStanceInMp.sources[0].outletOrPlatform || 'TBMM Tutanakları');
+        setSourceSummary(existingStanceInMp.sources[0].summary || '');
+      }
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +206,7 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
       addDirectlyApprovedFounderProposal({
         type: 'stance_update',
         submitterName: submitterName.trim() || 'Erdeniz Taşlıçukur (Kurucu)',
-        submitterNote: submitterNote.trim() || 'Kurucu tarafından doğrudan sisteme işlendi.',
+        submitterNote: submitterNote.trim() || (isEditMode ? 'Kurucu tarafından güncellendi ve düzeltildi.' : 'Kurucu tarafından doğrudan sisteme işlendi.'),
         mpId: selectedMpId,
         mpName,
         topicId: selectedTopicId,
@@ -135,7 +226,7 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
       addProposal({
         type: 'stance_update',
         submitterName: submitterName.trim() || 'Gönüllü Katılımcı',
-        submitterNote: submitterNote.trim() || 'Kullanıcı tarafından tutanak incelenerek gönderildi.',
+        submitterNote: submitterNote.trim() || (isEditMode ? 'Kullanıcı tarafından düzeltme önerisi sunuldu.' : 'Kullanıcı tarafından tutanak incelenerek gönderildi.'),
         mpId: selectedMpId,
         mpName,
         topicId: selectedTopicId,
@@ -155,6 +246,16 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
     onClose();
   };
 
+  const handleRevert = () => {
+    if (selectedMpId && selectedTopicId) {
+      removeApprovedCustomStance(selectedMpId, selectedTopicId);
+      if (onRevertToDefault) {
+        onRevertToDefault(selectedMpId, selectedTopicId);
+      }
+      onClose();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
       <div 
@@ -164,25 +265,35 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4.5 bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 text-white flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400">
-              <Plus className="w-6 h-6 stroke-[2.2]" />
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+              isEditMode 
+                ? 'bg-indigo-500/20 border border-indigo-400/30 text-indigo-400' 
+                : 'bg-amber-500/20 border border-amber-400/30 text-amber-400'
+            }`}>
+              {isEditMode ? <Edit3 className="w-5 h-5 stroke-[2.2]" /> : <Plus className="w-6 h-6 stroke-[2.2]" />}
             </div>
             <div>
               <h2 className="text-lg font-bold font-serif tracking-tight flex items-center gap-2">
-                <span>Yeni Demeç & Tutanak Ekle</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-sans font-normal">
-                  + Katkı Modülü
+                <span>{isEditMode ? 'Demeç & Tutanağı Düzenle / Düzelt' : 'Yeni Demeç & Tutanak Ekle'}</span>
+                <span className={`text-xs px-2 py-0.5 rounded-full font-sans font-normal border ${
+                  isEditMode
+                    ? 'bg-indigo-400/20 text-indigo-300 border-indigo-400/30'
+                    : 'bg-amber-400/20 text-amber-300 border-amber-400/30'
+                }`}>
+                  {isEditMode ? '✏️ Düzenleme Modu' : '+ Katkı Modülü'}
                 </span>
               </h2>
               <p className="text-xs text-slate-300">
-                Milletvekilinin meclis konuşması, oylama tutanağı veya basın demecini işleyin
+                {isEditMode 
+                  ? 'Milletvekilinin mevcut beyanını, alıntı cümlesini veya kaynak linkini güncelleyin' 
+                  : 'Milletvekilinin meclis konuşması, oylama tutanağı veya basın demecini işleyin'}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -237,65 +348,196 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4.5 max-h-[75vh] overflow-y-auto">
           {/* Target MP & Target Topic selection */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* MP Selection */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                İlgili Milletvekili
-              </label>
-              {initialMpId ? (
-                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
-                  <span>{currentMp?.fullName} ({currentMp?.partyId.toUpperCase()} • {currentMp?.province})</span>
-                  <span className="text-[10px] text-slate-500 bg-white dark:bg-slate-900 px-2 py-0.5 rounded border">Seçili</span>
+          <div className="p-4 bg-slate-50 dark:bg-slate-850/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* MP Selection */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-indigo-500" />
+                    <span>İlgili Milletvekili</span>
+                  </label>
+                  <span className="text-[10px] text-slate-500 bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                    {filteredMps.length} / {allMps.length} Vekil
+                  </span>
                 </div>
-              ) : (
-                <div className="space-y-1.5">
+
+                {/* MP Search Input */}
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                   <input 
                     type="text"
-                    placeholder="İsim, il veya parti ara..."
+                    placeholder="Vekil ara: Burak Dalgın, Ömer Çelik, CHP, DEVA, Adana..."
                     value={mpSearch}
                     onChange={(e) => setMpSearch(e.target.value)}
-                    className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                    className="w-full text-xs pl-8 pr-7 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
                   />
-                  <select
-                    value={selectedMpId}
-                    onChange={(e) => setSelectedMpId(e.target.value)}
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
-                  >
-                    {filteredMps.map((m) => (
-                      <option key={m.id} value={m.id}>
-                        {m.fullName} ({m.partyId.toUpperCase()} - {m.province})
-                      </option>
-                    ))}
-                  </select>
+                  {mpSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setMpSearch('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Topic Selection */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                Konu Başlığı
-              </label>
-              {initialTopicId ? (
-                <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
-                  <span className="truncate pr-2">{currentTopic?.title}</span>
-                  <span className="text-[10px] text-slate-500 bg-white dark:bg-slate-900 px-2 py-0.5 rounded border flex-shrink-0">Seçili</span>
+                {/* Quick Party Filter Chips */}
+                <div className="flex items-center gap-1 overflow-x-auto pb-1 text-[10px] no-scrollbar">
+                  {[
+                    { id: 'all', label: 'Tümü' },
+                    { id: 'akp', label: 'AKP' },
+                    { id: 'chp', label: 'CHP' },
+                    { id: 'mhp', label: 'MHP' },
+                    { id: 'iyi', label: 'İYİ' },
+                    { id: 'deva', label: 'DEVA' },
+                    { id: 'dem', label: 'DEM' },
+                    { id: 'tip', label: 'TİP' },
+                    { id: 'saadet', label: 'SP' },
+                    { id: 'yrp', label: 'YRP' },
+                  ].map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setPartyFilter(p.id)}
+                      className={`px-2 py-0.5 rounded-md font-semibold transition-colors flex-shrink-0 cursor-pointer ${
+                        partyFilter === p.id
+                          ? 'bg-slate-900 text-white dark:bg-amber-400 dark:text-slate-950 shadow-2xs'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-100'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
                 </div>
-              ) : (
+
+                {/* MP Select Dropdown */}
                 <select
-                  value={selectedTopicId}
-                  onChange={(e) => setSelectedTopicId(e.target.value)}
-                  className="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
+                  id="add-stance-mp-select"
+                  value={selectedMpId}
+                  onChange={(e) => {
+                    setSelectedMpId(e.target.value);
+                  }}
+                  className="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-semibold focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
                 >
-                  {allTopics.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.title}
+                  {filteredMps.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.fullName} ({m.partyId.toUpperCase()} • {m.province})
                     </option>
                   ))}
+                  {filteredMps.length === 0 && (
+                    <option disabled value="">
+                      Aramaya uygun vekil bulunamadı
+                    </option>
+                  )}
                 </select>
-              )}
+
+                {/* Active MP Summary Tag */}
+                {currentMp && (
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs flex items-center justify-between shadow-2xs">
+                    <div className="flex items-center gap-2 truncate">
+                      <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold flex items-center justify-center flex-shrink-0">
+                        {currentMp.fullName.charAt(0)}
+                      </div>
+                      <div className="truncate">
+                        <span className="font-bold text-slate-900 dark:text-slate-100">{currentMp.fullName}</span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 ml-1.5">
+                          ({currentMp.partyId.toUpperCase()} • {currentMp.province})
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-md flex-shrink-0">
+                      Aktif Seçim
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Topic Selection */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Konu Başlığı</span>
+                  </label>
+                  <span className="text-[10px] text-slate-500 bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                    {filteredTopics.length} / {allTopics.length} Konu
+                  </span>
+                </div>
+
+                {/* Topic Search Input */}
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                  <input 
+                    type="text"
+                    placeholder="Konu ara: Anayasa, ekonomi, dış politika..."
+                    value={topicSearch}
+                    onChange={(e) => setTopicSearch(e.target.value)}
+                    className="w-full text-xs pl-8 pr-7 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
+                  />
+                  {topicSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setTopicSearch('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Topic Select Dropdown */}
+                <select
+                  id="add-stance-topic-select"
+                  value={selectedTopicId}
+                  onChange={(e) => setSelectedTopicId(e.target.value)}
+                  className="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-semibold focus:ring-2 focus:ring-amber-500 focus:outline-hidden"
+                >
+                  {filteredTopics.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.title} {t.partyScope ? `(${t.partyScope.toUpperCase()} Özel)` : ''}
+                    </option>
+                  ))}
+                  {filteredTopics.length === 0 && (
+                    <option disabled value="">
+                      Aramaya uygun konu bulunamadı
+                    </option>
+                  )}
+                </select>
+
+                {/* Active Topic Summary Tag */}
+                {currentTopic && (
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs flex items-center justify-between shadow-2xs">
+                    <span className="font-semibold text-slate-800 dark:text-slate-200 truncate pr-2">
+                      {currentTopic.title}
+                    </span>
+                    <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-md flex-shrink-0">
+                      {currentTopic.category || 'Gündem'}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
+
+            {/* Helper: If selected MP already has a stance on the selected topic */}
+            {existingStanceInMp && (
+              <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-2 truncate">
+                  <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                  <span className="text-amber-900 dark:text-amber-200 truncate">
+                    <strong>{currentMp?.fullName}</strong> için bu konuda kayıtlı bir meclis beyanı mevcut.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleLoadExistingStance}
+                  className="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-[11px] flex-shrink-0 transition-colors cursor-pointer shadow-2xs"
+                >
+                  Mevcut Demeci Yükle & Düzenle
+                </button>
+              </div>
+            )}
           </div>
 
           {/* 1. REQUIRED FIELD: Verified Source URL */}
@@ -429,18 +671,32 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
-            >
-              Vazgeç
-            </button>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
+              >
+                Vazgeç
+              </button>
+
+              {isCustomEdited && (
+                <button
+                  type="button"
+                  onClick={handleRevert}
+                  className="inline-flex items-center gap-1 px-3 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-colors border border-rose-200"
+                  title="Eklenen veya düzenlenen bu demeci silip varsayılana döndürür"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Özel Demeci Sil</span>
+                </button>
+              )}
+            </div>
 
             <button
               type="submit"
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer ${
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer ${
                 userRole === 'founder'
                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white ring-2 ring-emerald-400/40'
                   : 'bg-amber-600 hover:bg-amber-700 text-white ring-2 ring-amber-400/40'
@@ -449,12 +705,12 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
               {userRole === 'founder' ? (
                 <>
                   <Crown className="w-4 h-4 text-amber-300" />
-                  <span>👑 Doğrudan Canlıya Al & Yayınla</span>
+                  <span>{isEditMode ? '👑 Değişiklikleri Kaydet & Canlıya Al' : '👑 Doğrudan Canlıya Al & Yayınla'}</span>
                 </>
               ) : (
                 <>
                   <ShieldAlert className="w-4 h-4 text-amber-200" />
-                  <span>🛡️ Hakem Denetimine Gönder</span>
+                  <span>{isEditMode ? '🛡️ Düzeltmeyi Hakem İncelemesine Gönder' : '🛡️ Hakem Denetimine Gönder'}</span>
                 </>
               )}
             </button>

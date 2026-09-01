@@ -1,24 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ALL_MPS, DEFAULT_BENCHMARK_USER_SCORES } from './data/mps';
 import { TOPICS } from './data/topics';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from './types';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, MpTopicStance, StanceTag } from './types';
 import { calculateMpScore } from './utils/calculator';
 import { 
   loadUserScores, 
   loadUserWeights, 
   saveUserScores, 
   saveUserWeights, 
-  getDefaultWeights,
-  loadProposals,
-  loadUserCustomTopics,
-  addUserCustomTopic,
-  removeUserCustomTopic,
-  loadUserSelectedTopicIds,
-  saveUserSelectedTopicIds,
-  loadUserRole,
-  saveUserRole,
-  AppUserRole,
-  mergeAllMpsWithCustomStances
+  loadMpWeights, 
+  saveMpWeights, 
+  setMpTopicWeightInStorage, 
+  resetMpWeightsInStorage, 
+  getDefaultWeights, 
+  loadProposals, 
+  loadUserCustomTopics, 
+  addUserCustomTopic, 
+  removeUserCustomTopic, 
+  loadUserSelectedTopicIds, 
+  saveUserSelectedTopicIds, 
+  loadUserRole, 
+  saveUserRole, 
+  AppUserRole, 
+  mergeAllMpsWithCustomStances,
+  updateApprovedCustomStance,
+  removeApprovedCustomStance
 } from './utils/storage';
 import { Header, NavTab } from './components/Header';
 import { HomeView } from './views/HomeView';
@@ -37,6 +43,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('mps');
   const [selectedMpId, setSelectedMpId] = useState<string | null>(null);
   const [userWeights, setUserWeights] = useState<UserWeights>(loadUserWeights);
+  const [mpWeights, setMpWeights] = useState<MpTopicWeights>(loadMpWeights);
   const [userScores, setUserScores] = useState<UserScores>(loadUserScores);
   const [comparedMpIds, setComparedMpIds] = useState<string[]>(['ozgur_ozel', 'mustafa_varank']);
   
@@ -143,15 +150,73 @@ export default function App() {
   const [modalInitialMp, setModalInitialMp] = useState<MP | undefined>(undefined);
   const [modalInitialTopic, setModalInitialTopic] = useState<Topic | undefined>(undefined);
 
-  // Dedicated '+' Add Stance Proposal Modal State
+  // Dedicated '+' Add/Edit Stance Proposal Modal State
   const [isAddStanceModalOpen, setIsAddStanceModalOpen] = useState(false);
   const [addStanceTargetMpId, setAddStanceTargetMpId] = useState<string | undefined>(undefined);
   const [addStanceTargetTopicId, setAddStanceTargetTopicId] = useState<string | undefined>(undefined);
+  const [addStanceInitialStance, setAddStanceInitialStance] = useState<MpTopicStance | undefined>(undefined);
 
   const handleOpenAddStance = (topicId?: string, mpId?: string) => {
     setAddStanceTargetTopicId(topicId);
     setAddStanceTargetMpId(mpId || selectedMpId || undefined);
+    setAddStanceInitialStance(undefined);
     setIsAddStanceModalOpen(true);
+  };
+
+  const handleOpenEditStance = (topicId: string, mpId?: string, stance?: MpTopicStance) => {
+    setAddStanceTargetTopicId(topicId);
+    setAddStanceTargetMpId(mpId || selectedMpId || undefined);
+    setAddStanceInitialStance(stance);
+    setIsAddStanceModalOpen(true);
+  };
+
+  const handleDirectUpdateStance = (
+    mpId: string, 
+    topicId: string, 
+    data: {
+      keyParaphrasedQuote: string;
+      sourceUrl?: string;
+      sourcePlatform?: string;
+      overallSummary?: string;
+      stanceTag?: StanceTag;
+      stanceLabel?: string;
+    }
+  ) => {
+    const sources = data.sourceUrl ? [{
+      id: `src-usr-${Date.now()}`,
+      mpId,
+      topicId,
+      outletOrPlatform: data.sourcePlatform || 'TBMM Tutanakları',
+      url: data.sourceUrl,
+      summary: data.keyParaphrasedQuote || 'Vekilin beyanı',
+      sourceType: 'news' as const,
+      publishDate: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' }),
+    }] : [];
+
+    updateApprovedCustomStance(mpId, topicId, {
+      keyParaphrasedQuote: data.keyParaphrasedQuote,
+      overallSummary: data.overallSummary || `"${data.keyParaphrasedQuote}"`,
+      stanceTag: data.stanceTag || 'destekledi',
+      stanceLabel: data.stanceLabel,
+      sources,
+    });
+
+    setCustomStancesVersion(v => v + 1);
+    setToastMessage({
+      type: 'success',
+      title: '✨ Demeç ve Tutanak Başarıyla Güncellendi!',
+      description: 'Değişiklikler anında profile işlendi ve değerlendirmeler güncellendi.'
+    });
+  };
+
+  const handleRevertStance = (mpId: string, topicId: string) => {
+    removeApprovedCustomStance(mpId, topicId);
+    setCustomStancesVersion(v => v + 1);
+    setToastMessage({
+      type: 'info',
+      title: '🔄 Demeç Sıfırlandı',
+      description: 'Bu konu için vekilin varsayılan meclis tutanak kaydına geri dönüldü.'
+    });
   };
 
   const handleProposalSubmitted = (isDirectlyApproved: boolean, targetMpId: string, targetTopicId: string) => {
@@ -182,6 +247,10 @@ export default function App() {
   }, [userWeights]);
 
   useEffect(() => {
+    saveMpWeights(mpWeights);
+  }, [mpWeights]);
+
+  useEffect(() => {
     saveUserScores(userScores);
   }, [userScores]);
 
@@ -190,14 +259,14 @@ export default function App() {
     return proposals.filter((p) => p.status === 'pending').length;
   }, [proposalsVersion]);
 
-  // Compute live scores for all MPs using activeTopics and liveMps
+  // Compute live scores for all MPs using activeTopics, userWeights, userScores and mpWeights
   const mpCalculationResults = useMemo(() => {
     const results: Record<string, ScoreCalculationResult> = {};
     liveMps.forEach((mp) => {
-      results[mp.id] = calculateMpScore(mp, activeTopics, userWeights, userScores);
+      results[mp.id] = calculateMpScore(mp, activeTopics, userWeights, userScores, mpWeights);
     });
     return results;
-  }, [userWeights, userScores, activeTopics, liveMps]);
+  }, [userWeights, userScores, activeTopics, liveMps, mpWeights]);
 
   // Count scored MPs
   const scoredMpCount = useMemo(() => {
@@ -217,6 +286,28 @@ export default function App() {
         ...prev,
         [mpId]: mpScores,
       };
+    });
+  };
+
+  // Handler: Set MP-specific weight override
+  const handleSetMpTopicWeight = (mpId: string, topicId: string, importance: number) => {
+    setMpTopicWeightInStorage(mpId, topicId, importance);
+    setMpWeights((prev) => ({
+      ...prev,
+      [mpId]: {
+        ...(prev[mpId] || {}),
+        [topicId]: importance,
+      },
+    }));
+  };
+
+  // Handler: Reset MP-specific weights
+  const handleResetMpWeights = (mpId: string) => {
+    resetMpWeightsInStorage(mpId);
+    setMpWeights((prev) => {
+      const next = { ...prev };
+      delete next[mpId];
+      return next;
     });
   };
 
@@ -348,19 +439,20 @@ export default function App() {
             mp={activeMp}
             topics={activeTopics}
             userWeights={userWeights}
+            mpWeights={mpWeights}
             userScores={userScores}
             calculationResult={mpCalculationResults[activeMp.id]}
             onSetTopicScore={handleSetTopicScore}
-            onQuickChangeImportance={handleUpdateWeight}
+            onSetMpTopicWeight={handleSetMpTopicWeight}
             onResetMpScores={handleResetMpScores}
+            onResetMpWeights={handleResetMpWeights}
             onBack={() => setSelectedMpId(null)}
-            onGoToWeights={() => {
-              setSelectedMpId(null);
-              setActiveTab('weights');
-            }}
             onOpenContributionModal={handleOpenContribution}
             onOpenTopicManager={() => setIsTopicManagerOpen(true)}
             onOpenAddStance={handleOpenAddStance}
+            onOpenEditStance={handleOpenEditStance}
+            onDirectUpdateStance={handleDirectUpdateStance}
+            onRevertStance={handleRevertStance}
             onNextMp={activeMpIndex < liveMps.length - 1 ? handleNextMp : undefined}
             onPrevMp={activeMpIndex > 0 ? handlePrevMp : undefined}
           />
@@ -374,10 +466,6 @@ export default function App() {
                 userScores={userScores}
                 mpCalculationResults={mpCalculationResults}
                 onSelectMp={(id) => setSelectedMpId(id)}
-                onGoToWeights={() => setActiveTab('weights')}
-                comparedMpIds={comparedMpIds}
-                onToggleCompare={handleToggleCompare}
-                onOpenCompare={() => setActiveTab('compare')}
               />
             )}
 
@@ -435,16 +523,20 @@ export default function App() {
         )}
       </main>
 
-      {/* Dedicated '+' Stance / Speech Addition Modal */}
+      {/* Dedicated '+' Stance / Speech Addition & Edit Modal */}
       <AddStanceProposalModal
         isOpen={isAddStanceModalOpen}
-        onClose={() => setIsAddStanceModalOpen(false)}
+        onClose={() => {
+          setIsAddStanceModalOpen(false);
+          setAddStanceInitialStance(undefined);
+        }}
         allMps={liveMps}
         allTopics={allCombinedTopics}
         userRole={userRole}
         onToggleUserRole={handleToggleUserRole}
         initialMpId={addStanceTargetMpId}
         initialTopicId={addStanceTargetTopicId}
+        initialStance={addStanceInitialStance}
         onProposalSubmitted={handleProposalSubmitted}
       />
 

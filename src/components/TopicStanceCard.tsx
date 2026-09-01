@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MpTopicStance, SourceItem, Topic } from '../types';
+import React, { useState, useEffect } from 'react';
+import { MpTopicStance, SourceItem, StanceTag, Topic } from '../types';
 import { 
   ExternalLink, 
   Tv, 
@@ -15,16 +15,24 @@ import {
   Plus,
   Trash2,
   CheckCircle2,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Edit3,
+  PencilLine,
+  Check,
+  X,
+  Sparkles
 } from 'lucide-react';
 import { getSemanticScoreDescription } from '../utils/calculator';
+import { isStanceCustomOrEdited } from '../utils/storage';
 
 interface TopicStanceCardProps {
   topic: Topic;
   stance?: MpTopicStance;
   mpId?: string;
   mpName?: string;
+  partyShortName?: string;
   userImportance: number; // 0-10
+  isMpCustomImportance?: boolean;
   currentScore: number | null | undefined;
   customSources?: SourceItem[];
   onSetScore: (score: number | undefined) => void;
@@ -32,6 +40,16 @@ interface TopicStanceCardProps {
   onAddCustomSource?: (mpId: string, topicId: string, source: Omit<SourceItem, 'id' | 'mpId' | 'topicId'>) => void;
   onRemoveCustomSource?: (mpId: string, topicId: string, sourceId: string) => void;
   onOpenAddStance?: (topicId: string, mpId?: string) => void;
+  onOpenEditStance?: (topicId: string, mpId?: string, stance?: MpTopicStance) => void;
+  onDirectUpdateStance?: (mpId: string, topicId: string, data: {
+    keyParaphrasedQuote: string;
+    sourceUrl?: string;
+    sourcePlatform?: string;
+    overallSummary?: string;
+    stanceTag?: StanceTag;
+    stanceLabel?: string;
+  }) => void;
+  onRevertStance?: (mpId: string, topicId: string) => void;
 }
 
 export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
@@ -39,7 +57,9 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   stance,
   mpId,
   mpName,
+  partyShortName,
   userImportance,
+  isMpCustomImportance = false,
   currentScore,
   customSources = [],
   onSetScore,
@@ -47,6 +67,9 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   onAddCustomSource,
   onRemoveCustomSource,
   onOpenAddStance,
+  onOpenEditStance,
+  onDirectUpdateStance,
+  onRevertStance,
 }) => {
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [isAddingSource, setIsAddingSource] = useState(false);
@@ -56,8 +79,30 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   const [newSourceType, setNewSourceType] = useState<'news' | 'tweet' | 'tv'>('news');
   const [newSourceDate, setNewSourceDate] = useState('');
 
+  // Inline Quick Edit state
+  const [isInlineEditing, setIsInlineEditing] = useState(false);
+  const [editQuote, setEditQuote] = useState(stance?.keyParaphrasedQuote || '');
+  const [editSummary, setEditSummary] = useState(stance?.overallSummary || '');
+  const [editUrl, setEditUrl] = useState(stance?.sources?.[0]?.url || '');
+  const [editPlatform, setEditPlatform] = useState(stance?.sources?.[0]?.outletOrPlatform || 'TBMM Tutanakları');
+  const [editStanceTag, setEditStanceTag] = useState<StanceTag>(stance?.stanceTag || 'destekledi');
+  const [editStanceLabel, setEditStanceLabel] = useState(stance?.stanceLabel || '');
+
+  // Keep inline edit states updated when stance prop changes
+  useEffect(() => {
+    if (stance) {
+      setEditQuote(stance.keyParaphrasedQuote || '');
+      setEditSummary(stance.overallSummary || '');
+      setEditUrl(stance.sources?.[0]?.url || '');
+      setEditPlatform(stance.sources?.[0]?.outletOrPlatform || 'TBMM Tutanakları');
+      setEditStanceTag(stance.stanceTag || 'destekledi');
+      setEditStanceLabel(stance.stanceLabel || '');
+    }
+  }, [stance]);
+
   const isScored = currentScore !== undefined && currentScore !== null;
   const importancePercent = userImportance * 10;
+  const isCustomEdited = mpId ? isStanceCustomOrEdited(mpId, topic.id) : false;
 
   // Combine standard stance sources with user added custom sources
   const baseSources = stance?.sources || [];
@@ -121,6 +166,28 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
     setSourcesOpen(true);
   };
 
+  const handleSaveInlineEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mpId || !onDirectUpdateStance) return;
+
+    onDirectUpdateStance(mpId, topic.id, {
+      keyParaphrasedQuote: editQuote.trim(),
+      overallSummary: editSummary.trim() || (editQuote.trim() ? `"${editQuote.trim()}"` : `${mpName || 'Vekil'}, bu konuda görüş beyan etti.`),
+      sourceUrl: editUrl.trim(),
+      sourcePlatform: editPlatform.trim() || 'TBMM Tutanakları',
+      stanceTag: editStanceTag,
+      stanceLabel: editStanceLabel.trim() || (
+        editStanceTag === 'destekledi' ? 'Destekledi / Kabul Oyu Verdi' :
+        editStanceTag === 'karsi_cikti' ? 'Karşı Çıktı / Ret Oyu Verdi' :
+        editStanceTag === 'elestirdi' ? 'Sert Şekilde Eleştirdi' :
+        editStanceTag === 'savundu' ? 'Kürsüde Savundu' :
+        editStanceTag === 'kanun_teklifi' ? 'Kanun Teklifi Verdi' : 'Çekimser / Nötr Kaldı'
+      ),
+    });
+
+    setIsInlineEditing(false);
+  };
+
   return (
     <div 
       id={`topic-stance-${topic.id}`}
@@ -138,23 +205,63 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
               {topic.title}
             </h3>
 
-            {/* Quick Add Stance / Speech '+' button right next to topic title */}
-            {onOpenAddStance && (
-              <button
-                type="button"
-                id={`add-speech-btn-${topic.id}`}
-                onClick={() => onOpenAddStance(topic.id, mpId)}
-                className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-2xs transition-all hover:scale-105 cursor-pointer"
-                title={`"${topic.title}" konusunda bu vekil için yeni demeç veya tutanak ekle`}
-              >
-                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>Demeç / Tutanak Ekle</span>
-              </button>
-            )}
+            {/* Quick Action Buttons (Edit / Add) in Title Area */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {stance ? (
+                <>
+                  <button
+                    type="button"
+                    id={`edit-stance-header-btn-${topic.id}`}
+                    onClick={() => {
+                      if (onOpenEditStance) {
+                        onOpenEditStance(topic.id, mpId, stance);
+                      } else {
+                        setIsInlineEditing(!isInlineEditing);
+                      }
+                    }}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 shadow-2xs transition-all hover:scale-105 cursor-pointer"
+                    title="Bu vekilin demecini veya tutanağını düzeltin / güncelleyin"
+                  >
+                    <Edit3 className="w-3 h-3 text-indigo-600 stroke-[2.2]" />
+                    <span>Düzenle</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => onOpenAddStance ? onOpenAddStance(topic.id, mpId) : null}
+                    className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 shadow-2xs transition-all cursor-pointer"
+                    title="Yeni bir demeç önerisi de ekleyin"
+                  >
+                    <Plus className="w-3 h-3 text-slate-600 stroke-[2.2]" />
+                    <span>Yeni Ekle</span>
+                  </button>
+                </>
+              ) : (
+                onOpenAddStance && (
+                  <button
+                    type="button"
+                    id={`add-speech-btn-${topic.id}`}
+                    onClick={() => onOpenAddStance(topic.id, mpId)}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-2xs transition-all hover:scale-105 cursor-pointer"
+                    title={`"${topic.title}" konusunda bu vekil için yeni demeç veya tutanak ekle`}
+                  >
+                    <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Demeç / Tutanak Ekle</span>
+                  </button>
+                )
+              )}
+            </div>
 
             {stance && (
               <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border shadow-2xs ${tagColor}`}>
                 {stance.stanceLabel || stance.stanceTag}
+              </span>
+            )}
+
+            {isCustomEdited && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-indigo-500" />
+                <span>Özel Düzenlenmiş</span>
               </span>
             )}
           </div>
@@ -176,23 +283,233 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
       <div className="p-4 sm:p-5 space-y-4">
         {stance ? (
           <>
-            {/* Neutral Paraphrased Summary */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-                <span>Tarafsız Tutanak / Beyan Özeti</span>
-                {stance.lastUpdated && <span>Son Güncelleme: {stance.lastUpdated}</span>}
+            {/* STANCE EDIT ACTION BAR (DÜZENLE ÇUBUĞU) */}
+            <div 
+              id={`stance-edit-bar-${topic.id}`}
+              className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-indigo-50/70 border border-indigo-100 rounded-xl text-xs"
+            >
+              <div className="flex items-center gap-2">
+                <span className="flex items-center gap-1.5 font-bold text-indigo-950">
+                  <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Demeç & Tutanak Kaydı</span>
+                </span>
+                {stance.lastUpdated && (
+                  <span className="text-[11px] text-slate-500 font-normal">
+                    • {stance.lastUpdated}
+                  </span>
+                )}
               </div>
-              <p className="text-sm text-slate-800 leading-relaxed font-normal bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/60">
-                {stance.overallSummary}
-              </p>
+
+              {/* Action Toolbar buttons */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  id={`inline-edit-toggle-${topic.id}`}
+                  onClick={() => setIsInlineEditing(!isInlineEditing)}
+                  className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    isInlineEditing 
+                      ? 'bg-indigo-600 text-white shadow-xs' 
+                      : 'bg-white hover:bg-indigo-100 text-indigo-700 border border-indigo-200'
+                  }`}
+                  title="Sayfadan ayrılmadan doğrudan burada hızlıca düzeltin"
+                >
+                  <PencilLine className="w-3 h-3" />
+                  <span>{isInlineEditing ? 'Hızlı Düzenlemeyi Kapat' : 'Hemen Düzenle'}</span>
+                </button>
+
+                {onOpenEditStance && (
+                  <button
+                    type="button"
+                    id={`modal-edit-btn-${topic.id}`}
+                    onClick={() => onOpenEditStance(topic.id, mpId, stance)}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-100 text-indigo-700 border border-indigo-200 transition-all cursor-pointer"
+                    title="Detaylı Düzenleme Penceresini Aç"
+                  >
+                    <Edit3 className="w-3 h-3" />
+                    <span>Tam Pencerede Aç</span>
+                  </button>
+                )}
+
+                {isCustomEdited && onRevertStance && (
+                  <button
+                    type="button"
+                    onClick={() => onRevertStance(mpId!, topic.id)}
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-lg text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 transition-colors cursor-pointer"
+                    title="Bu demeci sıfırlayıp varsayılana döndür"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Sıfırla</span>
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Paraphrased Quote if available */}
-            {stance.keyParaphrasedQuote && (
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-100/70 border border-slate-200 text-xs text-slate-700 italic">
-                <Quote className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 rotate-180" />
-                <span className="font-serif">"{stance.keyParaphrasedQuote}"</span>
-              </div>
+            {/* INLINE EDIT FORM (When user clicks 'Hemen Düzenle') */}
+            {isInlineEditing ? (
+              <form 
+                id={`inline-edit-form-${topic.id}`}
+                onSubmit={handleSaveInlineEdit} 
+                className="p-4 rounded-xl bg-indigo-50/90 border-2 border-indigo-300 space-y-3.5 animate-fadeIn shadow-inner"
+              >
+                <div className="flex items-center justify-between pb-1 border-b border-indigo-200">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-900">
+                    <Edit3 className="w-4 h-4 text-indigo-600" />
+                    <span>Demeç ve Tutanak Bilgilerini Düzelt</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsInlineEditing(false)}
+                    className="text-slate-400 hover:text-slate-600 p-1"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* 1. Stance Tag Selector */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Milletvekilinin Tutumu / Oyu
+                    </label>
+                    <select
+                      value={editStanceTag}
+                      onChange={(e) => setEditStanceTag(e.target.value as StanceTag)}
+                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white font-medium focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option value="destekledi">🟢 Destekledi / Kabul Oyu Verdi</option>
+                      <option value="savundu">🟢 Meclis Kürsüsünde Savundu</option>
+                      <option value="karsi_cikti">🔴 Karşı Çıktı / Ret Oyu Verdi</option>
+                      <option value="elestirdi">🔴 Sert Şekilde Eleştirdi</option>
+                      <option value="kanun_teklifi">🔵 Kanun Teklifi / Önerge Verdi</option>
+                      <option value="serh_koydu">🟡 Şerh Koydu / Çekimser Kaldı</option>
+                      <option value="notr_cekimser">⚪ Nötr / Sessiz Kaldı</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Kısa Etiket (İsteğe Bağlı)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Örn: Meclis Kürsüsünde Net Tavır Aldı"
+                      value={editStanceLabel}
+                      onChange={(e) => setEditStanceLabel(e.target.value)}
+                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white"
+                    />
+                  </div>
+                </div>
+
+                {/* 2. Direct Quote Input */}
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                    Vekilin Ağzından Birebir Alıntı / Demeç Cümlesi *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Örn: 'Bu kanun tasarısının derhal geri çekilmesi şarttır.'"
+                    value={editQuote}
+                    onChange={(e) => setEditQuote(e.target.value)}
+                    className="w-full text-xs px-2.5 py-2 rounded-lg border border-slate-300 bg-white font-serif focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+
+                {/* 3. Source URL & Platform */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Kaynak URL Bağlantısı (TBMM / Haber / Video) *
+                    </label>
+                    <input
+                      type="url"
+                      required
+                      placeholder="https://tbmm.gov.tr/... veya https://..."
+                      value={editUrl}
+                      onChange={(e) => setEditUrl(e.target.value)}
+                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Kuruluş / Tutanak Kaynağı
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Örn: TBMM Genel Kurul Tutanağı, X Yayını"
+                      value={editPlatform}
+                      onChange={(e) => setEditPlatform(e.target.value)}
+                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white"
+                    />
+                  </div>
+                </div>
+
+                {/* 4. Overall Summary */}
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                    Tarafsız Tutanak Özeti (İsteğe Bağlı)
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Vekilin tavrının kısa genel açıklaması..."
+                    value={editSummary}
+                    onChange={(e) => setEditSummary(e.target.value)}
+                    className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white resize-none"
+                  />
+                </div>
+
+                {/* Form Actions */}
+                <div className="flex items-center justify-between pt-2 border-t border-indigo-200">
+                  <button
+                    type="button"
+                    onClick={() => setIsInlineEditing(false)}
+                    className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-200/70 rounded-lg cursor-pointer"
+                  >
+                    İptal
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {onOpenEditStance && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsInlineEditing(false);
+                          onOpenEditStance(topic.id, mpId, stance);
+                        }}
+                        className="px-3 py-1.5 text-xs text-indigo-700 hover:bg-indigo-100 rounded-lg border border-indigo-200 font-semibold cursor-pointer"
+                      >
+                        Tam Pencereye Geç
+                      </button>
+                    )}
+
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-1 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors cursor-pointer"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Kaydet ve Canlıya Al</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <>
+                {/* Neutral Paraphrased Summary */}
+                <div className="space-y-1.5">
+                  <p className="text-sm text-slate-800 leading-relaxed font-normal bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/60">
+                    {stance.overallSummary}
+                  </p>
+                </div>
+
+                {/* Paraphrased Quote if available */}
+                {stance.keyParaphrasedQuote && (
+                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-100/70 border border-slate-200 text-xs text-slate-700 italic">
+                    <Quote className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5 rotate-180" />
+                    <span className="font-serif">"{stance.keyParaphrasedQuote}"</span>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Verified Sources Container */}
@@ -201,7 +518,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                 <button
                   type="button"
                   onClick={() => setSourcesOpen(!sourcesOpen)}
-                  className="flex items-center gap-1.5 font-semibold text-slate-800 hover:text-indigo-600 transition-colors text-left"
+                  className="flex items-center gap-1.5 font-semibold text-slate-800 hover:text-indigo-600 transition-colors text-left cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-indigo-600" />
                   <span>Güvenilir Kaynaklar ({allSources.length})</span>
@@ -236,7 +553,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                     <button
                       type="button"
                       onClick={() => setIsAddingSource(false)}
-                      className="text-slate-400 hover:text-slate-600 text-[11px]"
+                      className="text-slate-400 hover:text-slate-600 text-[11px] cursor-pointer"
                     >
                       Vazgeç
                     </button>
@@ -307,13 +624,13 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                     <button
                       type="button"
                       onClick={() => setIsAddingSource(false)}
-                      className="px-2.5 py-1 rounded-md text-slate-600 hover:bg-slate-200/60 text-xs"
+                      className="px-2.5 py-1 rounded-md text-slate-600 hover:bg-slate-200/60 text-xs cursor-pointer"
                     >
                       İptal
                     </button>
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-semibold shadow-xs transition-colors cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Kaydet ve Listeye Ekle</span>
@@ -357,7 +674,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => onRemoveCustomSource(mpId, topic.id, source.id)}
-                                  className="text-rose-500 hover:text-rose-700 p-0.5 rounded hover:bg-rose-50"
+                                  className="text-rose-500 hover:text-rose-700 p-0.5 rounded hover:bg-rose-50 cursor-pointer"
                                   title="Bu kaynağı sil"
                                 >
                                   <Trash2 className="w-3 h-3" />
@@ -403,45 +720,32 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
           </div>
         )}
 
-        {/* COMBINED CONTROLS AREA: WEIGHT SCHEMA (TOP) & SCORING BUTTONS (BOTTOM) */}
-        <div className="pt-3 border-t border-slate-200/80 space-y-4">
+        {/* COMBINED CONTROLS AREA: PER-MP IMPORTANCE (TOP) & MP STANCE SCORING (BOTTOM) */}
+        <div className="pt-3 border-t border-slate-200/80 space-y-3">
           
-          {/* 1. TOP SCHEMA: Sağa-Sola Çekilebilir Ağırlık / Önem Derecesi Şeması */}
+          {/* 1. TOP: Vekile Özel Konu Ağırlığı & Önem Derecesi Ayarı */}
           {onQuickChangeImportance && (
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/50 border border-amber-200/70 space-y-2.5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-amber-700" />
-                  <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                    Konunun Sizin İçin Önemi (Ağırlık Şeması):
+            <div className="p-3 sm:p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/70 space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                <div className="flex items-center gap-1.5">
+                  <Sliders className="w-3.5 h-3.5 text-amber-700" />
+                  <span className="text-xs font-bold text-slate-900">
+                    {mpName ? `${mpName} İçin Konu Önemi:` : 'Bu Konunun Önemi:'}
                   </span>
+                  {isMpCustomImportance && (
+                    <span className="text-[10px] bg-amber-200/70 text-amber-900 px-1.5 py-0.2 rounded font-semibold border border-amber-300">
+                      Vekile Özel
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-md border shadow-2xs ${importanceBadge.color}`}>
-                    {importanceBadge.text}
-                  </span>
-                </div>
+                <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded-md border ${importanceBadge.color}`}>
+                  {importanceBadge.text}
+                </span>
               </div>
 
-              {/* Slider (Sol-Sağa Çekme Şeması) */}
-              <div className="space-y-1.5 pt-1">
-                <div className="flex items-center gap-3">
-                  <span className="text-[11px] font-semibold text-slate-500 w-12 text-left">%0</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="10"
-                    step="1"
-                    value={userImportance}
-                    onChange={(e) => onQuickChangeImportance(parseInt(e.target.value, 10))}
-                    className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-600 focus:outline-hidden"
-                    title={`Önem derecesini ayarlayın: ${userImportance}/10 (%${importancePercent})`}
-                  />
-                  <span className="text-[11px] font-semibold text-slate-500 w-12 text-right">%100</span>
-                </div>
-
-                {/* Discrete Tick Buttons / Scale points for direct tap */}
-                <div className="grid grid-cols-11 gap-1 text-center pt-0.5">
+              {/* Interactive Importance Radio Selector (0 - 10) */}
+              <div className="space-y-1 pt-1">
+                <div className="grid grid-cols-11 gap-1">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => {
                     const isSelected = userImportance === val;
                     return (
@@ -449,37 +753,41 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                         key={val}
                         type="button"
                         onClick={() => onQuickChangeImportance(val)}
-                        className={`py-0.5 text-[10px] font-mono rounded transition-all ${
+                        className={`h-8 rounded-lg flex flex-col items-center justify-center font-mono text-xs font-bold transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-amber-600 text-white font-bold shadow-xs ring-1 ring-amber-400'
-                            : 'text-slate-500 hover:text-slate-900 hover:bg-amber-100/60'
+                            ? 'bg-amber-600 text-white shadow-xs scale-105 ring-2 ring-amber-400'
+                            : 'bg-white hover:bg-amber-100/70 text-slate-700 border border-amber-200/80 hover:border-amber-300'
                         }`}
-                        title={`%${val * 10} olarak ayarla`}
+                        title={`Öncelik: %${val * 10}`}
                       >
-                        {val === 0 ? '0' : val === 10 ? '10' : val}
+                        <span>{val}</span>
                       </button>
                     );
                   })}
                 </div>
+                <div className="flex justify-between text-[10px] text-slate-500 font-medium px-0.5">
+                  <span>0: Önemsiz / Etkisiz (%0)</span>
+                  <span>5: Standart (%50)</span>
+                  <span>10: En Kritik (%100)</span>
+                </div>
               </div>
 
-              {/* Zero importance special warning */}
               {userImportance === 0 && (
-                <div className="flex items-center gap-1.5 text-[11px] text-amber-800 bg-amber-100/70 p-2 rounded-lg border border-amber-300/60">
+                <div className="flex items-center gap-1.5 text-[11px] text-amber-800 bg-amber-100/70 p-1.5 rounded-lg border border-amber-300/60">
                   <Info className="w-3.5 h-3.5 flex-shrink-0 text-amber-700" />
-                  <span>Bu konunun önemi %0 yapıldı; bu konu genel uyum puanı hesaplamasına dahil edilmeyecektir.</span>
+                  <span>Önem %0: Bu konu genel uyum puanı hesabında dikkate alınmaz.</span>
                 </div>
               )}
             </div>
           )}
 
-          {/* 2. BOTTOM AREA: 0-10 Milletvekili Tutumu Puanlama Butonları */}
-          <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-2.5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2 flex-wrap">
-                <Award className="w-4 h-4 text-indigo-600" />
-                <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Milletvekilinin Bu Tutumuna Puanınız:
+          {/* 2. BOTTOM: Milletvekili Tutumuna 0-10 Puan Verme */}
+          <div className="p-3 sm:p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <Award className="w-3.5 h-3.5 text-indigo-600" />
+                <span className="text-xs font-bold text-slate-900">
+                  {mpName ? `${mpName} Tutumuna Puanınız:` : 'Tutum Puanınız:'}
                 </span>
                 {isScored ? (
                   <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200">
@@ -487,15 +795,15 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                   </span>
                 ) : (
                   <span className="text-xs text-slate-400 font-medium">
-                    (Henüz puan verilmedi)
+                    (Henüz puanlanmadı)
                   </span>
                 )}
               </div>
 
               {/* Unscore Button / Semantic Feedback */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 {scoreInfo && (
-                  <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium border ${scoreInfo.toneColor}`}>
+                  <span className={`text-[11px] px-2 py-0.5 rounded-full font-medium border ${scoreInfo.toneColor}`}>
                     {scoreInfo.label}
                   </span>
                 )}
@@ -503,8 +811,8 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                   <button
                     type="button"
                     onClick={() => onSetScore(undefined)}
-                    className="inline-flex items-center gap-1 text-[11px] text-rose-600 hover:text-rose-800 font-medium px-2 py-0.5 rounded hover:bg-rose-50 border border-rose-200 transition-colors"
-                    title="Puanı kaldır / Seçimi sıfırla"
+                    className="inline-flex items-center gap-1 text-[11px] text-rose-600 hover:text-rose-800 font-medium px-2 py-0.5 rounded hover:bg-rose-50 border border-rose-200 transition-colors cursor-pointer"
+                    title="Puanı kaldır"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Puanı Kaldır</span>
@@ -513,15 +821,15 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
               </div>
             </div>
 
-            {/* 11 Buttons for Discrete 0-10 Scoring (Clicking active score unselects it) */}
-            <div className="grid grid-cols-11 gap-1 sm:gap-1.5">
+            {/* 11 Buttons for Discrete 0-10 Scoring */}
+            <div className="grid grid-cols-11 gap-1">
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((scoreVal) => {
                 const isSelected = isScored && currentScore === scoreVal;
                 let btnClass = 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200';
                 if (isSelected) {
-                  if (scoreVal >= 8) btnClass = 'bg-emerald-600 text-white font-bold border-emerald-700 shadow-sm ring-2 ring-emerald-300';
-                  else if (scoreVal >= 5) btnClass = 'bg-amber-500 text-white font-bold border-amber-600 shadow-sm ring-2 ring-amber-300';
-                  else btnClass = 'bg-rose-600 text-white font-bold border-rose-700 shadow-sm ring-2 ring-rose-300';
+                  if (scoreVal >= 8) btnClass = 'bg-emerald-600 text-white font-bold border-emerald-700 shadow-xs ring-2 ring-emerald-300';
+                  else if (scoreVal >= 5) btnClass = 'bg-amber-500 text-white font-bold border-amber-600 shadow-xs ring-2 ring-amber-300';
+                  else btnClass = 'bg-rose-600 text-white font-bold border-rose-700 shadow-xs ring-2 ring-rose-300';
                 }
 
                 return (
@@ -530,7 +838,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                     type="button"
                     id={`score-btn-${topic.id}-${scoreVal}`}
                     onClick={() => handleScoreClick(scoreVal)}
-                    className={`h-9 sm:h-10 rounded-lg text-xs sm:text-sm flex items-center justify-center font-mono border transition-all ${btnClass}`}
+                    className={`h-8 sm:h-9 rounded-lg text-xs sm:text-sm flex items-center justify-center font-mono border transition-all cursor-pointer ${btnClass}`}
                     title={isSelected ? `${scoreVal} Puanı seçili (Tekrar tıklayarak kaldırabilirsiniz)` : `${scoreVal} Puan Ver`}
                   >
                     {scoreVal}
@@ -540,17 +848,17 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
             </div>
 
             {/* Qualitative semantic helpers below bar */}
-            <div className="flex justify-between text-[10px] text-slate-400 px-1 font-medium">
+            <div className="flex justify-between text-[10px] text-slate-400 px-0.5 font-medium">
               <span>0 = Tamamen Zıt</span>
-              <span className="text-[10px] text-slate-500 italic">Seçili puana tekrar tıklayarak kaldırabilirsiniz</span>
+              <span className="text-[10px] text-slate-500 italic hidden sm:inline">Seçili puana tekrar tıklayarak kaldırabilirsiniz</span>
               <span>10 = Tamamen Uyumlu</span>
             </div>
 
             {/* Live Mathematical Formula Contribution Chip */}
             {isScored && (
-              <div className="mt-2 p-2.5 rounded-xl bg-slate-900 text-slate-200 text-xs font-mono flex flex-wrap items-center justify-between gap-2 shadow-inner">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-amber-400 font-sans font-medium">Formül Katkısı:</span>
+              <div className="mt-1.5 p-2 rounded-lg bg-slate-900 text-slate-200 text-[11px] font-mono flex flex-wrap items-center justify-between gap-1.5 shadow-inner">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-amber-400 font-sans font-medium">Katkı:</span>
                   <span>Pay: {importancePercent} × {currentScore} = <strong className="text-emerald-400 font-bold">+{nominatorContribution}</strong></span>
                 </div>
                 <div>

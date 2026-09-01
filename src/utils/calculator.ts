@@ -1,8 +1,8 @@
-import { MP, ScoreCalculationResult, Topic, TopicCalculationContribution, UserScores, UserWeights } from '../types';
+import { MP, MpTopicWeights, ScoreCalculationResult, Topic, TopicCalculationContribution, UserScores, UserWeights } from '../types';
 
 /**
  * Calculates the personal compatibility percentage for an MP based on:
- * - Topic Importance % (0-10, where 10 = %100, 9 = %90, ..., 0 = %0)
+ * - Topic Importance % (MP-specific weight overrides if set, or general user weight, or default) (0-10, where 10 = %100, 9 = %90, ..., 0 = %0)
  * - User Score for MP's stance on that topic (0-10)
  * 
  * Formula:
@@ -12,17 +12,25 @@ export function calculateMpScore(
   mp: MP,
   topics: Topic[],
   userWeights: UserWeights,
-  userScores: UserScores
+  userScores: UserScores,
+  mpWeights?: MpTopicWeights
 ): ScoreCalculationResult {
   const mpScores = userScores[mp.id] || {};
+  const mpSpecificWeights = mpWeights?.[mp.id] || {};
   let totalNominator = 0;
   let totalDenominator = 0;
   let scoredTopicsCount = 0;
   let activeWeightedTopicsCount = 0;
 
   const topicBreakdowns: TopicCalculationContribution[] = topics.map((topic) => {
-    // Importance 0-10 -> percent (10 = 100%, 8 = 80%, etc.)
-    const importance = userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance;
+    // MP-specific weight takes priority over global user weight or default
+    let importance = topic.defaultImportance;
+    if (mpSpecificWeights[topic.id] !== undefined) {
+      importance = mpSpecificWeights[topic.id];
+    } else if (userWeights[topic.id] !== undefined) {
+      importance = userWeights[topic.id];
+    }
+
     const importancePercent = importance * 10;
     
     if (importance > 0) {

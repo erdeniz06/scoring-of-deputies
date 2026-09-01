@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, SourceItem } from '../types';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, SourceItem } from '../types';
 import { PARTIES } from '../data/parties';
 import { MpAvatar } from '../components/MpAvatar';
 import { TopicStanceCard } from '../components/TopicStanceCard';
@@ -19,23 +19,35 @@ import {
   Search,
   SlidersHorizontal,
   X,
-  Plus
+  Plus,
+  Sliders
 } from 'lucide-react';
 
 interface MpDetailViewProps {
   mp: MP;
   topics: Topic[];
   userWeights: UserWeights;
+  mpWeights?: MpTopicWeights;
   userScores: UserScores;
   calculationResult: ScoreCalculationResult;
   onSetTopicScore: (mpId: string, topicId: string, score: number | undefined) => void;
-  onQuickChangeImportance: (topicId: string, importance: number) => void;
+  onSetMpTopicWeight: (mpId: string, topicId: string, importance: number) => void;
   onResetMpScores: (mpId: string) => void;
+  onResetMpWeights?: (mpId: string) => void;
   onBack: () => void;
-  onGoToWeights: () => void;
   onOpenContributionModal?: (mp?: MP, topic?: Topic) => void;
   onOpenTopicManager?: () => void;
   onOpenAddStance?: (topicId?: string, mpId?: string) => void;
+  onOpenEditStance?: (topicId: string, mpId?: string, stance?: import('../types').MpTopicStance) => void;
+  onDirectUpdateStance?: (mpId: string, topicId: string, data: {
+    keyParaphrasedQuote: string;
+    sourceUrl?: string;
+    sourcePlatform?: string;
+    overallSummary?: string;
+    stanceTag?: import('../types').StanceTag;
+    stanceLabel?: string;
+  }) => void;
+  onRevertStance?: (mpId: string, topicId: string) => void;
   onNextMp?: () => void;
   onPrevMp?: () => void;
 }
@@ -44,16 +56,20 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   mp,
   topics,
   userWeights,
+  mpWeights,
   userScores,
   calculationResult,
   onSetTopicScore,
-  onQuickChangeImportance,
+  onSetMpTopicWeight,
   onResetMpScores,
+  onResetMpWeights,
   onBack,
-  onGoToWeights,
   onOpenContributionModal,
   onOpenTopicManager,
   onOpenAddStance,
+  onOpenEditStance,
+  onDirectUpdateStance,
+  onRevertStance,
   onNextMp,
   onPrevMp,
 }) => {
@@ -73,6 +89,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   };
 
   const mpCustomSources = customSourcesMap[mp.id] || {};
+  const mpSpecificWeights = mpWeights?.[mp.id] || {};
 
   const party = PARTIES[mp.partyId] || {
     id: mp.partyId,
@@ -85,6 +102,9 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   };
 
   const mpScores = userScores[mp.id] || {};
+
+  // Count how many custom weights are set for this specific MP
+  const customWeightsCount = Object.keys(mpSpecificWeights).length;
 
   // Filter topics based on party scope, search query, and score status
   const filteredTopics = useMemo(() => {
@@ -253,24 +273,6 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         {/* Action Controls Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2 flex-wrap">
-            <button
-              onClick={onGoToWeights}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800/60 text-xs font-semibold transition-colors cursor-pointer"
-            >
-              <Scale className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-              <span>Konu Ağırlıklarını Düzenle</span>
-            </button>
-
-            {onOpenTopicManager && (
-              <button
-                onClick={onOpenTopicManager}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-red-400" />
-                <span>Konu Havuzu & Arama ({topics.length})</span>
-              </button>
-            )}
-
             {onOpenAddStance && (
               <button
                 id="add-speech-for-mp-top-btn"
@@ -283,14 +285,35 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
               </button>
             )}
 
+            {onOpenTopicManager && (
+              <button
+                onClick={onOpenTopicManager}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+                <span>Konu Havuzu ({topics.length})</span>
+              </button>
+            )}
+
+            {customWeightsCount > 0 && onResetMpWeights && (
+              <button
+                onClick={() => onResetMpWeights(mp.id)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold transition-colors cursor-pointer"
+                title="Bu vekil için belirlenen özel konu ağırlıklarını sıfırlar"
+              >
+                <Sliders className="w-3.5 h-3.5 text-amber-700" />
+                <span>Özel Ağırlıkları Sıfırla ({customWeightsCount})</span>
+              </button>
+            )}
+
             {onOpenContributionModal && (
               <button
                 id="suggest-stance-for-mp-btn"
                 onClick={() => onOpenContributionModal(mp)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/60 text-xs font-semibold transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-semibold transition-colors cursor-pointer"
               >
-                <PlusCircle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-                <span>Tutum / Tutanak Öner</span>
+                <PlusCircle className="w-3.5 h-3.5 text-slate-500" />
+                <span>Öneri Gönder</span>
               </button>
             )}
           </div>
@@ -397,7 +420,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
           </div>
 
           <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-            Önem derecesini şemadan ayarlayın, tutuma göre <strong>0-10</strong> puan verin veya iptal için tekrar tıklayın.
+            Önem derecesini bu vekil için belirleyin, tutuma göre <strong>0-10</strong> puan verin.
           </span>
         </div>
       </div>
@@ -424,7 +447,11 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         ) : (
           filteredTopics.map((topic) => {
             const stance = mp.stances[topic.id];
-            const userImportance = userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance;
+            const mpSpecificWeight = mpSpecificWeights[topic.id];
+            const userImportance = mpSpecificWeight !== undefined 
+              ? mpSpecificWeight 
+              : (userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance);
+            const isMpCustomImportance = mpSpecificWeight !== undefined;
             const currentScore = mpScores[topic.id];
 
             return (
@@ -434,11 +461,13 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                 stance={stance}
                 mpId={mp.id}
                 mpName={mp.fullName}
+                partyShortName={party.shortName}
                 userImportance={userImportance}
+                isMpCustomImportance={isMpCustomImportance}
                 currentScore={currentScore}
                 customSources={mpCustomSources[topic.id] || []}
                 onSetScore={(score) => onSetTopicScore(mp.id, topic.id, score)}
-                onQuickChangeImportance={(newImp) => onQuickChangeImportance(topic.id, newImp)}
+                onQuickChangeImportance={(newImp) => onSetMpTopicWeight(mp.id, topic.id, newImp)}
                 onAddCustomSource={handleAddCustomSource}
                 onRemoveCustomSource={handleRemoveCustomSource}
                 onOpenAddStance={(topicId) => {
@@ -448,6 +477,9 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                     onOpenContributionModal(mp, topic);
                   }
                 }}
+                onOpenEditStance={onOpenEditStance}
+                onDirectUpdateStance={onDirectUpdateStance}
+                onRevertStance={onRevertStance}
               />
             );
           })

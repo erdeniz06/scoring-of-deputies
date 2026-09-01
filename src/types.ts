@@ -133,6 +133,9 @@ export interface ContributionProposal {
 // User Weights: Topic ID -> Importance (0-10, where 10 = %100, 9 = %90 ... 0 = %0)
 export type UserWeights = Record<string, number>;
 
+// MP-specific Topic Weights: MP ID -> { Topic ID -> Importance (0-10) }
+export type MpTopicWeights = Record<string, Record<string, number>>;
+
 // User Scores: MP ID -> { Topic ID -> Score (0-10) }
 export type UserScores = Record<string, Record<string, number>>;
 

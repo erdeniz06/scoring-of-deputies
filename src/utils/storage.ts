@@ -1,9 +1,10 @@
 import { TOPICS } from '../data/topics';
 import { DEFAULT_BENCHMARK_USER_SCORES } from '../data/mps';
-import { UserScores, UserWeights, ContributionProposal } from '../types';
+import { UserScores, UserWeights, MpTopicWeights, ContributionProposal } from '../types';
 
 const STORAGE_KEYS = {
   WEIGHTS: 'mv_puanlama_weights_v2',
+  MP_WEIGHTS: 'mv_puanlama_mp_weights_v1',
   SCORES: 'mv_puanlama_scores_v2',
   ACTIVE_TAB: 'mv_puanlama_active_tab_v2',
   PROPOSALS: 'mv_puanlama_proposals_v1',
@@ -75,12 +76,47 @@ export function addApprovedCustomStance(
   saveApprovedCustomStances(current);
 }
 
+export function updateApprovedCustomStance(
+  mpId: string, 
+  topicId: string, 
+  updatedData: Partial<import('../types').MpTopicStance>
+): void {
+  const current = loadApprovedCustomStances();
+  if (!current[mpId]) {
+    current[mpId] = {};
+  }
+  const existing: import('../types').MpTopicStance = current[mpId][topicId] || {
+    id: `stance-usr-${Date.now()}`,
+    mpId,
+    topicId,
+    stanceTag: 'destekledi',
+    stanceLabel: 'Destekledi / Kabul Oyu Verdi',
+    overallSummary: '',
+    keyParaphrasedQuote: '',
+    sources: [],
+    lastUpdated: 'Şimdi güncellendi',
+  };
+  current[mpId][topicId] = {
+    ...existing,
+    mpId,
+    topicId,
+    ...updatedData,
+    lastUpdated: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) + ' (Düzenlendi)',
+  };
+  saveApprovedCustomStances(current);
+}
+
 export function removeApprovedCustomStance(mpId: string, topicId: string): void {
   const current = loadApprovedCustomStances();
   if (current[mpId] && current[mpId][topicId]) {
     delete current[mpId][topicId];
     saveApprovedCustomStances(current);
   }
+}
+
+export function isStanceCustomOrEdited(mpId: string, topicId: string): boolean {
+  const current = loadApprovedCustomStances();
+  return !!(current[mpId] && current[mpId][topicId]);
 }
 
 export function mergeMpWithCustomStances(mp: import('../types').MP, approvedStances?: ApprovedCustomStances): import('../types').MP {
@@ -269,6 +305,44 @@ export function saveUserWeights(weights: UserWeights): void {
     localStorage.setItem(STORAGE_KEYS.WEIGHTS, JSON.stringify(weights));
   } catch (e) {
     console.error('Failed to save user weights:', e);
+  }
+}
+
+// MP-Specific Topic Weights (mpId -> { topicId -> weight })
+export function loadMpWeights(): MpTopicWeights {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.MP_WEIGHTS);
+    if (raw) {
+      return JSON.parse(raw);
+    }
+  } catch (e) {
+    console.error('Failed to load MP weights:', e);
+  }
+  return {};
+}
+
+export function saveMpWeights(weights: MpTopicWeights): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.MP_WEIGHTS, JSON.stringify(weights));
+  } catch (e) {
+    console.error('Failed to save MP weights:', e);
+  }
+}
+
+export function setMpTopicWeightInStorage(mpId: string, topicId: string, weight: number): void {
+  const current = loadMpWeights();
+  if (!current[mpId]) {
+    current[mpId] = {};
+  }
+  current[mpId][topicId] = weight;
+  saveMpWeights(current);
+}
+
+export function resetMpWeightsInStorage(mpId: string): void {
+  const current = loadMpWeights();
+  if (current[mpId]) {
+    delete current[mpId];
+    saveMpWeights(current);
   }
 }
 
