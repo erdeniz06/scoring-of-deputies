@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
-import { PARTIES } from '../data/parties';
+import { PARTIES, UNIQUE_PARTIES } from '../data/parties';
 import { MpAvatar } from '../components/MpAvatar';
 import { Trophy, Award, Sparkles, ChevronRight, Share2, Download, Check, MapPin, Users } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -29,7 +29,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
 
   // Sorted MPs by compatibility
   const rankedMps = [...mps]
-    .filter(mp => selectedParty === 'all' || mp.partyId === selectedParty)
+    .filter(mp => selectedParty === 'all' || mp.partyId === selectedParty || (PARTIES[mp.partyId]?.id === selectedParty))
     .sort((a, b) => {
       const resA = mpCalculationResults[a.id];
       const resB = mpCalculationResults[b.id];
@@ -94,7 +94,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <MpAvatar fullName={topMatch.fullName} partyId={topMatch.partyId} size="lg" className="border-2 border-amber-400 bg-white" />
+                <MpAvatar fullName={topMatch.fullName} partyId={topMatch.partyId} photoUrl={topMatch.photoUrl} size="lg" className="border-2 border-amber-400 bg-white" />
                 <div className="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md border border-white">
                   👑
                 </div>
@@ -144,8 +144,8 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
         >
           Tüm Partiler ({mps.length})
         </button>
-        {Object.values(PARTIES).map((party) => {
-          const count = mps.filter(m => m.partyId === party.id).length;
+        {UNIQUE_PARTIES.map((party) => {
+          const count = mps.filter(m => m.partyId === party.id || PARTIES[m.partyId]?.id === party.id).length;
           if (count === 0) return null;
           return (
             <button
@@ -197,7 +197,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                   </span>
 
                   {/* Avatar */}
-                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="md" />
+                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="md" />
 
                   {/* Name and Party */}
                   <div className="min-w-0">

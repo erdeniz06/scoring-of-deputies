@@ -32,6 +32,9 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
   const [customMpProvince, setCustomMpProvince] = useState('');
   const [customTopicTitle, setCustomTopicTitle] = useState('');
   const [customTopicDesc, setCustomTopicDesc] = useState('');
+  const [customTopicCat, setCustomTopicCat] = useState<'siyaset' | 'hukuk' | 'sosyal' | 'kultur_ifade' | 'egitim_inanc'>('siyaset');
+  const [customTopicContext, setCustomTopicContext] = useState('');
+  const [customTopicImportance, setCustomTopicImportance] = useState(8);
 
   // Stance Details
   const [stanceTag, setStanceTag] = useState('karsi_cikti');
@@ -99,9 +102,9 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
       addProposal({
         type,
         submitterName: finalSubmitter,
-        submitterNote: submitterNote.trim() || 'Kullanıcı tutanak katkısı.',
+        submitterNote: submitterNote.trim() || 'Kullanıcı kriter / tutanak katkısı.',
         mpId: type === 'new_mp' ? undefined : (currentMp?.id || selectedMpId),
-        mpName: type === 'new_mp' ? customMpName : currentMp?.fullName,
+        mpName: type === 'new_mp' ? customMpName : (type === 'new_topic' ? undefined : currentMp?.fullName),
         topicId: type === 'new_topic' ? undefined : (currentTopic?.id || selectedTopicId),
         topicTitle: type === 'new_topic' ? customTopicTitle : currentTopic?.title,
         stanceTag,
@@ -111,6 +114,15 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
         sourceUrl: sourceUrl.trim(),
         sourcePlatform: extractedPlatform,
         sourceSummary: sourceSummary.trim() || 'Doğrulanabilir kaynak bağlantısı.',
+        newTopicData: type === 'new_topic' ? {
+          title: customTopicTitle.trim(),
+          description: customTopicDesc.trim() || 'Kullanıcı tarafından önerilen meclis kriteri.',
+          category: customTopicCat,
+          defaultImportance: customTopicImportance,
+          partyScope: 'all',
+          partyScopeLabel: 'Genel (Tüm Milletvekilleri)',
+          contextNote: submitterNote.trim() || 'TBMM komisyon ve genel kurul tutanakları.',
+        } : undefined,
       });
 
       setIsSuccess(true);
@@ -213,49 +225,89 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                 >
                   Yeni Milletvekili Öner
                 </button>
+                <button
+                  type="button"
+                  id="type-btn-new-topic"
+                  onClick={() => setType('new_topic')}
+                  className={`px-3 py-2 text-xs font-semibold rounded-lg border text-center transition-all ${
+                    type === 'new_topic'
+                      ? 'bg-red-50 border-red-600 text-red-700 dark:bg-red-950/40 dark:border-red-500 dark:text-red-300'
+                      : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                  }`}
+                >
+                  Yeni Kriter / Konu Öner
+                </button>
               </div>
             </div>
 
-            {/* Target MP & Topic Selection */}
-            {type !== 'new_mp' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                    Milletvekili
-                  </label>
-                  <select
-                    id="select-mp-input"
-                    value={selectedMpId}
-                    onChange={(e) => setSelectedMpId(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                  >
-                    {allMps.map((mp) => (
-                      <option key={mp.id} value={mp.id}>
-                        {mp.fullName} ({mp.partyId.toUpperCase()} - {mp.province})
-                      </option>
-                    ))}
-                  </select>
+            {/* Target MP & Topic Selection / New Topic Form */}
+            {type === 'new_topic' ? (
+              <div className="space-y-3 p-4 bg-amber-50/60 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-800/60">
+                <div className="text-xs font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5">
+                  <BookOpen className="w-4 h-4 text-amber-600" />
+                  <span>Önerilen Yeni Kriter Bilgileri</span>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                    İlgili Konu / Gündem Maddesi
+                    Kriter / Yasa Teklifi Başlığı *
                   </label>
-                  <select
-                    id="select-topic-input"
-                    value={selectedTopicId}
-                    onChange={(e) => setSelectedTopicId(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                  >
-                    {allTopics.map((top) => (
-                      <option key={top.id} value={top.id}>
-                        {top.title} {top.partyScope ? `(${top.partyScopeLabel || top.partyScope.toUpperCase()})` : ''}
-                      </option>
-                    ))}
-                  </select>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Örn: Sokak Hayvanları Yasası (Ötanazi Tartışması)"
+                    value={customTopicTitle}
+                    onChange={(e) => setCustomTopicTitle(e.target.value)}
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                      Kategori
+                    </label>
+                    <select
+                      value={customTopicCat}
+                      onChange={(e) => setCustomTopicCat(e.target.value as any)}
+                      className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
+                    >
+                      <option value="siyaset">Siyaset & Seçimler</option>
+                      <option value="hukuk">Hukuk & Adalet</option>
+                      <option value="sosyal">Toplum & Sosyal Politikalar</option>
+                      <option value="kultur_ifade">Kültür & İfade Özgürlüğü</option>
+                      <option value="egitim_inanc">Eğitim & Laiklik</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                      Önem Ağırlığı (1 - 10)
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={10}
+                      value={customTopicImportance}
+                      onChange={(e) => setCustomTopicImportance(Number(e.target.value))}
+                      className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Kriter Açıklaması & Meclis Bağlamı
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Bu kriterde vekillerin hangi oylamaları veya kanun teklifleri değerlendirilmeli?"
+                    value={customTopicDesc}
+                    onChange={(e) => setCustomTopicDesc(e.target.value)}
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs"
+                  />
                 </div>
               </div>
-            ) : (
+            ) : type === 'new_mp' ? (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
                 <div className="sm:col-span-1">
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Vekil Adı Soyadı</label>
@@ -293,6 +345,44 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                     onChange={(e) => setCustomMpProvince(e.target.value)}
                     className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
                   />
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Milletvekili
+                  </label>
+                  <select
+                    id="select-mp-input"
+                    value={selectedMpId}
+                    onChange={(e) => setSelectedMpId(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                  >
+                    {allMps.map((mp) => (
+                      <option key={mp.id} value={mp.id}>
+                        {mp.fullName} ({mp.partyId.toUpperCase()} - {mp.province})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    İlgili Konu / Gündem Maddesi
+                  </label>
+                  <select
+                    id="select-topic-input"
+                    value={selectedTopicId}
+                    onChange={(e) => setSelectedTopicId(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                  >
+                    {allTopics.map((top) => (
+                      <option key={top.id} value={top.id}>
+                        {top.title} {top.partyScope ? `(${top.partyScopeLabel || top.partyScope.toUpperCase()})` : ''}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             )}

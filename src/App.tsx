@@ -14,6 +14,7 @@ import {
   resetMpWeightsInStorage, 
   getDefaultWeights, 
   loadProposals, 
+  addProposal,
   loadUserCustomTopics, 
   addUserCustomTopic, 
   removeUserCustomTopic, 
@@ -24,11 +25,18 @@ import {
   AppUserRole, 
   mergeAllMpsWithCustomStances,
   updateApprovedCustomStance,
-  removeApprovedCustomStance
+  removeApprovedCustomStance,
+  loadTopicOverrides,
+  saveTopicOverrides,
+  updateTopicDetails,
+  resetTopicDetails,
+  mergeTopicsWithOverrides,
+  TopicOverrides
 } from './utils/storage';
 import { Header, NavTab } from './components/Header';
 import { HomeView } from './views/HomeView';
 import { WeightsView } from './views/WeightsView';
+import { CriteriaView } from './views/CriteriaView';
 import { MpDetailView } from './views/MpDetailView';
 import { LeaderboardView } from './views/LeaderboardView';
 import { CompareView } from './views/CompareView';
@@ -78,12 +86,13 @@ export default function App() {
     }
   }, [toastMessage]);
 
-  // Custom Topics & Selection State
+  // Custom Topics & Selection State with Topic Overrides (Renaming / Editing)
   const [customTopics, setCustomTopics] = useState<Topic[]>(() => loadUserCustomTopics());
+  const [topicOverrides, setTopicOverrides] = useState<TopicOverrides>(() => loadTopicOverrides());
   
   const allCombinedTopics = useMemo(() => {
-    return [...TOPICS, ...customTopics];
-  }, [customTopics]);
+    return mergeTopicsWithOverrides(TOPICS, customTopics, topicOverrides);
+  }, [customTopics, topicOverrides]);
 
   const [selectedTopicIds, setSelectedTopicIds] = useState<string[]>(() => {
     const saved = loadUserSelectedTopicIds();
@@ -136,12 +145,102 @@ export default function App() {
       ...prev,
       [newTopic.id]: newTopic.defaultImportance,
     }));
+    setToastMessage({
+      type: 'success',
+      title: 'Yeni Kriter Eklendi',
+      description: `"${newTopic.title}" kriteri başarıyla listeye dahil edildi.`,
+    });
+  };
+
+  const handleProposeNewTopic = (topicData: Omit<Topic, 'id'>, submitterName?: string, submitterNote?: string) => {
+    addProposal({
+      type: 'new_topic',
+      submitterName: submitterName || 'Gönüllü Katılımcı',
+      submitterNote: submitterNote || 'Yeni kriter / yasama konusu önerisi.',
+      newTopicData: {
+        title: topicData.title,
+        description: topicData.description || 'Kullanıcı tarafından önerilen meclis kriteri.',
+        category: topicData.category,
+        defaultImportance: topicData.defaultImportance,
+        partyScope: topicData.partyScope || 'all',
+        partyScopeLabel: topicData.partyScopeLabel || 'Genel (Tüm Milletvekilleri)',
+        contextNote: topicData.contextNote || 'TBMM tutanakları ve yasama faaliyeti.',
+      }
+    });
+    setProposalsVersion(v => v + 1);
+    setToastMessage({
+      type: 'info',
+      title: 'Kriter Önerisi Denetime İletildi',
+      description: `"${topicData.title}" öneriniz kurucu ve hakem heyeti onayına gönderildi. Onaylandıktan sonra canlıya alınacaktır.`,
+    });
+  };
+
+  const handleProposeUpdateTopic = (topicId: string, updatedData: Partial<Topic>, submitterName?: string, submitterNote?: string) => {
+    const existing = allCombinedTopics.find(t => t.id === topicId);
+    addProposal({
+      type: 'topic_rename',
+      submitterName: submitterName || 'Gönüllü Katılımcı',
+      submitterNote: submitterNote || 'Kriter yeniden adlandırma / düzenleme önerisi.',
+      topicEditData: {
+        topicId,
+        oldTitle: existing?.title || topicId,
+        newTitle: updatedData.title || existing?.title || topicId,
+        category: updatedData.category || existing?.category,
+        description: updatedData.description || existing?.description,
+        defaultImportance: updatedData.defaultImportance || existing?.defaultImportance,
+        partyScope: updatedData.partyScope || existing?.partyScope,
+        partyScopeLabel: updatedData.partyScopeLabel || existing?.partyScopeLabel,
+        contextNote: updatedData.contextNote || existing?.contextNote,
+      }
+    });
+    setProposalsVersion(v => v + 1);
+    setToastMessage({
+      type: 'info',
+      title: 'Düzenleme Önerisi İletildi',
+      description: `"${updatedData.title || existing?.title}" için güncelleme öneriniz denetim heyetine iletildi. Onaylandığında güncellenecektir.`,
+    });
   };
 
   const handleRemoveCustomTopic = (topicId: string) => {
     removeUserCustomTopic(topicId);
     setCustomTopics(loadUserCustomTopics());
     setSelectedTopicIds(prev => prev.filter(id => id !== topicId));
+    setToastMessage({
+      type: 'info',
+      title: 'Kriter Kaldırıldı',
+      description: 'Özel kriter başarıyla silindi.',
+    });
+  };
+
+  const handleUpdateTopic = (topicId: string, updatedData: Partial<Topic>) => {
+    updateTopicDetails(topicId, updatedData);
+    setTopicOverrides(loadTopicOverrides());
+    setCustomTopics(loadUserCustomTopics());
+    setToastMessage({
+      type: 'success',
+      title: 'Kriter Başlığı Güncellendi',
+      description: `"${updatedData.title || topicId}" kriteri başarıyla güncellendi.`,
+    });
+  };
+
+  const handleResetTopic = (topicId: string) => {
+    resetTopicDetails(topicId);
+    setTopicOverrides(loadTopicOverrides());
+    setToastMessage({
+      type: 'info',
+      title: 'Kriter Orijinaline Döndürüldü',
+      description: 'Kriter başlığı varsayılan haline getirildi.',
+    });
+  };
+
+  const handleResetAllTopics = () => {
+    saveTopicOverrides({});
+    setTopicOverrides({});
+    setToastMessage({
+      type: 'info',
+      title: 'Tüm Kriter İsimleri Sıfırlandı',
+      description: 'Tüm konu ve kriter başlıkları varsayılan orijinal değerlerine döndürüldü.',
+    });
   };
 
   // Proposals & Moderation State
@@ -423,11 +522,11 @@ export default function App() {
         }}
         scoredMpCount={scoredMpCount}
         totalMps={liveMps.length}
+        totalCriteriaCount={allCombinedTopics.length}
         pendingProposalsCount={pendingProposalsCount}
         userRole={userRole}
         onToggleUserRole={handleToggleUserRole}
         onResetScores={handleResetAllScores}
-        onLoadBenchmark={handleLoadBenchmark}
         onOpenContributionModal={() => handleOpenContribution()}
         onOpenAddStanceModal={() => handleOpenAddStance()}
       />
@@ -466,6 +565,27 @@ export default function App() {
                 userScores={userScores}
                 mpCalculationResults={mpCalculationResults}
                 onSelectMp={(id) => setSelectedMpId(id)}
+              />
+            )}
+
+            {activeTab === 'criteria' && (
+              <CriteriaView
+                topics={allCombinedTopics}
+                allMps={liveMps}
+                selectedTopicIds={selectedTopicIds}
+                topicOverrides={topicOverrides}
+                userRole={userRole}
+                onToggleTopic={handleToggleTopic}
+                onSelectAll={handleSelectAllTopics}
+                onDeselectAll={handleDeselectAllTopics}
+                onUpdateTopic={handleUpdateTopic}
+                onResetTopic={handleResetTopic}
+                onResetAllTopics={handleResetAllTopics}
+                onAddNewTopic={handleAddNewTopic}
+                onProposeNewTopic={handleProposeNewTopic}
+                onProposeUpdateTopic={handleProposeUpdateTopic}
+                onRemoveCustomTopic={handleRemoveCustomTopic}
+                onOpenAddStance={handleOpenAddStance}
               />
             )}
 

@@ -102,7 +102,7 @@ export const MpCard: React.FC<MpCardProps> = ({
           onClick={() => onSelect(mp.id)}
           className="flex items-center gap-4 mb-4 cursor-pointer group/name"
         >
-          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="lg" />
+          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="lg" />
           <div className="min-w-0 flex-1">
             <h3 className="font-bold text-base sm:text-lg text-slate-900 group-hover/name:text-red-700 truncate font-serif transition-colors">
               {mp.fullName}

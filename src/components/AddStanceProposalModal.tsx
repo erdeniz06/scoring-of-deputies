@@ -388,13 +388,13 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
                   {[
                     { id: 'all', label: 'Tümü' },
                     { id: 'akp', label: 'AKP' },
+                    { id: 'yeni_parti', label: 'YENİ PARTİ' },
                     { id: 'chp', label: 'CHP' },
+                    { id: 'yeni_yol', label: 'YENİ YOL' },
                     { id: 'mhp', label: 'MHP' },
-                    { id: 'iyi', label: 'İYİ' },
-                    { id: 'deva', label: 'DEVA' },
                     { id: 'dem', label: 'DEM' },
+                    { id: 'iyi', label: 'İYİ' },
                     { id: 'tip', label: 'TİP' },
-                    { id: 'saadet', label: 'SP' },
                     { id: 'yrp', label: 'YRP' },
                   ].map((p) => (
                     <button

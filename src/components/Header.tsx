@@ -1,19 +1,19 @@
 import React from 'react';
-import { Landmark, Users, Trophy, Info, RotateCcw, ShieldCheck, Crown, Plus, UserCheck } from 'lucide-react';
+import { Landmark, Users, Trophy, Info, ShieldCheck, Crown, Plus, UserCheck, SlidersHorizontal } from 'lucide-react';
 import { AppUserRole } from '../utils/storage';
 
-export type NavTab = 'mps' | 'leaderboard' | 'moderation' | 'about';
+export type NavTab = 'mps' | 'criteria' | 'leaderboard' | 'moderation' | 'about';
 
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   scoredMpCount: number;
   totalMps: number;
+  totalCriteriaCount?: number;
   pendingProposalsCount: number;
   userRole: AppUserRole;
   onToggleUserRole: () => void;
   onResetScores: () => void;
-  onLoadBenchmark: () => void;
   onOpenContributionModal: () => void;
   onOpenAddStanceModal: () => void;
 }
@@ -23,11 +23,11 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
   scoredMpCount,
   totalMps,
+  totalCriteriaCount = 10,
   pendingProposalsCount,
   userRole,
   onToggleUserRole,
   onResetScores,
-  onLoadBenchmark,
   onOpenContributionModal,
   onOpenAddStanceModal,
 }) => {
@@ -45,12 +45,12 @@ export const Header: React.FC<HeaderProps> = ({
           {userRole === 'founder' ? (
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold">
               <Crown className="w-3 h-3 text-amber-400" />
-              <span>Kurucu (Erdeniz Taşlıçukur) • Doğrudan Onay Yetkisi Aktif</span>
+              <span>Kurucu (Erdeniz Taşlıçukur) • Doğrudan Onay & Kriter Düzenleme Yetkisi</span>
             </div>
           ) : (
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-900/60 border border-amber-500/40 text-amber-300 text-[11px] font-semibold">
               <UserCheck className="w-3 h-3 text-amber-300" />
-              <span>Katılımcı Modu • Hakem Heyeti Denetimi</span>
+              <span>Katılımcı Modu • Kriter Özelleştirme & Denetim</span>
             </div>
           )}
 
@@ -92,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Navigation Items (Cleaned up as requested) */}
+          {/* Navigation Items */}
           <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/70">
             <button
               id="nav-mps-btn"
@@ -107,6 +107,23 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Milletvekilleri</span>
               <span className="text-2xs bg-slate-200 text-slate-700 px-1.5 py-0.2 rounded-full font-mono">
                 {totalMps}
+              </span>
+            </button>
+
+            {/* Criteria / Topics Tab */}
+            <button
+              id="nav-criteria-btn"
+              onClick={() => setActiveTab('criteria')}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                activeTab === 'criteria'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5 text-amber-500" />
+              <span>Kriterler</span>
+              <span className="text-2xs bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded-full font-mono font-bold">
+                {totalCriteriaCount}
               </span>
             </button>
 
@@ -175,20 +192,10 @@ export const Header: React.FC<HeaderProps> = ({
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Demeç / Tutanak Ekle</span>
             </button>
-
-            <button
-              id="btn-header-benchmark"
-              onClick={onLoadBenchmark}
-              title="Örnek analiz puanlarını yeniden yükle"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
-              <span className="hidden sm:inline">Örnek Veri</span>
-            </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Tabs (Cleaned & Restricted) */}
+        {/* Mobile Navigation Tabs */}
         <div className="flex md:hidden overflow-x-auto py-2 gap-1 border-t border-slate-100 no-scrollbar">
           <button
             onClick={() => setActiveTab('mps')}
@@ -201,6 +208,19 @@ export const Header: React.FC<HeaderProps> = ({
             <Users className="w-3.5 h-3.5" />
             Milletvekilleri
           </button>
+
+          <button
+            onClick={() => setActiveTab('criteria')}
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'criteria'
+                ? 'bg-slate-900 text-white'
+                : 'bg-slate-100 text-slate-700'
+            }`}
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5 text-amber-500" />
+            Kriterler ({totalCriteriaCount})
+          </button>
+
           <button
             onClick={() => setActiveTab('leaderboard')}
             className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 cursor-pointer ${

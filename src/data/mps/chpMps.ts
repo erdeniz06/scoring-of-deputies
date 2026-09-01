@@ -120,7 +120,7 @@ export const CHP_MPS: MP[] = [
     partyId: 'chp',
     electedPartyId: 'chp',
     province: 'Mersin',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ali_Mahir_Ba%C5%9Far%C4%B1r_2023.jpg/600px-Ali_Mahir_Ba%C5%9Far%C4%B1r_2023.jpg',
+    photoUrl: '/mps/ali_mahir_basarir.jpg',
     term: '28. Dönem (Mersin)',
     title: 'TBMM CHP Grup Başkanvekili & Mersin Milletvekili',
     bio: 'Hukukçu, avukat. 27 ve 28. Dönem Mersin Milletvekili. TBMM CHP Grup Başkanvekili.',

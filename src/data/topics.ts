@@ -28,7 +28,7 @@ export const TOPIC_CATEGORIES: Record<TopicCategory, { label: string; icon: stri
   },
 };
 
-export const OPPOSITION_PARTIES = ['chp', 'iyi', 'dem', 'deva', 'gelecek', 'saadet', 'tip', 'emep', 'dp', 'zafer', 'yrp'];
+export const OPPOSITION_PARTIES = ['chp', 'yeni_parti', 'yeni_yol', 'iyi', 'dem', 'deva', 'gelecek', 'saadet', 'tip', 'emep', 'dp', 'zafer', 'yrp'];
 
 export function isTopicApplicableToMp(topic: Topic, mp: { partyId: string; electedPartyId?: string }): boolean {
   if (!topic.partyScope || topic.partyScope === 'all') return true;

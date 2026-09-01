@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PARTIES } from '../data/parties';
 
 interface MpAvatarProps {
   fullName: string;
   partyId: string;
+  photoUrl?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }
@@ -11,9 +12,11 @@ interface MpAvatarProps {
 export const MpAvatar: React.FC<MpAvatarProps> = ({
   fullName,
   partyId,
+  photoUrl,
   size = 'md',
   className = '',
 }) => {
+  const [imageFailed, setImageFailed] = useState(false);
   const party = PARTIES[partyId];
   const initials = fullName
     .split(' ')
@@ -30,9 +33,11 @@ export const MpAvatar: React.FC<MpAvatarProps> = ({
     xl: 'w-20 h-20 sm:w-24 sm:h-24 text-xl sm:text-2xl rounded-3xl',
   };
 
+  const hasPhoto = !!photoUrl && photoUrl.trim().length > 0 && !imageFailed;
+
   return (
     <div
-      className={`relative shrink-0 flex items-center justify-center font-bold font-serif shadow-xs border select-none transition-transform group-hover:scale-105 duration-200 ${sizeClasses[size]} ${className}`}
+      className={`relative shrink-0 flex items-center justify-center font-bold font-serif shadow-xs border select-none transition-transform group-hover:scale-105 duration-200 overflow-hidden ${sizeClasses[size]} ${className}`}
       style={{
         backgroundColor: party ? party.bgColor : '#f1f5f9',
         borderColor: party ? party.borderColor : '#cbd5e1',
@@ -40,11 +45,21 @@ export const MpAvatar: React.FC<MpAvatarProps> = ({
       }}
       title={`${fullName} (${party?.shortName || ''})`}
     >
-      <span>{initials}</span>
-      {/* Tiny corner party dot for small/medium sizes if needed */}
+      {hasPhoto ? (
+        <img
+          src={photoUrl}
+          alt={fullName}
+          className="w-full h-full object-cover object-top"
+          onError={() => setImageFailed(true)}
+          loading="lazy"
+        />
+      ) : (
+        <span>{initials}</span>
+      )}
+      {/* Tiny corner party dot for large/xl sizes */}
       {party && (size === 'lg' || size === 'xl') && (
         <span
-          className="absolute -bottom-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-white dark:border-slate-900 shadow-xs"
+          className="absolute bottom-1 right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-white dark:border-slate-900 shadow-xs z-10"
           style={{ backgroundColor: party.color }}
           title={party.name}
         />

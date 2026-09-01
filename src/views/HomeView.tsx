@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
-import { PARTIES } from '../data/parties';
+import { PARTIES, UNIQUE_PARTIES } from '../data/parties';
 import { MpCard } from '../components/MpCard';
 import { 
   Search, 
@@ -72,7 +72,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         (party && party.shortName.toLowerCase().includes(query));
 
       // Party match
-      const matchParty = selectedParty === 'all' || mp.partyId === selectedParty;
+      const matchParty = selectedParty === 'all' || mp.partyId === selectedParty || (PARTIES[mp.partyId]?.id === selectedParty);
 
       // Province match
       const matchProvince = selectedProvince === 'all' || mp.province === selectedProvince;
@@ -225,8 +225,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
             Tüm Partiler ({mps.length})
           </button>
 
-          {Object.values(PARTIES).map((party) => {
-            const count = mps.filter(m => m.partyId === party.id).length;
+          {UNIQUE_PARTIES.map((party) => {
+            const count = mps.filter(m => m.partyId === party.id || PARTIES[m.partyId]?.id === party.id).length;
             if (count === 0) return null;
             const isSelected = selectedParty === party.id;
 

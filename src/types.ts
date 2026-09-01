@@ -81,7 +81,7 @@ export interface MP {
 }
 
 // Moderation and Contribution System
-export type ContributionType = 'stance_update' | 'new_mp' | 'new_topic';
+export type ContributionType = 'stance_update' | 'new_mp' | 'new_topic' | 'topic_rename';
 export type ContributionStatus = 'pending' | 'approved' | 'rejected';
 
 export interface ContributionProposal {
@@ -124,9 +124,23 @@ export interface ContributionProposal {
     title: string;
     description: string;
     category: TopicCategory;
-    partyScope?: 'all' | 'chp' | 'iyi' | 'akp' | 'mhp' | 'dem' | 'tip';
+    defaultImportance?: number;
+    partyScope?: string;
     partyScopeLabel?: string;
-    contextNote: string;
+    contextNote?: string;
+  };
+
+  // For topic rename / edit proposals
+  topicEditData?: {
+    topicId: string;
+    oldTitle: string;
+    newTitle: string;
+    category?: TopicCategory;
+    description?: string;
+    defaultImportance?: number;
+    partyScope?: string;
+    partyScopeLabel?: string;
+    contextNote?: string;
   };
 }
 

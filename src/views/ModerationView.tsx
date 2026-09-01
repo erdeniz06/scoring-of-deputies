@@ -12,7 +12,9 @@ import {
   FileText,
   BadgeCheck,
   ChevronRight,
-  Edit3
+  Edit3,
+  BookOpen,
+  CheckCircle2
 } from 'lucide-react';
 import { ContributionProposal, MP, Topic } from '../types';
 import { loadProposals, updateProposalStatus } from '../utils/storage';
@@ -266,74 +268,183 @@ export const ModerationView: React.FC<ModerationViewProps> = ({
                   </div>
 
                   {/* Core Proposal Info */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="md:col-span-2 space-y-2">
-                      <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
-                        <span className="text-red-600 dark:text-red-400">{prop.mpName || 'Yeni Vekil'}</span>
-                        <ChevronRight className="w-4 h-4 text-slate-400" />
-                        <span>{prop.topicTitle || 'Yeni Konu'}</span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-md">
-                          Önerilen Tutum: {prop.stanceLabel}
-                        </span>
-                      </div>
-
-                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {prop.overallSummary}
-                      </p>
-
-                      {prop.keyParaphrasedQuote && (
-                        <blockquote className="p-2.5 bg-slate-50 dark:bg-slate-800/60 border-l-2 border-red-500 text-xs italic text-slate-700 dark:text-slate-300 rounded-r-lg">
-                          "{prop.keyParaphrasedQuote}"
-                        </blockquote>
-                      )}
-
-                      {prop.submitterNote && (
-                        <div className="text-2xs text-slate-500 italic bg-amber-50/50 dark:bg-amber-950/20 p-2 rounded-lg border border-amber-200/40">
-                          <strong>Gönderen Notu:</strong> {prop.submitterNote}
+                  {prop.type === 'new_topic' && prop.newTopicData ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="md:col-span-2 space-y-2.5">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/50 text-amber-900 dark:text-amber-200 text-xs font-bold flex items-center gap-1">
+                            <BookOpen className="w-3.5 h-3.5" />
+                            Yeni Kriter Önerisi
+                          </span>
+                          <span className="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-md">
+                            Kategori: <strong className="capitalize">{prop.newTopicData.category}</strong>
+                          </span>
+                          <span className="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-md">
+                            Ağırlık: <strong>{prop.newTopicData.defaultImportance || 8}/10</strong>
+                          </span>
                         </div>
-                      )}
-                    </div>
 
-                    {/* Source & Verification Column */}
-                    <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
-                      <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-red-600" />
-                        Kaynak Doğrulaması
-                      </div>
-
-                      <div className="text-xs text-slate-600 dark:text-slate-400">
-                        <div className="font-semibold text-slate-800 dark:text-slate-200">{prop.sourcePlatform || 'Kaynak'}</div>
-                        <div className="text-2xs mt-0.5 truncate">{prop.sourceSummary || 'Açıklama belirtilmemiş'}</div>
-                      </div>
-
-                      {prop.sourceUrl ? (
-                        <a
-                          id={`source-link-${prop.id}`}
-                          href={prop.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-red-500 text-red-700 dark:text-red-400 rounded-lg text-xs font-semibold transition-colors w-full justify-center"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          Kaynağı / Tutanağı Aç
-                        </a>
-                      ) : (
-                        <div className="text-2xs text-red-500 font-medium">Kaynak linki bulunamadı</div>
-                      )}
-
-                      {/* Review Status Info */}
-                      {!isPending && (
-                        <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-2xs text-slate-500 space-y-1">
-                          <div><strong>İnceleyen:</strong> {prop.reviewedBy}</div>
-                          <div><strong>Tarih:</strong> {prop.reviewedAt}</div>
-                          <div className="italic text-slate-600 dark:text-slate-400">"{prop.reviewerComment}"</div>
+                        <div className="text-base font-bold text-slate-900 dark:text-white">
+                          {prop.newTopicData.title}
                         </div>
-                      )}
+
+                        <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-700/60">
+                          {prop.newTopicData.description}
+                        </p>
+
+                        {prop.newTopicData.contextNote && (
+                          <div className="text-xs text-slate-600 dark:text-slate-400">
+                            <strong>TBMM / Yasama Bağlamı:</strong> {prop.newTopicData.contextNote}
+                          </div>
+                        )}
+
+                        {prop.submitterNote && (
+                          <div className="text-2xs text-slate-500 italic bg-amber-50/50 dark:bg-amber-950/20 p-2 rounded-lg border border-amber-200/40">
+                            <strong>Kullanıcı Gerekçesi:</strong> {prop.submitterNote}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Scope & Moderation Side Info */}
+                      <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
+                          Kriter Kapsamı
+                        </div>
+
+                        <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                          <div><strong>Kapsam:</strong> {prop.newTopicData.partyScopeLabel || 'Tüm Milletvekilleri'}</div>
+                          <div><strong>Varsayılan Ağırlık:</strong> {prop.newTopicData.defaultImportance || 8} / 10</div>
+                        </div>
+
+                        {!isPending && (
+                          <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-2xs text-slate-500 space-y-1">
+                            <div><strong>İnceleyen:</strong> {prop.reviewedBy}</div>
+                            <div><strong>Tarih:</strong> {prop.reviewedAt}</div>
+                            <div className="italic text-slate-600 dark:text-slate-400">"{prop.reviewerComment}"</div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  ) : prop.type === 'topic_rename' && prop.topicEditData ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="md:col-span-2 space-y-2.5">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-200 text-xs font-bold flex items-center gap-1">
+                            <BookOpen className="w-3.5 h-3.5" />
+                            Kriter Düzenleme Önerisi
+                          </span>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="text-xs text-slate-500 line-through">
+                            Eski Başlık: {prop.topicEditData.oldTitle}
+                          </div>
+                          <div className="text-sm font-bold text-slate-900 dark:text-white">
+                            Yeni Başlık: <span className="text-blue-600 dark:text-blue-400">{prop.topicEditData.newTitle}</span>
+                          </div>
+                        </div>
+
+                        {prop.topicEditData.description && (
+                          <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-700/60">
+                            {prop.topicEditData.description}
+                          </p>
+                        )}
+
+                        {prop.submitterNote && (
+                          <div className="text-2xs text-slate-500 italic bg-amber-50/50 dark:bg-amber-950/20 p-2 rounded-lg border border-amber-200/40">
+                            <strong>Düzenleme Gerekçesi:</strong> {prop.submitterNote}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                          Düzenleme Detayları
+                        </div>
+                        <div className="text-xs text-slate-600 dark:text-slate-400">
+                          <div><strong>Kriter ID:</strong> {prop.topicEditData.topicId}</div>
+                        </div>
+
+                        {!isPending && (
+                          <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-2xs text-slate-500 space-y-1">
+                            <div><strong>İnceleyen:</strong> {prop.reviewedBy}</div>
+                            <div><strong>Tarih:</strong> {prop.reviewedAt}</div>
+                            <div className="italic text-slate-600 dark:text-slate-400">"{prop.reviewerComment}"</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="md:col-span-2 space-y-2">
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
+                          <span className="text-red-600 dark:text-red-400">{prop.mpName || 'Yeni Vekil'}</span>
+                          <ChevronRight className="w-4 h-4 text-slate-400" />
+                          <span>{prop.topicTitle || 'Yeni Konu'}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-md">
+                            Önerilen Tutum: {prop.stanceLabel}
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {prop.overallSummary}
+                        </p>
+
+                        {prop.keyParaphrasedQuote && (
+                          <blockquote className="p-2.5 bg-slate-50 dark:bg-slate-800/60 border-l-2 border-red-500 text-xs italic text-slate-700 dark:text-slate-300 rounded-r-lg">
+                            "{prop.keyParaphrasedQuote}"
+                          </blockquote>
+                        )}
+
+                        {prop.submitterNote && (
+                          <div className="text-2xs text-slate-500 italic bg-amber-50/50 dark:bg-amber-950/20 p-2 rounded-lg border border-amber-200/40">
+                            <strong>Gönderen Notu:</strong> {prop.submitterNote}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Source & Verification Column */}
+                      <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                          <FileText className="w-3.5 h-3.5 text-red-600" />
+                          Kaynak Doğrulaması
+                        </div>
+
+                        <div className="text-xs text-slate-600 dark:text-slate-400">
+                          <div className="font-semibold text-slate-800 dark:text-slate-200">{prop.sourcePlatform || 'Kaynak'}</div>
+                          <div className="text-2xs mt-0.5 truncate">{prop.sourceSummary || 'Açıklama belirtilmemiş'}</div>
+                        </div>
+
+                        {prop.sourceUrl ? (
+                          <a
+                            id={`source-link-${prop.id}`}
+                            href={prop.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-red-500 text-red-700 dark:text-red-400 rounded-lg text-xs font-semibold transition-colors w-full justify-center"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                            Kaynağı / Tutanağı Aç
+                          </a>
+                        ) : (
+                          <div className="text-2xs text-red-500 font-medium">Kaynak linki bulunamadı</div>
+                        )}
+
+                        {/* Review Status Info */}
+                        {!isPending && (
+                          <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-2xs text-slate-500 space-y-1">
+                            <div><strong>İnceleyen:</strong> {prop.reviewedBy}</div>
+                            <div><strong>Tarih:</strong> {prop.reviewedAt}</div>
+                            <div className="italic text-slate-600 dark:text-slate-400">"{prop.reviewerComment}"</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Decision Actions for Reviewers */}
                   {isPending && (

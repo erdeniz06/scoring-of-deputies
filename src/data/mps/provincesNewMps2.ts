@@ -811,7 +811,7 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
     partyId: 'chp',
     electedPartyId: 'chp',
     province: 'Mersin',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Ali_Mahir_Ba%C5%9Far%C4%B1r.jpg/600px-Ali_Mahir_Ba%C5%9Far%C4%B1r.jpg',
+    photoUrl: '/mps/ali_mahir_basarir.jpg',
     term: '28. Dönem',
     title: 'CHP TBMM Grup Başkanvekili & Mersin Milletvekili',
     bio: 'Hukukçu, avukat. 27. ve 28. Dönem TBMM Mersin Milletvekili. CHP TBMM Grup Başkanvekili.',

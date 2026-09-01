@@ -193,7 +193,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           {/* MP Info */}
           <div className="flex items-start sm:items-center gap-4 sm:gap-6">
-            <MpAvatar fullName={mp.fullName} partyId={mp.partyId} size="xl" />
+            <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="xl" />
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
