@@ -1,4 +1,5 @@
 import { MP, UserScores } from '../types';
+import { YENI_PARTI_MPS } from './mps/yeniPartiMps';
 import { ADANA_MPS } from './mps/adanaMps';
 import { ISTANBUL_MPS } from './mps/istanbulMps';
 import { CHP_MPS } from './mps/chpMps';
@@ -15,6 +16,7 @@ import { PROVINCES_NEW_MPS_7 } from './mps/provincesNewMps7';
 
 // Combine all datasets with deduplication by id
 const combinedMps = [
+  ...YENI_PARTI_MPS,
   ...ADANA_MPS,
   ...ISTANBUL_MPS,
   ...CHP_MPS,
@@ -30,10 +32,26 @@ const combinedMps = [
   ...PROVINCES_NEW_MPS_7,
 ];
 
+// Explicit list of MPs that remain in CHP
+const EXPLICIT_CHP_MP_IDS = new Set([
+  'engin_altay',
+  'erdogan_toprak',
+  'gamze_akkus_ilgezdi',
+]);
+
 const uniqueMpMap = new Map<string, MP>();
 combinedMps.forEach((mp) => {
   if (!uniqueMpMap.has(mp.id)) {
-    uniqueMpMap.set(mp.id, mp);
+    // If party is CHP and not in explicit CHP list, transfer to yeni_parti
+    if (mp.partyId === 'chp' && !EXPLICIT_CHP_MP_IDS.has(mp.id)) {
+      uniqueMpMap.set(mp.id, {
+        ...mp,
+        partyId: 'yeni_parti',
+        electedPartyId: mp.electedPartyId || 'chp',
+      });
+    } else {
+      uniqueMpMap.set(mp.id, mp);
+    }
   }
 });
 

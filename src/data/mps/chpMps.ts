@@ -4,13 +4,13 @@ export const CHP_MPS: MP[] = [
   {
     id: 'ozgur_ozel',
     fullName: 'Özgür Özel',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'Manisa',
     photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/%C3%96zg%C3%BCr_%C3%96zel_2023.jpg/600px-%C3%96zg%C3%BCr_%C3%96zel_2023.jpg',
     term: '28. Dönem (Manisa)',
-    title: 'CHP Genel Başkanı & Manisa Milletvekili',
-    bio: 'Eczacı, 24, 25, 26, 27 ve 28. Dönem Manisa Milletvekili. 4-5 Kasım 2023 38. Olağan Kurultay’da CHP Genel Başkanı seçildi.',
+    title: 'Yeni Parti Genel Başkanı & Manisa Milletvekili',
+    bio: 'Eczacı, 24, 25, 26, 27 ve 28. Dönem Manisa Milletvekili. TBMM Yeni Parti Grubu Genel Başkanı.',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#manisa-45',
     stances: {
       '2023_kk_adaylik': {
@@ -117,14 +117,14 @@ export const CHP_MPS: MP[] = [
   {
     id: 'ali_mahir_basarir',
     fullName: 'Ali Mahir Başarır',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'Mersin',
     photoUrl: '/mps/ali_mahir_basarir.jpg',
     term: '28. Dönem (Mersin)',
-    title: 'TBMM CHP Grup Başkanvekili & Mersin Milletvekili',
-    bio: 'Hukukçu, avukat. 27 ve 28. Dönem Mersin Milletvekili. TBMM CHP Grup Başkanvekili.',
-    committee: 'TBMM Anayasa Komisyonu',
+    title: 'Yeni Parti Grup Başkanvekili & Mersin Milletvekili',
+    bio: 'Hukukçu, avukat. 27 ve 28. Dönem Mersin Milletvekili. TBMM Yeni Parti Grup Başkanvekili.',
+    committee: 'TBMM Yeni Parti Grup Başkanvekili',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#mersin-33',
     stances: {
       '2023_kk_oo_kurultay': {
@@ -165,14 +165,14 @@ export const CHP_MPS: MP[] = [
   {
     id: 'murat_emir',
     fullName: 'Murat Emir',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'Ankara',
     photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&fit=crop&q=80',
     term: '28. Dönem (Ankara)',
-    title: 'TBMM CHP Grup Başkanvekili & Ankara Milletvekili',
-    bio: 'Tıp doktoru (Göz Hastalıkları Uzmanı), hukuk doktoru. 25, 26, 27 ve 28. Dönem Ankara Milletvekili. TBMM CHP Grup Başkanvekili.',
-    committee: 'TBMM Anayasa Komisyonu',
+    title: 'Yeni Parti Grup Başkanvekili & Ankara Milletvekili',
+    bio: 'Tıp doktoru (Göz Hastalıkları Uzmanı), hukuk doktoru. 25, 26, 27 ve 28. Dönem Ankara Milletvekili. TBMM Yeni Parti Grup Başkanvekili.',
+    committee: 'TBMM Yeni Parti Grup Başkanvekili',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#ankara-06',
     stances: {
       'sokak_kopegi_yasasi': {
@@ -191,15 +191,15 @@ export const CHP_MPS: MP[] = [
   {
     id: 'gokhan_gunaydin',
     fullName: 'Gökhan Günaydın',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'İstanbul',
     electoralDistrict: '2. Bölge',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&fit=crop&q=80',
     term: '28. Dönem (İstanbul 2. Bölge)',
-    title: 'TBMM CHP Grup Başkanvekili & İstanbul Milletvekili',
-    bio: 'Ziraat Mühendisi, iktisatçı, hukukçu. 24. Dönem Ankara, 28. Dönem İstanbul Milletvekili. TBMM CHP Grup Başkanvekili.',
-    committee: 'TBMM Tarım ve Köyişleri Komisyonu',
+    title: 'Yeni Parti Grup Başkanvekili & İstanbul Milletvekili',
+    bio: 'Ziraat Mühendisi, iktisatçı, hukukçu. 24. Dönem Ankara, 28. Dönem İstanbul Milletvekili. TBMM Yeni Parti Grup Başkanvekili.',
+    committee: 'TBMM Yeni Parti Grup Başkanvekili',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#istanbul-34',
     stances: {
       'sokak_kopegi_yasasi': {

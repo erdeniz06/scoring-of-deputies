@@ -350,14 +350,14 @@ export const ISTANBUL_MPS: MP[] = [
   {
     id: 'gokan_zeybek',
     fullName: 'Gökan Zeybek',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'İstanbul',
     electoralDistrict: '2. Bölge',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&fit=crop&q=80',
     term: '28. Dönem (İstanbul 2. Bölge)',
-    title: 'CHP Genel Başkan Yardımcısı (Yerel Yönetimler) & İstanbul Milletvekili',
-    bio: 'Mimar, şehir plancısı. 27 ve 28. Dönem İstanbul Milletvekili. CHP Yerel Yönetimlerden Sorumlu Genel Başkan Yardımcısı.',
+    title: 'Yeni Parti Genel Başkan Yardımcısı (Yerel Yönetimler) & İstanbul Milletvekili',
+    bio: 'Mimar, şehir plancısı. 27 ve 28. Dönem İstanbul Milletvekili. Yerel Yönetimlerden Sorumlu Genel Başkan Yardımcısı.',
     committee: 'TBMM Bayındırlık ve İmar Komisyonu',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#istanbul-34',
     stances: {
