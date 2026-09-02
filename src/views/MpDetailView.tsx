@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, SourceItem } from '../types';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, SourceItem, ControversyItem } from '../types';
 import { PARTIES } from '../data/parties';
 import { MpAvatar } from '../components/MpAvatar';
 import { TopicStanceCard } from '../components/TopicStanceCard';
+import { MpControversiesSection } from '../components/MpControversiesSection';
 import { isTopicApplicableToMp } from '../data/topics';
 import { loadUserCustomSources, addUserCustomSource, removeUserCustomSource, UserCustomSources } from '../utils/storage';
 import { 
@@ -20,7 +21,9 @@ import {
   SlidersHorizontal,
   X,
   Plus,
-  Sliders
+  Sliders,
+  ShieldAlert,
+  FileText
 } from 'lucide-react';
 
 interface MpDetailViewProps {
@@ -50,6 +53,10 @@ interface MpDetailViewProps {
   onRevertStance?: (mpId: string, topicId: string) => void;
   onNextMp?: () => void;
   onPrevMp?: () => void;
+  controversies?: ControversyItem[];
+  onAddControversy?: (data: Omit<ControversyItem, 'id'>) => void;
+  onUpdateControversy?: (id: string, updated: Partial<ControversyItem>) => void;
+  onDeleteControversy?: (id: string) => void;
 }
 
 export const MpDetailView: React.FC<MpDetailViewProps> = ({
@@ -72,11 +79,20 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   onRevertStance,
   onNextMp,
   onPrevMp,
+  controversies = [],
+  onAddControversy,
+  onUpdateControversy,
+  onDeleteControversy,
 }) => {
+  const [activeDetailTab, setActiveDetailTab] = useState<'stances' | 'controversies'>('stances');
   const [filterMode, setFilterMode] = useState<'all' | 'unscored' | 'scored'>('all');
   const [partyScopeFilter, setPartyScopeFilter] = useState<'all_topics' | 'party_relevant_only'>('party_relevant_only');
   const [searchTopicQuery, setSearchTopicQuery] = useState('');
   const [customSourcesMap, setCustomSourcesMap] = useState<UserCustomSources>(() => loadUserCustomSources());
+
+  const mpControversies = useMemo(() => {
+    return controversies.filter((c) => c.mpId === mp.id);
+  }, [controversies, mp.id]);
 
   const handleAddCustomSource = (mpId: string, topicId: string, sourceData: Omit<SourceItem, 'id' | 'mpId' | 'topicId'>) => {
     addUserCustomSource(mpId, topicId, sourceData);
@@ -193,7 +209,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           {/* MP Info */}
           <div className="flex items-start sm:items-center gap-4 sm:gap-6">
-            <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="xl" />
+            <MpAvatar mpId={mp.id} fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="xl" />
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
@@ -333,158 +349,214 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         </div>
       </div>
 
-      {/* Search Bar & Filter and Category Pills */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-xs space-y-3">
-        {/* Inline Topic Keyword Search Bar */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Bu vekilin tutumlarında konu ara (örn: Kürt sorunu, referandum, deniz gezmiş, infaz, silah, sokak hayvanları)..."
-            value={searchTopicQuery}
-            onChange={(e) => setSearchTopicQuery(e.target.value)}
-            className="w-full pl-9 pr-8 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 transition-colors"
-          />
-          {searchTopicQuery && (
-            <button
-              onClick={() => setSearchTopicQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
-          {/* Status & Scope Filter */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-              <button
-                onClick={() => setFilterMode('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  filterMode === 'all'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                }`}
-              >
-                Tümü ({topics.length})
-              </button>
-              <button
-                onClick={() => setFilterMode('scored')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  filterMode === 'scored'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                }`}
-              >
-                Puanlananlar ({calculationResult.scoredTopicsCount})
-              </button>
-              <button
-                onClick={() => setFilterMode('unscored')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  filterMode === 'unscored'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                }`}
-              >
-                Kalanlar ({topics.length - calculationResult.scoredTopicsCount})
-              </button>
-            </div>
-
-            {/* Party Scope Toggle */}
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-              <button
-                id="scope-toggle-relevant"
-                onClick={() => setPartyScopeFilter('party_relevant_only')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  partyScopeFilter === 'party_relevant_only'
-                    ? 'bg-red-700 text-white shadow-2xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                }`}
-                title="Sadece bu partiyle ilgili iç tartışmaları ve genel Türkiye meselelerini gösterir"
-              >
-                {mp.partyId.toUpperCase()} İlgili & Genel Konular
-              </button>
-              <button
-                id="scope-toggle-all"
-                onClick={() => setPartyScopeFilter('all_topics')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  partyScopeFilter === 'all_topics'
-                    ? 'bg-slate-800 text-white shadow-2xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                }`}
-              >
-                Tüm Konuları Göster
-              </button>
-            </div>
-          </div>
-
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-            Önem derecesini bu vekil için belirleyin, tutuma göre <strong>0-10</strong> puan verin.
+      {/* Main Section Navigation Tabs (Tutumlar vs İddialar/Skandallar) */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+        <button
+          id="tab-btn-stances"
+          onClick={() => setActiveDetailTab('stances')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            activeDetailTab === 'stances'
+              ? 'bg-slate-900 text-white shadow-sm'
+              : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+          }`}
+        >
+          <FileText className="w-4 h-4" />
+          <span>Meclis Tutumları & Puanlama</span>
+          <span className={`text-xs px-2 py-0.5 rounded-md font-mono ${
+            activeDetailTab === 'stances' ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+          }`}>
+            {topics.length}
           </span>
-        </div>
+        </button>
+
+        <button
+          id="tab-btn-controversies"
+          onClick={() => setActiveDetailTab('controversies')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            activeDetailTab === 'controversies'
+              ? 'bg-rose-700 text-white shadow-sm'
+              : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-slate-200 dark:border-slate-700'
+          }`}
+        >
+          <ShieldAlert className={`w-4 h-4 ${activeDetailTab === 'controversies' ? 'text-white' : 'text-rose-600 dark:text-rose-400'}`} />
+          <span>İddialar, Skandallar & Dosyalar</span>
+          <span className={`text-xs px-2 py-0.5 rounded-md font-mono font-bold ${
+            activeDetailTab === 'controversies'
+              ? 'bg-rose-800 text-white'
+              : mpControversies.length > 0
+                ? 'bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-500'
+          }`}>
+            {mpControversies.length}
+          </span>
+        </button>
       </div>
 
-      {/* Topic Stance Cards List */}
-      <div className="space-y-4">
-        {filteredTopics.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-3">
-            <Search className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
-            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-              "{searchTopicQuery}" ile eşleşen bir konu bulunamadı.
-            </p>
-            <div className="flex items-center justify-center gap-2 pt-1">
-              {onOpenTopicManager && (
+      {/* Render Active View */}
+      {activeDetailTab === 'controversies' ? (
+        <MpControversiesSection
+          mp={mp}
+          controversies={controversies}
+          onAddControversy={onAddControversy}
+          onUpdateControversy={onUpdateControversy}
+          onDeleteControversy={onDeleteControversy}
+        />
+      ) : (
+        <>
+          {/* Search Bar & Filter and Category Pills */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-xs space-y-3">
+            {/* Inline Topic Keyword Search Bar */}
+            <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Bu vekilin tutumlarında konu ara (örn: Kürt sorunu, referandum, deniz gezmiş, infaz, silah, sokak hayvanları)..."
+                value={searchTopicQuery}
+                onChange={(e) => setSearchTopicQuery(e.target.value)}
+                className="w-full pl-9 pr-8 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 transition-colors"
+              />
+              {searchTopicQuery && (
                 <button
-                  onClick={onOpenTopicManager}
-                  className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                  onClick={() => setSearchTopicQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
-                  Tüm Konu Havuzunu Aç / Yeni Konu Ekle
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
-          </div>
-        ) : (
-          filteredTopics.map((topic) => {
-            const stance = mp.stances[topic.id];
-            const mpSpecificWeight = mpSpecificWeights[topic.id];
-            const userImportance = mpSpecificWeight !== undefined 
-              ? mpSpecificWeight 
-              : (userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance);
-            const isMpCustomImportance = mpSpecificWeight !== undefined;
-            const currentScore = mpScores[topic.id];
 
-            return (
-              <TopicStanceCard
-                key={topic.id}
-                topic={topic}
-                stance={stance}
-                mpId={mp.id}
-                mpName={mp.fullName}
-                partyShortName={party.shortName}
-                userImportance={userImportance}
-                isMpCustomImportance={isMpCustomImportance}
-                currentScore={currentScore}
-                customSources={mpCustomSources[topic.id] || []}
-                onSetScore={(score) => onSetTopicScore(mp.id, topic.id, score)}
-                onQuickChangeImportance={(newImp) => onSetMpTopicWeight(mp.id, topic.id, newImp)}
-                onAddCustomSource={handleAddCustomSource}
-                onRemoveCustomSource={handleRemoveCustomSource}
-                onOpenAddStance={(topicId) => {
-                  if (onOpenAddStance) {
-                    onOpenAddStance(topicId, mp.id);
-                  } else if (onOpenContributionModal) {
-                    onOpenContributionModal(mp, topic);
-                  }
-                }}
-                onOpenEditStance={onOpenEditStance}
-                onDirectUpdateStance={onDirectUpdateStance}
-                onRevertStance={onRevertStance}
-              />
-            );
-          })
-        )}
-      </div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
+              {/* Status & Scope Filter */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                  <button
+                    onClick={() => setFilterMode('all')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      filterMode === 'all'
+                        ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                  >
+                    Tümü ({topics.length})
+                  </button>
+                  <button
+                    onClick={() => setFilterMode('scored')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      filterMode === 'scored'
+                        ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                  >
+                    Puanlananlar ({calculationResult.scoredTopicsCount})
+                  </button>
+                  <button
+                    onClick={() => setFilterMode('unscored')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      filterMode === 'unscored'
+                        ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                  >
+                    Kalanlar ({topics.length - calculationResult.scoredTopicsCount})
+                  </button>
+                </div>
+
+                {/* Party Scope Toggle */}
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                  <button
+                    id="scope-toggle-relevant"
+                    onClick={() => setPartyScopeFilter('party_relevant_only')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      partyScopeFilter === 'party_relevant_only'
+                        ? 'bg-red-700 text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                    title="Sadece bu partiyle ilgili iç tartışmaları ve genel Türkiye meselelerini gösterir"
+                  >
+                    {mp.partyId.toUpperCase()} İlgili & Genel Konular
+                  </button>
+                  <button
+                    id="scope-toggle-all"
+                    onClick={() => setPartyScopeFilter('all_topics')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      partyScopeFilter === 'all_topics'
+                        ? 'bg-slate-800 text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                  >
+                    Tüm Konuları Göster
+                  </button>
+                </div>
+              </div>
+
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                Önem derecesini bu vekil için belirleyin, tutuma göre <strong>0-10</strong> puan verin.
+              </span>
+            </div>
+          </div>
+
+          {/* Topic Stance Cards List */}
+          <div className="space-y-4">
+            {filteredTopics.length === 0 ? (
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-3">
+                <Search className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
+                <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  "{searchTopicQuery}" ile eşleşen bir konu bulunamadı.
+                </p>
+                <div className="flex items-center justify-center gap-2 pt-1">
+                  {onOpenTopicManager && (
+                    <button
+                      onClick={onOpenTopicManager}
+                      className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      Tüm Konu Havuzunu Aç / Yeni Konu Ekle
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : (
+              filteredTopics.map((topic) => {
+                const stance = mp.stances[topic.id];
+                const mpSpecificWeight = mpSpecificWeights[topic.id];
+                const userImportance = mpSpecificWeight !== undefined 
+                  ? mpSpecificWeight 
+                  : (userWeights[topic.id] !== undefined ? userWeights[topic.id] : topic.defaultImportance);
+                const isMpCustomImportance = mpSpecificWeight !== undefined;
+                const currentScore = mpScores[topic.id];
+
+                return (
+                  <TopicStanceCard
+                    key={topic.id}
+                    topic={topic}
+                    stance={stance}
+                    mpId={mp.id}
+                    mpName={mp.fullName}
+                    partyShortName={party.shortName}
+                    userImportance={userImportance}
+                    isMpCustomImportance={isMpCustomImportance}
+                    currentScore={currentScore}
+                    customSources={mpCustomSources[topic.id] || []}
+                    onSetScore={(score) => onSetTopicScore(mp.id, topic.id, score)}
+                    onQuickChangeImportance={(newImp) => onSetMpTopicWeight(mp.id, topic.id, newImp)}
+                    onAddCustomSource={handleAddCustomSource}
+                    onRemoveCustomSource={handleRemoveCustomSource}
+                    onOpenAddStance={(topicId) => {
+                      if (onOpenAddStance) {
+                        onOpenAddStance(topicId, mp.id);
+                      } else if (onOpenContributionModal) {
+                        onOpenContributionModal(mp, topic);
+                      }
+                    }}
+                    onOpenEditStance={onOpenEditStance}
+                    onDirectUpdateStance={onDirectUpdateStance}
+                    onRevertStance={onRevertStance}
+                  />
+                );
+              })
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

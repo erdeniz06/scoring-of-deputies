@@ -94,7 +94,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <MpAvatar fullName={topMatch.fullName} partyId={topMatch.partyId} photoUrl={topMatch.photoUrl} size="lg" className="border-2 border-amber-400 bg-white" />
+                <MpAvatar mpId={topMatch.id} fullName={topMatch.fullName} partyId={topMatch.partyId} photoUrl={topMatch.photoUrl} size="lg" className="border-2 border-amber-400 bg-white" />
                 <div className="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow-md border border-white">
                   👑
                 </div>
@@ -197,7 +197,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                   </span>
 
                   {/* Avatar */}
-                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="md" />
+                  <MpAvatar mpId={mp.id} fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="md" />
 
                   {/* Name and Party */}
                   <div className="min-w-0">

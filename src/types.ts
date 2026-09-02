@@ -174,3 +174,42 @@ export interface ScoreCalculationResult {
   activeWeightedTopicsCount: number;
   topicBreakdowns: TopicCalculationContribution[];
 }
+
+// Controversies, Scandals & Allegations System
+export type ControversyCategory = 
+  | 'yargi_fezleke' 
+  | 'yolsuzluk_ihale' 
+  | 'etik_skandal' 
+  | 'soz_eylem' 
+  | 'parti_kriz' 
+  | 'diger';
+
+export type ControversyStatus = 
+  | 'fezleke_mecliste' 
+  | 'sorusturma_suruyor' 
+  | 'dava_acildi' 
+  | 'takipsizlik_beraat' 
+  | 'ceza_aldi' 
+  | 'kamuoyu_tartismasi' 
+  | 'tekzip_edildi';
+
+export interface ControversySource {
+  title: string;
+  url: string;
+  outlet: string;
+  date?: string;
+}
+
+export interface ControversyItem {
+  id: string;
+  mpId: string;
+  title: string;
+  category: ControversyCategory;
+  severity: 'dusuk' | 'orta' | 'yuksek';
+  date: string;
+  summary: string;
+  mpResponse?: string;
+  status: ControversyStatus;
+  sources: ControversySource[];
+  isUserAdded?: boolean;
+}

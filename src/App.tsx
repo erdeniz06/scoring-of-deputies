@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ALL_MPS, DEFAULT_BENCHMARK_USER_SCORES } from './data/mps';
 import { TOPICS } from './data/topics';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, MpTopicStance, StanceTag } from './types';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, MpTopicWeights, MpTopicStance, StanceTag, ControversyItem } from './types';
 import { calculateMpScore } from './utils/calculator';
 import { 
   loadUserScores, 
@@ -31,7 +31,11 @@ import {
   updateTopicDetails,
   resetTopicDetails,
   mergeTopicsWithOverrides,
-  TopicOverrides
+  TopicOverrides,
+  loadAllControversies,
+  addUserControversy,
+  updateUserControversy,
+  deleteUserControversy
 } from './utils/storage';
 import { Header, NavTab } from './components/Header';
 import { HomeView } from './views/HomeView';
@@ -103,6 +107,39 @@ export default function App() {
   });
 
   const [isTopicManagerOpen, setIsTopicManagerOpen] = useState(false);
+
+  // Controversies & Scandals State
+  const [controversies, setControversies] = useState<ControversyItem[]>(() => loadAllControversies());
+
+  const handleAddControversy = (data: Omit<ControversyItem, 'id'>) => {
+    const created = addUserControversy(data);
+    setControversies(loadAllControversies());
+    setToastMessage({
+      type: 'success',
+      title: 'İddia / Dosya Kaydedildi',
+      description: `"${created.title}" başarıyla eklendi.`,
+    });
+  };
+
+  const handleUpdateControversy = (id: string, updated: Partial<ControversyItem>) => {
+    updateUserControversy(id, updated);
+    setControversies(loadAllControversies());
+    setToastMessage({
+      type: 'success',
+      title: 'Dosya Güncellendi',
+      description: 'İddia / fezleke kaydı başarıyla güncellendi.',
+    });
+  };
+
+  const handleDeleteControversy = (id: string) => {
+    deleteUserControversy(id);
+    setControversies(loadAllControversies());
+    setToastMessage({
+      type: 'info',
+      title: 'Dosya Silindi',
+      description: 'İddia / tartışma kaydı listeden kaldırıldı.',
+    });
+  };
 
   // Sync selected topic IDs to local storage
   useEffect(() => {
@@ -554,6 +591,10 @@ export default function App() {
             onRevertStance={handleRevertStance}
             onNextMp={activeMpIndex < liveMps.length - 1 ? handleNextMp : undefined}
             onPrevMp={activeMpIndex > 0 ? handlePrevMp : undefined}
+            controversies={controversies}
+            onAddControversy={handleAddControversy}
+            onUpdateControversy={handleUpdateControversy}
+            onDeleteControversy={handleDeleteControversy}
           />
         ) : (
           <>
@@ -565,6 +606,7 @@ export default function App() {
                 userScores={userScores}
                 mpCalculationResults={mpCalculationResults}
                 onSelectMp={(id) => setSelectedMpId(id)}
+                controversies={controversies}
               />
             )}
 

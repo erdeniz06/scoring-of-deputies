@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights } from '../types';
+import { MP, ScoreCalculationResult, Topic, UserScores, UserWeights, ControversyItem } from '../types';
 import { PARTIES, UNIQUE_PARTIES } from '../data/parties';
 import { MpCard } from '../components/MpCard';
 import { 
@@ -11,7 +11,8 @@ import {
   Sparkles, 
   CheckCircle2, 
   PlusCircle,
-  HelpCircle
+  HelpCircle,
+  ShieldAlert
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -21,6 +22,7 @@ interface HomeViewProps {
   userScores: UserScores;
   mpCalculationResults: Record<string, ScoreCalculationResult>;
   onSelectMp: (mpId: string) => void;
+  controversies?: ControversyItem[];
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -30,11 +32,22 @@ export const HomeView: React.FC<HomeViewProps> = ({
   userScores,
   mpCalculationResults,
   onSelectMp,
+  controversies = [],
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedParty, setSelectedParty] = useState<string>('all');
   const [selectedProvince, setSelectedProvince] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'highest_match' | 'lowest_match' | 'most_scored' | 'name' | 'province'>('highest_match');
+  const [hasControversyOnly, setHasControversyOnly] = useState(false);
+  const [sortBy, setSortBy] = useState<'highest_match' | 'lowest_match' | 'most_scored' | 'most_controversies' | 'name' | 'province'>('highest_match');
+
+  // MP controversies count map
+  const mpControversyCounts = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const c of controversies) {
+      map[c.mpId] = (map[c.mpId] || 0) + 1;
+    }
+    return map;
+  }, [controversies]);
 
   // Distinct provinces from mps
   const availableProvinces = useMemo(() => {
@@ -77,7 +90,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
       // Province match
       const matchProvince = selectedProvince === 'all' || mp.province === selectedProvince;
 
-      return matchSearch && matchParty && matchProvince;
+      // Controversy filter match
+      const count = mpControversyCounts[mp.id] || 0;
+      const matchControversy = !hasControversyOnly || count > 0;
+
+      return matchSearch && matchParty && matchProvince && matchControversy;
     }).sort((a, b) => {
       const resA = mpCalculationResults[a.id];
       const resB = mpCalculationResults[b.id];
@@ -96,13 +113,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
       if (sortBy === 'most_scored') {
         return resB.scoredTopicsCount - resA.scoredTopicsCount;
       }
+      if (sortBy === 'most_controversies') {
+        const cA = mpControversyCounts[a.id] || 0;
+        const cB = mpControversyCounts[b.id] || 0;
+        return cB - cA;
+      }
       if (sortBy === 'province') {
         return a.province.localeCompare(b.province, 'tr');
       }
       // 'name'
       return a.fullName.localeCompare(b.fullName, 'tr');
     });
-  }, [mps, searchQuery, selectedParty, sortBy, mpCalculationResults]);
+  }, [mps, searchQuery, selectedParty, selectedProvince, hasControversyOnly, sortBy, mpCalculationResults, mpControversyCounts]);
 
   return (
     <div className="space-y-6">
@@ -204,6 +226,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <option value="highest_match">En Yüksek Uyum (%)</option>
                 <option value="lowest_match">En Düşük Uyum (%)</option>
                 <option value="most_scored">En Çok Puanlanan Konu</option>
+                <option value="most_controversies">En Çok İddia / Dosya Sayısı</option>
                 <option value="name">İsim (A-Z)</option>
                 <option value="province">İl (A-Z)</option>
               </select>
@@ -211,8 +234,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
 
-        {/* Party Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+        {/* Party Filter Pills & Controversy Filter Pill */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
           <button
             id="filter-party-all"
             onClick={() => setSelectedParty('all')}
@@ -223,6 +246,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
             }`}
           >
             Tüm Partiler ({mps.length})
+          </button>
+
+          {/* Quick Controversy Filter Toggle Pill */}
+          <button
+            id="filter-has-controversy"
+            onClick={() => setHasControversyOnly(!hasControversyOnly)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap border flex items-center gap-1.5 transition-all ${
+              hasControversyOnly
+                ? 'bg-rose-600 text-white border-rose-700 shadow-xs'
+                : 'bg-rose-50/80 text-rose-700 border-rose-200 hover:bg-rose-100'
+            }`}
+          >
+            <ShieldAlert className="w-3.5 h-3.5" />
+            <span>İddiası / Fezlekesi Olanlar ({Object.keys(mpControversyCounts).length})</span>
           </button>
 
           {UNIQUE_PARTIES.map((party) => {
@@ -264,6 +301,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               mp={mp}
               calculationResult={mpCalculationResults[mp.id]}
               onSelect={onSelectMp}
+              controversyCount={mpControversyCounts[mp.id] || 0}
             />
           ))}
         </div>

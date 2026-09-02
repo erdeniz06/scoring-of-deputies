@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { PARTIES } from '../data/parties';
+import { resolveMpPhoto } from '../utils/mpPhotos';
 
 interface MpAvatarProps {
   fullName: string;
   partyId: string;
+  mpId?: string;
   photoUrl?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
@@ -12,6 +14,7 @@ interface MpAvatarProps {
 export const MpAvatar: React.FC<MpAvatarProps> = ({
   fullName,
   partyId,
+  mpId,
   photoUrl,
   size = 'md',
   className = '',
@@ -33,7 +36,9 @@ export const MpAvatar: React.FC<MpAvatarProps> = ({
     xl: 'w-20 h-20 sm:w-24 sm:h-24 text-xl sm:text-2xl rounded-3xl',
   };
 
-  const hasPhoto = !!photoUrl && photoUrl.trim().length > 0 && !imageFailed;
+  // Resolve photo URL (local photo or provided URL)
+  const resolvedPhoto = resolveMpPhoto(mpId || '', photoUrl);
+  const hasPhoto = !!resolvedPhoto && resolvedPhoto.trim().length > 0 && !imageFailed;
 
   return (
     <div
@@ -47,7 +52,7 @@ export const MpAvatar: React.FC<MpAvatarProps> = ({
     >
       {hasPhoto ? (
         <img
-          src={photoUrl}
+          src={resolvedPhoto}
           alt={fullName}
           className="w-full h-full object-cover object-top"
           onError={() => setImageFailed(true)}
@@ -67,3 +72,4 @@ export const MpAvatar: React.FC<MpAvatarProps> = ({
     </div>
   );
 };
+

@@ -71,7 +71,7 @@ export const CompareView: React.FC<CompareViewProps> = ({
                   key={mp.id}
                   className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-slate-900 text-white text-xs font-semibold shadow-xs border border-slate-800"
                 >
-                  <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="xs" />
+                  <MpAvatar mpId={mp.id} fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="xs" />
                   <span>{mp.fullName}</span>
                   <span className="text-amber-400 font-mono">%{res?.compatibilityPercentage || 0}</span>
                   {effectiveMps.length > 2 && (
@@ -147,7 +147,7 @@ export const CompareView: React.FC<CompareViewProps> = ({
                       <div className="space-y-3">
                         {/* MP Header */}
                         <div className="flex items-center gap-2.5">
-                          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="sm" />
+                          <MpAvatar mpId={mp.id} fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="sm" />
                           <div>
                             <span className="font-bold text-sm text-slate-900 block font-serif">
                               {mp.fullName}

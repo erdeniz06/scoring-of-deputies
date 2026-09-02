@@ -2,7 +2,7 @@ import React from 'react';
 import { MP, ScoreCalculationResult } from '../types';
 import { PARTIES } from '../data/parties';
 import { MpAvatar } from './MpAvatar';
-import { ChevronRight, CheckCircle2, GitCompare, MapPin, Sparkles } from 'lucide-react';
+import { ChevronRight, CheckCircle2, GitCompare, MapPin, Sparkles, ShieldAlert } from 'lucide-react';
 
 interface MpCardProps {
   mp: MP;
@@ -10,6 +10,7 @@ interface MpCardProps {
   onSelect: (mpId: string) => void;
   isCompared?: boolean;
   onToggleCompare?: (mpId: string) => void;
+  controversyCount?: number;
 }
 
 export const MpCard: React.FC<MpCardProps> = ({
@@ -18,6 +19,7 @@ export const MpCard: React.FC<MpCardProps> = ({
   onSelect,
   isCompared = false,
   onToggleCompare,
+  controversyCount = 0,
 }) => {
   const party = PARTIES[mp.partyId] || {
     id: mp.partyId,
@@ -88,6 +90,16 @@ export const MpCard: React.FC<MpCardProps> = ({
                 {PARTIES[mp.electedPartyId].shortName}’den Geçti
               </span>
             )}
+
+            {controversyCount > 0 && (
+              <span 
+                className="text-[10px] px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900 font-bold inline-flex items-center gap-1"
+                title={`${controversyCount} adet kayıtlı iddia, fezleke veya tartışma dosyası bulunuyor`}
+              >
+                <ShieldAlert className="w-3 h-3 text-rose-600" />
+                {controversyCount} Dosya / İddia
+              </span>
+            )}
           </div>
 
           {/* Compatibility Percentage Badge */}
@@ -102,7 +114,7 @@ export const MpCard: React.FC<MpCardProps> = ({
           onClick={() => onSelect(mp.id)}
           className="flex items-center gap-4 mb-4 cursor-pointer group/name"
         >
-          <MpAvatar fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="lg" />
+          <MpAvatar mpId={mp.id} fullName={mp.fullName} partyId={mp.partyId} photoUrl={mp.photoUrl} size="lg" />
           <div className="min-w-0 flex-1">
             <h3 className="font-bold text-base sm:text-lg text-slate-900 group-hover/name:text-red-700 truncate font-serif transition-colors">
               {mp.fullName}

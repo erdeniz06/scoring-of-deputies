@@ -8,7 +8,7 @@ export const ADANA_MPS: MP[] = [
     electedPartyId: 'akp',
     province: 'Adana',
     electoralDistrict: 'Adana',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&fit=crop&q=80',
+    photoUrl: '/mps/omer_celik.jpg',
     term: '28. Dönem (Adana)',
     title: 'AK Parti Genel Başkan Yardımcısı & Parti Sözcüsü',
     bio: 'Siyaset bilimci, yazar. 22, 23, 24, 26, 27 ve 28. Dönem Adana Milletvekili. Kültür ve Turizm Bakanlığı ile AB Bakanlığı ve Başmüzakerecilik görevlerinde bulundu.',

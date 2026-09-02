@@ -1,6 +1,7 @@
 import { TOPICS } from '../data/topics';
 import { DEFAULT_BENCHMARK_USER_SCORES } from '../data/mps';
-import { UserScores, UserWeights, MpTopicWeights, ContributionProposal } from '../types';
+import { INITIAL_CONTROVERSIES } from '../data/controversies';
+import { UserScores, UserWeights, MpTopicWeights, ContributionProposal, ControversyItem } from '../types';
 
 const STORAGE_KEYS = {
   WEIGHTS: 'mv_puanlama_weights_v2',
@@ -16,6 +17,7 @@ const STORAGE_KEYS = {
   USER_ROLE: 'mv_puanlama_user_role_v1',
   APPROVED_CUSTOM_STANCES: 'mv_puanlama_approved_custom_stances_v1',
   TOPIC_OVERRIDES: 'mv_puanlama_topic_overrides_v1',
+  CONTROVERSIES: 'mv_puanlama_controversies_v1',
 };
 
 // User Role (Founder vs Normal Contributor)
@@ -630,11 +632,96 @@ export function updateProposalStatus(
   return updated;
 }
 
+// ----------------------------------------------------
+// CONTROVERSIES, SCANDALS & FEZLEKE DOSYALARI STORAGE
+// ----------------------------------------------------
+
+export function loadAllControversies(): ControversyItem[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.CONTROVERSIES);
+    if (raw) {
+      const userControversies: ControversyItem[] = JSON.parse(raw);
+      // Map user ones by ID
+      const userMap = new Map<string, ControversyItem>();
+      for (const item of userControversies) {
+        userMap.set(item.id, item);
+      }
+      // Combine with INITIAL_CONTROVERSIES (user override or added items)
+      const result: ControversyItem[] = [];
+      const seenIds = new Set<string>();
+
+      for (const init of INITIAL_CONTROVERSIES) {
+        if (userMap.has(init.id)) {
+          const userVer = userMap.get(init.id)!;
+          result.push(userVer);
+        } else {
+          result.push(init);
+        }
+        seenIds.add(init.id);
+      }
+
+      // Add user new items
+      for (const userItem of userControversies) {
+        if (!seenIds.has(userItem.id)) {
+          result.push(userItem);
+          seenIds.add(userItem.id);
+        }
+      }
+
+      return result;
+    }
+  } catch (e) {
+    console.error('Failed to load controversies:', e);
+  }
+  return [...INITIAL_CONTROVERSIES];
+}
+
+export function saveAllControversies(items: ControversyItem[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.CONTROVERSIES, JSON.stringify(items));
+  } catch (e) {
+    console.error('Failed to save controversies:', e);
+  }
+}
+
+export function addUserControversy(data: Omit<ControversyItem, 'id'>): ControversyItem {
+  const all = loadAllControversies();
+  const newItem: ControversyItem = {
+    ...data,
+    id: `cntr-usr-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    isUserAdded: true,
+  };
+  all.unshift(newItem);
+  saveAllControversies(all);
+  return newItem;
+}
+
+export function updateUserControversy(id: string, updated: Partial<ControversyItem>): void {
+  const all = loadAllControversies();
+  const index = all.findIndex((c) => c.id === id);
+  if (index !== -1) {
+    all[index] = { ...all[index], ...updated };
+    saveAllControversies(all);
+  }
+}
+
+export function deleteUserControversy(id: string): void {
+  const all = loadAllControversies();
+  const filtered = all.filter((c) => c.id !== id);
+  saveAllControversies(filtered);
+}
+
+export function getControversiesForMp(mpId: string): ControversyItem[] {
+  const all = loadAllControversies();
+  return all.filter((c) => c.mpId === mpId);
+}
+
 export function exportUserBackup(): string {
   const payload = {
     weights: loadUserWeights(),
     scores: loadUserScores(),
     proposals: loadProposals(),
+    controversies: loadAllControversies(),
     exportedAt: new Date().toISOString(),
     version: '2.0',
   };
@@ -652,6 +739,9 @@ export function importUserBackup(jsonString: string): { success: boolean; error?
     }
     if (Array.isArray(parsed.proposals)) {
       saveProposals(parsed.proposals);
+    }
+    if (Array.isArray(parsed.controversies)) {
+      saveAllControversies(parsed.controversies);
     }
     return { success: true };
   } catch (e) {
