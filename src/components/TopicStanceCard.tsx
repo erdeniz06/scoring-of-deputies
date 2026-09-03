@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { MpTopicStance, SourceItem, StanceTag, Topic } from '../types';
 import { 
+  STANCE_GROUPS, 
+  resolveDefaultStanceLabel, 
+  getQuickPresetChips, 
+  getStanceBadgeClasses 
+} from '../utils/stanceHelpers';
+import { 
   ExternalLink, 
   Tv, 
   FileText, 
@@ -113,16 +119,7 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
   const denominatorContribution = importancePercent * 10;
 
   // Semantic tag colors
-  let tagColor = 'bg-slate-100 text-slate-700 border-slate-200';
-  if (stance?.stanceTag === 'destekledi' || stance?.stanceTag === 'savundu') {
-    tagColor = 'bg-emerald-50 text-emerald-800 border-emerald-200';
-  } else if (stance?.stanceTag === 'karsi_cikti' || stance?.stanceTag === 'elestirdi') {
-    tagColor = 'bg-rose-50 text-rose-800 border-rose-200';
-  } else if (stance?.stanceTag === 'kanun_teklifi') {
-    tagColor = 'bg-blue-50 text-blue-800 border-blue-200';
-  } else if (stance?.stanceTag === 'serh_koydu' || stance?.stanceTag === 'notr_cekimser') {
-    tagColor = 'bg-amber-50 text-amber-800 border-amber-200';
-  }
+  const tagColor = getStanceBadgeClasses(stance?.stanceTag);
 
   const scoreInfo = isScored ? getSemanticScoreDescription(currentScore as number) : null;
 
@@ -174,15 +171,9 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
       keyParaphrasedQuote: editQuote.trim(),
       overallSummary: editSummary.trim() || (editQuote.trim() ? `"${editQuote.trim()}"` : `${mpName || 'Vekil'}, bu konuda görüş beyan etti.`),
       sourceUrl: editUrl.trim(),
-      sourcePlatform: editPlatform.trim() || 'TBMM Tutanakları',
+      sourcePlatform: editPlatform.trim() || 'TBMM / Açıklama Kaynağı',
       stanceTag: editStanceTag,
-      stanceLabel: editStanceLabel.trim() || (
-        editStanceTag === 'destekledi' ? 'Destekledi / Kabul Oyu Verdi' :
-        editStanceTag === 'karsi_cikti' ? 'Karşı Çıktı / Ret Oyu Verdi' :
-        editStanceTag === 'elestirdi' ? 'Sert Şekilde Eleştirdi' :
-        editStanceTag === 'savundu' ? 'Kürsüde Savundu' :
-        editStanceTag === 'kanun_teklifi' ? 'Kanun Teklifi Verdi' : 'Çekimser / Nötr Kaldı'
-      ),
+      stanceLabel: resolveDefaultStanceLabel(editStanceTag, topic.id, editStanceLabel.trim()),
     });
 
     setIsInlineEditing(false);
@@ -366,37 +357,74 @@ export const TopicStanceCard: React.FC<TopicStanceCardProps> = ({
                 </div>
 
                 {/* 1. Stance Tag Selector */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Milletvekilinin Tutumu / Oyu
-                    </label>
-                    <select
-                      value={editStanceTag}
-                      onChange={(e) => setEditStanceTag(e.target.value as StanceTag)}
-                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white font-medium focus:ring-2 focus:ring-indigo-500"
-                    >
-                      <option value="destekledi">🟢 Destekledi / Kabul Oyu Verdi</option>
-                      <option value="savundu">🟢 Meclis Kürsüsünde Savundu</option>
-                      <option value="karsi_cikti">🔴 Karşı Çıktı / Ret Oyu Verdi</option>
-                      <option value="elestirdi">🔴 Sert Şekilde Eleştirdi</option>
-                      <option value="kanun_teklifi">🔵 Kanun Teklifi / Önerge Verdi</option>
-                      <option value="serh_koydu">🟡 Şerh Koydu / Çekimser Kaldı</option>
-                      <option value="notr_cekimser">⚪ Nötr / Sessiz Kaldı</option>
-                    </select>
+                <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Tutum / Duruş Türü
+                      </label>
+                      <select
+                        value={editStanceTag}
+                        onChange={(e) => {
+                          const newTag = e.target.value as StanceTag;
+                          setEditStanceTag(newTag);
+                          if (!editStanceLabel || editStanceLabel.trim() === '') {
+                            setEditStanceLabel(resolveDefaultStanceLabel(newTag, topic.id));
+                          }
+                        }}
+                        className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white font-medium focus:ring-2 focus:ring-indigo-500"
+                      >
+                        {STANCE_GROUPS.map((group) => (
+                          <optgroup key={group.id} label={group.title}>
+                            {group.options.map((opt) => (
+                              <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Kısa Rozet Metni (İsteğe Bağlı)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Örn: Saygıyla Andı / Eleştirdi / Açıklama Yaptı"
+                        value={editStanceLabel}
+                        onChange={(e) => setEditStanceLabel(e.target.value)}
+                        className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white"
+                      />
+                    </div>
                   </div>
 
+                  {/* Smart Quick Preset Chips */}
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Kısa Etiket (İsteğe Bağlı)
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Örn: Meclis Kürsüsünde Net Tavır Aldı"
-                      value={editStanceLabel}
-                      onChange={(e) => setEditStanceLabel(e.target.value)}
-                      className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white"
-                    />
+                    <div className="text-[10px] font-semibold text-slate-500 mb-1 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-indigo-600" />
+                      <span>Bu konu için hazır etiketler (tıklayarak seçin):</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {getQuickPresetChips(topic.id).map((chip, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => {
+                            setEditStanceTag(chip.tag);
+                            setEditStanceLabel(chip.badge);
+                          }}
+                          className={`text-[11px] px-2 py-0.5 rounded border transition-colors ${
+                            editStanceLabel === chip.badge
+                              ? 'bg-indigo-100 text-indigo-900 border-indigo-400 font-semibold'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                          }`}
+                        >
+                          {chip.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

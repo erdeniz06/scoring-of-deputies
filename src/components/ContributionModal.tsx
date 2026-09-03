@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { X, Send, ShieldCheck, Link2, User, BookOpen, AlertCircle, CheckCircle2, Quote } from 'lucide-react';
-import { MP, Topic, ContributionType } from '../types';
+import { X, Send, ShieldCheck, Link2, User, BookOpen, AlertCircle, CheckCircle2, Quote, Sparkles } from 'lucide-react';
+import { MP, Topic, ContributionType, StanceTag } from '../types';
 import { addProposal } from '../utils/storage';
+import { 
+  STANCE_GROUPS, 
+  resolveDefaultStanceLabel, 
+  getQuickPresetChips 
+} from '../utils/stanceHelpers';
 
 interface ContributionModalProps {
   isOpen: boolean;
@@ -74,11 +79,10 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
       }
     }
 
-    const defaultLabel = stanceLabel.trim() || (
-      stanceTag === 'destekledi' || stanceTag === 'savundu' ? 'Savundu / Kabul Oyu Verdi' :
-      stanceTag === 'karsi_cikti' ? 'Karşı Çıktı / Ret Oyu Verdi' :
-      stanceTag === 'elestirdi' ? 'Eleştirdi' :
-      stanceTag === 'kanun_teklifi' ? 'Kanun Teklifi / Önerge Verdi' : 'Tutum Bildirdi'
+    const defaultLabel = resolveDefaultStanceLabel(
+      stanceTag as StanceTag,
+      currentTopic?.id || selectedTopicId,
+      stanceLabel.trim()
     );
 
     const finalSummary = overallSummary.trim() || (
@@ -262,36 +266,21 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Kategori
-                    </label>
-                    <select
-                      value={customTopicCat}
-                      onChange={(e) => setCustomTopicCat(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
-                    >
-                      <option value="siyaset">Siyaset & Seçimler</option>
-                      <option value="hukuk">Hukuk & Adalet</option>
-                      <option value="sosyal">Toplum & Sosyal Politikalar</option>
-                      <option value="kultur_ifade">Kültür & İfade Özgürlüğü</option>
-                      <option value="egitim_inanc">Eğitim & Laiklik</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                      Önem Ağırlığı (1 - 10)
-                    </label>
-                    <input
-                      type="number"
-                      min={1}
-                      max={10}
-                      value={customTopicImportance}
-                      onChange={(e) => setCustomTopicImportance(Number(e.target.value))}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Kategori
+                  </label>
+                  <select
+                    value={customTopicCat}
+                    onChange={(e) => setCustomTopicCat(e.target.value as any)}
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
+                  >
+                    <option value="siyaset">Siyaset & Seçimler</option>
+                    <option value="hukuk">Hukuk & Adalet</option>
+                    <option value="sosyal">Toplum & Sosyal Politikalar</option>
+                    <option value="kultur_ifade">Kültür & İfade Özgürlüğü</option>
+                    <option value="egitim_inanc">Eğitim & Laiklik</option>
+                  </select>
                 </div>
 
                 <div>
@@ -388,48 +377,75 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
             )}
 
             {/* Stance Tag & Label */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Önerilen Tutum Kategorisi
-                </label>
-                <select
-                  id="select-stance-tag"
-                  value={stanceTag}
-                  onChange={(e) => {
-                    setStanceTag(e.target.value);
-                    const labels: Record<string, string> = {
-                      savundu: 'Aktif Savundu',
-                      karsi_cikti: 'Karşı Çıktı / Ret Oyu Verdi',
-                      kanun_teklifi: 'Kanun Teklifi / Önerge Verdi',
-                      serh_koydu: 'Şerh Koydu / Kısmi İtiraz Etti',
-                      elestirdi: 'Eleştirdi',
-                      notr_cekimser: 'Nötr / Çekimser Kaldı',
-                    };
-                    setStanceLabel(labels[e.target.value] || 'Görüş Belirtti');
-                  }}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                >
-                  <option value="savundu">Savundu (Kabul / Destek)</option>
-                  <option value="karsi_cikti">Karşı Çıktı (Ret Oyu / İtiraz)</option>
-                  <option value="kanun_teklifi">Kanun Teklifi / Önerge Verdi</option>
-                  <option value="serh_koydu">Şerh Koydu (Kısmi Karşıtlık)</option>
-                  <option value="elestirdi">Eleştirdi</option>
-                  <option value="notr_cekimser">Nötr / Çekimser</option>
-                </select>
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Önerilen Tutum / Duruş Türü
+                  </label>
+                  <select
+                    id="select-stance-tag"
+                    value={stanceTag}
+                    onChange={(e) => {
+                      const newTag = e.target.value as StanceTag;
+                      setStanceTag(newTag);
+                      if (!stanceLabel || stanceLabel.trim() === '') {
+                        setStanceLabel(resolveDefaultStanceLabel(newTag, currentTopic?.id || selectedTopicId));
+                      }
+                    }}
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                  >
+                    {STANCE_GROUPS.map((group) => (
+                      <optgroup key={group.id} label={group.title}>
+                        {group.options.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    Tutum Kısa Başlığı (İsteğe Bağlı)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Örn: Saygıyla Andı / Eleştirdi / Açıklama Yaptı"
+                    value={stanceLabel}
+                    onChange={(e) => setStanceLabel(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
+                  />
+                </div>
               </div>
 
+              {/* Quick Preset Chips */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Tutum Kısa Başlığı (İsteğe Bağlı)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Örn: Komisyonda Ret Oyu Verdi"
-                  value={stanceLabel}
-                  onChange={(e) => setStanceLabel(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white"
-                />
+                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Hazır Etiketler (Tek tıkla seçebilirsiniz):</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {getQuickPresetChips(currentTopic?.id || selectedTopicId).map((chip, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setStanceTag(chip.tag);
+                        setStanceLabel(chip.badge);
+                      }}
+                      className={`text-xs px-2.5 py-1 rounded-md border transition-all ${
+                        stanceLabel === chip.badge
+                          ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 border-amber-400 font-semibold shadow-2xs'
+                          : 'bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 

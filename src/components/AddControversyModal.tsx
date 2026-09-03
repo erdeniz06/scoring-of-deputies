@@ -120,10 +120,10 @@ export const AddControversyModal: React.FC<AddControversyModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-serif">
-                {editingControversy ? 'İddia / Dosya Kaydını Düzenle' : 'Yeni İddia / Skandal / Dosya Ekle'}
+                {editingControversy ? 'İddia / Fezleke Kaydını Düzenle' : 'Yeni İddia / Fezleke / Dosya Ekle'}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Milletvekili: <strong className="text-slate-700 dark:text-slate-200">{mp.fullName}</strong>
+                Milletvekili: <strong className="text-slate-700 dark:text-slate-200">{mp.fullName}</strong> ({mp.province})
               </p>
             </div>
           </div>
@@ -149,20 +149,20 @@ export const AddControversyModal: React.FC<AddControversyModalProps> = ({
           <div className="p-3.5 bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 rounded-2xl text-amber-900 dark:text-amber-200 text-[11px] leading-relaxed flex items-start gap-2.5">
             <Scale className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div>
-              <strong>Objektiflik ve Masumiyet Karinesi:</strong> İddiaların doğrulanabilir haber kaynaklarına veya resmi meclis/yargı tutanaklarına dayanması esastır. Milletvekilinin savunması veya tekzibi varsa mutlaka eklenmelidir.
+              <strong>Objektiflik ve Masumiyet Karinesi:</strong> İddiaların doğrulanabilir haber kaynaklarına veya resmi TBMM / yargı fezlekelerine dayanması esastır. Milletvekilinin açıklaması, savunması veya tekzibi varsa mutlaka eklenmelidir.
             </div>
           </div>
 
           {/* Title */}
           <div>
             <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1.5">
-              İddia / Skandal / Dosya Başlığı <span className="text-rose-500">*</span>
+              İddia / Fezleke / Dosya Başlığı <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Örn: TBMM Genel Kurulu Dokunulmazlık Fezlekesi veya İhale İddiası..."
+              placeholder="Örn: TBMM Genel Kurulu Dokunulmazlık Fezlekesi, İhale İddiası veya Yargı Süreci..."
               className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 font-medium"
               required
             />
@@ -333,7 +333,7 @@ export const AddControversyModal: React.FC<AddControversyModalProps> = ({
               className="px-5 py-2.5 text-xs font-bold bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-xs transition-colors cursor-pointer flex items-center gap-1.5"
             >
               <FileText className="w-4 h-4" />
-              <span>{editingControversy ? 'Değişiklikleri Kaydet' : 'İddia / Dosyayı Kaydet'}</span>
+              <span>{editingControversy ? 'Değişiklikleri Kaydet' : 'İddia / Fezlekeyi Kaydet'}</span>
             </button>
           </div>
         </form>

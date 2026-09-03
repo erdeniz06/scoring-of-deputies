@@ -17,7 +17,7 @@ const STORAGE_KEYS = {
   USER_ROLE: 'mv_puanlama_user_role_v1',
   APPROVED_CUSTOM_STANCES: 'mv_puanlama_approved_custom_stances_v1',
   TOPIC_OVERRIDES: 'mv_puanlama_topic_overrides_v1',
-  CONTROVERSIES: 'mv_puanlama_controversies_v1',
+  CONTROVERSIES: 'mv_puanlama_controversies_v2',
 };
 
 // User Role (Founder vs Normal Contributor)
@@ -93,7 +93,7 @@ export function updateApprovedCustomStance(
     mpId,
     topicId,
     stanceTag: 'destekledi',
-    stanceLabel: 'Destekledi / Kabul Oyu Verdi',
+    stanceLabel: 'Görüş / Beyan Kaydı',
     overallSummary: '',
     keyParaphrasedQuote: '',
     sources: [],
@@ -641,34 +641,10 @@ export function loadAllControversies(): ControversyItem[] {
     const raw = localStorage.getItem(STORAGE_KEYS.CONTROVERSIES);
     if (raw) {
       const userControversies: ControversyItem[] = JSON.parse(raw);
-      // Map user ones by ID
-      const userMap = new Map<string, ControversyItem>();
-      for (const item of userControversies) {
-        userMap.set(item.id, item);
+      if (Array.isArray(userControversies)) {
+        // Only return verified user-submitted records
+        return userControversies.filter((c) => c && c.id && !c.id.startsWith('cntr-ahmet-') && !c.id.startsWith('cntr-cemal-') && !c.id.startsWith('cntr-ali-') && !c.id.startsWith('cntr-enis-') && !c.id.startsWith('cntr-suleyman-') && !c.id.startsWith('cntr-feti-') && !c.id.startsWith('cntr-suat-') && !c.id.startsWith('cntr-erkan-') && !c.id.startsWith('cntr-mustafa-') && !c.id.startsWith('cntr-tulay-'));
       }
-      // Combine with INITIAL_CONTROVERSIES (user override or added items)
-      const result: ControversyItem[] = [];
-      const seenIds = new Set<string>();
-
-      for (const init of INITIAL_CONTROVERSIES) {
-        if (userMap.has(init.id)) {
-          const userVer = userMap.get(init.id)!;
-          result.push(userVer);
-        } else {
-          result.push(init);
-        }
-        seenIds.add(init.id);
-      }
-
-      // Add user new items
-      for (const userItem of userControversies) {
-        if (!seenIds.has(userItem.id)) {
-          result.push(userItem);
-          seenIds.add(userItem.id);
-        }
-      }
-
-      return result;
     }
   } catch (e) {
     console.error('Failed to load controversies:', e);

@@ -492,18 +492,11 @@ export const CriteriaView: React.FC<CriteriaViewProps> = ({
 
               {/* Bottom Footer Info & Actions */}
               <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3 text-xs">
-                {/* Left: Stances Count & Default Importance */}
+                {/* Left: Stances Count */}
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 font-medium">
                     <span className="font-bold text-slate-900 dark:text-slate-200">{stanceCount}</span>
                     <span className="text-[11px]">Vekil Tutanağı</span>
-                  </div>
-
-                  <div className="hidden sm:flex items-center gap-1.5 text-slate-500 text-[11px]">
-                    <span>Önem:</span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400 font-mono">
-                      {topic.defaultImportance || 8}/10
-                    </span>
                   </div>
                 </div>
 
@@ -722,26 +715,6 @@ export const CriteriaView: React.FC<CriteriaViewProps> = ({
                 />
               </div>
 
-              {/* Default Importance Slider */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
-                    Varsayılan Önem Katsayısı
-                  </label>
-                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">
-                    {editImportance} / 10
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="10"
-                  value={editImportance}
-                  onChange={(e) => setEditImportance(parseInt(e.target.value, 10))}
-                  className="w-full accent-amber-500 cursor-pointer"
-                />
-              </div>
-
               {/* Form Action Buttons */}
               <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-2">
                 <button
@@ -786,7 +759,7 @@ export const CriteriaView: React.FC<CriteriaViewProps> = ({
                     Yeni Değerlendirme Kriteri Tanımla
                   </h2>
                   <p className="text-xs text-slate-500">
-                    Milletvekillerini puanlamak için yeni bir yasama başlığı oluşturun
+                    Milletvekillerini değerlendirmek için yeni bir yasama başlığı oluşturun
                   </p>
                 </div>
               </div>
@@ -925,25 +898,6 @@ export const CriteriaView: React.FC<CriteriaViewProps> = ({
                   onChange={(e) => setNewContextNote(e.target.value)}
                   placeholder="Örn: TBMM Genel Kurul oylaması veya basın açıklamaları..."
                   className="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
-                    Varsayılan Önem Derecesi
-                  </label>
-                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">
-                    {newImportance} / 10
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="10"
-                  value={newImportance}
-                  onChange={(e) => setNewImportance(parseInt(e.target.value, 10))}
-                  className="w-full accent-amber-500 cursor-pointer"
                 />
               </div>
 

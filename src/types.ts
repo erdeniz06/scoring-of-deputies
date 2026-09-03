@@ -49,7 +49,11 @@ export type StanceTag =
   | 'kanun_teklifi' 
   | 'sessiz_kaldi'
   | 'elestirdi'
-  | 'savundu';
+  | 'savundu'
+  | 'andi_sahiplendi'
+  | 'katilmadi_mesafeli'
+  | 'kabul_oyu'
+  | 'ret_oyu';
 
 export interface MpTopicStance {
   id: string;

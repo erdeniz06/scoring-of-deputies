@@ -4,6 +4,7 @@ import { PARTIES } from '../data/parties';
 import { MpAvatar } from '../components/MpAvatar';
 import { TopicStanceCard } from '../components/TopicStanceCard';
 import { MpControversiesSection } from '../components/MpControversiesSection';
+import { AddControversyModal } from '../components/AddControversyModal';
 import { isTopicApplicableToMp } from '../data/topics';
 import { loadUserCustomSources, addUserCustomSource, removeUserCustomSource, UserCustomSources } from '../utils/storage';
 import { 
@@ -85,6 +86,7 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
   onDeleteControversy,
 }) => {
   const [activeDetailTab, setActiveDetailTab] = useState<'stances' | 'controversies'>('stances');
+  const [isAddControversyModalOpen, setIsAddControversyModalOpen] = useState(false);
   const [filterMode, setFilterMode] = useState<'all' | 'unscored' | 'scored'>('all');
   const [partyScopeFilter, setPartyScopeFilter] = useState<'all_topics' | 'party_relevant_only'>('party_relevant_only');
   const [searchTopicQuery, setSearchTopicQuery] = useState('');
@@ -240,6 +242,20 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                     <ExternalLink className="w-2.5 h-2.5" />
                   </a>
                 )}
+
+                <button
+                  id="header-controversy-count-btn"
+                  onClick={() => setActiveDetailTab('controversies')}
+                  className={`text-xs px-2.5 py-1 rounded-md font-semibold inline-flex items-center gap-1.5 transition-colors cursor-pointer border ${
+                    mpControversies.length > 0
+                      ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-900 hover:bg-rose-100'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200'
+                  }`}
+                  title="İddia ve fezleke dosyalarını inceleyin"
+                >
+                  <ShieldAlert className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                  <span>{mpControversies.length > 0 ? `${mpControversies.length} Fezleke / Dosya` : '0 Fezleke / İddia'}</span>
+                </button>
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-serif">
                 {mp.fullName}
@@ -300,6 +316,16 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
                 <span>+ Demeç / Tutanak Ekle</span>
               </button>
             )}
+
+            <button
+              id="add-controversy-hero-btn"
+              onClick={() => setIsAddControversyModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs transition-all hover:scale-105 cursor-pointer"
+              title="Bu milletvekili hakkında yeni bir fezleke veya iddia dosyası ekleyin"
+            >
+              <ShieldAlert className="w-4 h-4 stroke-[2.5]" />
+              <span>+ İddia / Fezleke Ekle</span>
+            </button>
 
             {onOpenTopicManager && (
               <button
@@ -403,6 +429,44 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
         />
       ) : (
         <>
+          {/* Quick Prompt Banner for Adding İddia / Fezleke */}
+          <div className="bg-gradient-to-r from-rose-50 to-orange-50 dark:from-rose-950/30 dark:to-orange-950/20 border border-rose-200/80 dark:border-rose-900/50 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-2xs">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-400 shrink-0">
+                <ShieldAlert className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                  <span>Milletvekili İddia ve Fezleke Kayıtları</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 font-mono font-bold">
+                    {mpControversies.length} Kayıt
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  TBMM dokunulmazlık fezlekeleri, kamuoyuna yansıyan iddialar veya yargı süreçlerini tarafsız kaynaklarla ekleyebilirsiniz.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+              {mpControversies.length > 0 && (
+                <button
+                  onClick={() => setActiveDetailTab('controversies')}
+                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-300 font-semibold border border-rose-200 dark:border-rose-800 hover:bg-rose-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                >
+                  Dosyaları Gör ({mpControversies.length})
+                </button>
+              )}
+              <button
+                id="add-controversy-banner-btn"
+                onClick={() => setIsAddControversyModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-xs transition-transform hover:scale-105 cursor-pointer flex items-center gap-1.5"
+              >
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>+ İddia / Fezleke Ekle</span>
+              </button>
+            </div>
+          </div>
+
           {/* Search Bar & Filter and Category Pills */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-xs space-y-3">
             {/* Inline Topic Keyword Search Bar */}
@@ -556,6 +620,24 @@ export const MpDetailView: React.FC<MpDetailViewProps> = ({
             )}
           </div>
         </>
+      )}
+
+      {/* Direct Add Controversy / Fezleke Modal */}
+      {isAddControversyModalOpen && (
+        <AddControversyModal
+          isOpen={isAddControversyModalOpen}
+          onClose={() => setIsAddControversyModalOpen(false)}
+          mp={mp}
+          onSave={(data, editId) => {
+            if (editId && onUpdateControversy) {
+              onUpdateControversy(editId, data);
+            } else if (onAddControversy) {
+              onAddControversy(data);
+            }
+            setIsAddControversyModalOpen(false);
+            setActiveDetailTab('controversies');
+          }}
+        />
       )}
     </div>
   );

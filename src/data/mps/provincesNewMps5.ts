@@ -732,14 +732,14 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
   {
     id: 'adnan_beker',
     fullName: 'Adnan Beker',
-    partyId: 'independent_opposition',
+    partyId: 'bagimsiz',
     electedPartyId: 'iyi',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/adnan_beker.jpg',
     term: '28. Dönem',
     title: 'Bağımsız Ankara Milletvekili & İş İnsanı',
-    bio: 'İş insanı, eski Ankara Büyükşehir Belediye Meclisi İYİ Parti Grup Başkanvekili. 28. Dönem Ankara Milletvekili.',
+    bio: 'İş insanı, eski Ankara Büyükşehir Belediye Meclisi İYİ Parti Grup Başkanvekili. 28. Dönem Ankara Bağımsız Milletvekili.',
     tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1347',
     stances: {
       '2023_kk_adaylik': {
@@ -751,6 +751,80 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
         overallSummary: 'Seçim mağlubiyetinin ardından Kılıçdaroğlu’nun aday dayatmasının yanlış olduğunu belirterek partiden istifa etti.',
         keyParaphrasedQuote: 'Halkın sesine kulak verilmedi, yanlış aday yüzünden seçim kaybedildi.',
         lastUpdated: 'Kasım 2023',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'koray_aydin',
+    fullName: 'Koray Aydın',
+    partyId: 'bagimsiz',
+    electedPartyId: 'iyi',
+    province: 'Ankara',
+    electoralDistrict: '1. Bölge',
+    photoUrl: '/mps/koray_aydin.jpg',
+    term: '28. Dönem',
+    title: 'Bağımsız Ankara Milletvekili & Eski Bayındırlık ve İskan Bakanı',
+    bio: 'Makine mühendisi, siyasetçi, eski Bayındırlık ve İskan Bakanı, eski TBMM Başkanvekili. 21, 24, 25 ve 28. Dönem Milletvekili. Görevini Bağımsız Milletvekili olarak sürdürmektedir.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1349',
+    stances: {
+      '2023_kk_adaylik': {
+        id: 'st_ka_adaylik',
+        mpId: 'koray_aydin',
+        topicId: '2023_kk_adaylik',
+        stanceTag: 'elestirdi',
+        stanceLabel: 'Millet İttifakı Stratejisini ve Masadaki Aday Belirleme Yöntemini Eleştirdi',
+        overallSummary: 'Kazanacak aday formülü üzerinden parti tabanının hassasiyetlerinin gözetilmesi gerektiğini savunmuştu.',
+        keyParaphrasedQuote: 'Milletimizin beklentilerine ve anket sonuçlarına kulak verilmeliydi.',
+        lastUpdated: 'Mayıs 2023',
+        sources: []
+      },
+      'can_atalay_karari': {
+        id: 'st_ka_atalay',
+        mpId: 'koray_aydin',
+        topicId: 'can_atalay_karari',
+        stanceTag: 'karsi_cikti',
+        stanceLabel: 'Anayasa Mahkemesi Kararlarının Bağlayıcılığını Savundu',
+        overallSummary: 'Hukuk devleti ilkesi gereği Anayasa Mahkemesi kararlarına uyulmasının zorunlu olduğunu vurguladı.',
+        keyParaphrasedQuote: 'Anayasa Mahkemesi kararlarının yok sayılması hukuki istikrara zarar verir.',
+        lastUpdated: 'Şubat 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'aliye_timisi_ersever',
+    fullName: 'Aliye Timisi Ersever',
+    partyId: 'yeni_parti',
+    electedPartyId: 'chp',
+    province: 'Ankara',
+    electoralDistrict: '2. Bölge',
+    photoUrl: '/mps/aliye_timisi_ersever.jpg',
+    term: '28. Dönem',
+    title: 'Yeni Parti Ankara Milletvekili',
+    bio: 'Siyasetçi ve iş insanı, TBMM 28. Dönem Ankara Milletvekili. Meclis çalışmalarını Yeni Parti bünyesinde sürdürmektedir.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1345',
+    stances: {
+      'sokak_kopegi_yasasi': {
+        id: 'st_ate_kopek',
+        mpId: 'aliye_timisi_ersever',
+        topicId: 'sokak_kopegi_yasasi',
+        stanceTag: 'karsi_cikti',
+        stanceLabel: 'Ötanazi Maddesine Karşı Çıktı, Kısırlaştırma ve Yaşatma Çağrısı Yaptı',
+        overallSummary: 'Hayvan hakları savunucularının taleplerini mecliste dile getirerek yasanın korumacı anlayışla revize edilmesini istedi.',
+        keyParaphrasedQuote: 'Çözüm öldürmek değil; etkin kısırlaştırma, aşılama ve sahiplendirmedir.',
+        lastUpdated: 'Temmuz 2024',
+        sources: []
+      },
+      'milli_bayramlar_ataturk': {
+        id: 'st_ate_ataturk',
+        mpId: 'aliye_timisi_ersever',
+        topicId: 'milli_bayramlar_ataturk',
+        stanceTag: 'destekledi',
+        stanceLabel: 'Cumhuriyet Kazanımları ve Laiklik İlkesine Güçlü Bağlılık',
+        overallSummary: 'Mustafa Kemal Atatürk’ün kurucu ilkelerini ve kadın hakları mirasını sürekli vurguladı.',
+        keyParaphrasedQuote: 'Cumhuriyetimizin kurucu değerleri ve Atatürk ilkeleri yol göstericimizdir.',
+        lastUpdated: 'Ekim 2024',
         sources: []
       }
     }

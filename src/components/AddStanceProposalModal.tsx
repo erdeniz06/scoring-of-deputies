@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MP, MpTopicStance, StanceTag, Topic } from '../types';
 import { 
+  STANCE_GROUPS, 
+  resolveDefaultStanceLabel, 
+  getQuickPresetChips 
+} from '../utils/stanceHelpers';
+import { 
   AppUserRole, 
   addDirectlyApprovedFounderProposal, 
   addProposal,
@@ -175,12 +180,10 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
     const mpName = currentMp?.fullName || 'Milletvekili';
     const topicTitle = currentTopic?.title || 'Konu Başlığı';
 
-    const defaultLabel = stanceLabel.trim() || (
-      stanceTag === 'destekledi' ? 'Destekledi / Kabul Oyu Verdi' :
-      stanceTag === 'karsi_cikti' ? 'Karşı Çıktı / Ret Oyu Verdi' :
-      stanceTag === 'elestirdi' ? 'Sert Şekilde Eleştirdi' :
-      stanceTag === 'savundu' ? 'Kürsüde Savundu' :
-      stanceTag === 'kanun_teklifi' ? 'Kanun Teklifi Verdi' : 'Çekimser / Nötr Kaldı'
+    const defaultLabel = resolveDefaultStanceLabel(
+      stanceTag, 
+      currentTopic?.id || selectedTopicId, 
+      stanceLabel.trim()
     );
 
     // Auto-generate summary from quote if omitted
@@ -593,48 +596,85 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
             </div>
 
             {/* Stance Tag and Label */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Tutum Kategorisi (İsteğe Bağlı)
-                </label>
-                <select
-                  value={stanceTag}
-                  onChange={(e) => setStanceTag(e.target.value as StanceTag)}
-                  className="w-full text-xs px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value="destekledi">🟢 Destekledi / Kabul Oyu Verdi</option>
-                  <option value="savundu">🟢 Meclis Kürsüsünde Savundu</option>
-                  <option value="karsi_cikti">🔴 Karşı Çıktı / Ret Oyu Verdi</option>
-                  <option value="elestirdi">🔴 Sert Şekilde Eleştirdi</option>
-                  <option value="kanun_teklifi">🔵 Kanun Teklifi / Önerge Verdi</option>
-                  <option value="serh_koydu">🟡 Şerh Koydu / Çekimser Kaldı</option>
-                  <option value="notr_cekimser">⚪ Nötr / Sessiz Kaldı</option>
-                </select>
+            <div className="space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Tutum / Duruş Türü
+                  </label>
+                  <select
+                    value={stanceTag}
+                    onChange={(e) => {
+                      const newTag = e.target.value as StanceTag;
+                      setStanceTag(newTag);
+                      if (!stanceLabel || stanceLabel.trim() === '') {
+                        setStanceLabel(resolveDefaultStanceLabel(newTag, currentTopic?.id || selectedTopicId));
+                      }
+                    }}
+                    className="w-full text-xs px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
+                  >
+                    {STANCE_GROUPS.map((group) => (
+                      <optgroup key={group.id} label={group.title}>
+                        {group.options.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Kısa Başlık / Rozet Metni (Serbestçe Belirleyebilirsiniz)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Örn: Saygıyla Andı / Eleştirdi / Açıklama Yaptı"
+                    value={stanceLabel}
+                    onChange={(e) => setStanceLabel(e.target.value)}
+                    className="w-full text-xs px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
               </div>
 
+              {/* Smart Quick Preset Chips based on topic */}
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Kısa Başlık / Etiket (İsteğe Bağlı)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Örn: Meclis Kürsüsünde Çözüm Vurgusu Yaptı"
-                  value={stanceLabel}
-                  onChange={(e) => setStanceLabel(e.target.value)}
-                  className="w-full text-xs px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500"
-                />
+                <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-500" />
+                  <span>Hızlı Seçim (Bu konuya özel hazır etiketler - tek tıkla seçebilirsiniz):</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {getQuickPresetChips(currentTopic?.id || selectedTopicId).map((chip, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setStanceTag(chip.tag);
+                        setStanceLabel(chip.badge);
+                      }}
+                      className={`text-[11px] px-2 py-1 rounded-md border transition-all ${
+                        stanceLabel === chip.badge
+                          ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 border-amber-400 font-semibold shadow-2xs'
+                          : 'bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Optional Summary */}
             <div>
               <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                Tutanak Özeti / Açıklama (İsteğe Bağlı - boş bırakılırsa alıntıdan üretilir)
+                Kısa Açıklama / Bağlam (İsteğe Bağlı - boş bırakılırsa alıntıdan üretilir)
               </label>
               <textarea
                 rows={2}
-                placeholder="Vekilin Genel Kurul'daki tavrının kısa özeti (isteğe bağlı)..."
+                placeholder="Vekilin bu konudaki tutumu, açıklaması veya davranışının özeti..."
                 value={overallSummary}
                 onChange={(e) => setOverallSummary(e.target.value)}
                 className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 resize-none"
@@ -645,11 +685,11 @@ export const AddStanceProposalModal: React.FC<AddStanceProposalModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                  Kuruluş / Platform Adı (İsteğe Bağlı)
+                  Kuruluş / Platform / Yayın (İsteğe Bağlı)
                 </label>
                 <input
                   type="text"
-                  placeholder="Örn: TBMM Tutanak Dergisi, TV Yayını, X Hesabı"
+                  placeholder="Örn: Resmi X Hesabı, Basın Toplantısı, TV Mülakatı, TBMM Tutanağı"
                   value={sourcePlatform}
                   onChange={(e) => setSourcePlatform(e.target.value)}
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"

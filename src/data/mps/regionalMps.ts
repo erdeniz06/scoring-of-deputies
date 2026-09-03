@@ -238,7 +238,7 @@ export const REGIONAL_MPS: MP[] = [
     partyId: 'tip',
     electedPartyId: 'tip',
     province: 'Hatay',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/can_atalay.jpg',
     term: '28. Dönem (Hatay)',
     title: 'TİP Hatay Milletvekili (Milletvekilliği Durumu Tartışmalı)',
     bio: 'Hukukçu, insan hakları savunucusu. Gezi Parkı davası ve AYM hak ihlali kararlarıyla kamuoyu gündeminde yer aldı.',

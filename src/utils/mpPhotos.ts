@@ -15,6 +15,9 @@ export const MP_LOCAL_PHOTOS: Record<string, string> = {
   numan_kurtulmus: '/mps/numan_kurtulmus.jpg',
   erkan_bas: '/mps/erkan_bas.jpg',
   ahmet_sik: '/mps/ahmet_sik.jpg',
+  sera_kadigil: '/mps/sera_kadigil.jpg',
+  can_atalay: '/mps/can_atalay.jpg',
+  serafettin_can_atalay: '/mps/can_atalay.jpg',
   fatih_erbakan: '/mps/fatih_erbakan.jpg',
   m_fatih_erbakan: '/mps/fatih_erbakan.jpg',
   engin_altay: '/mps/engin_altay.jpg',
@@ -77,6 +80,20 @@ export const MP_LOCAL_PHOTOS: Record<string, string> = {
   idris_nebi_hatipoglu: '/mps/idris_nebi_hatipoglu.jpg',
   jale_nur_sullu: '/mps/jale_nur_sullu.png',
   utku_cakirozer: '/mps/utku_cakirozer.png',
+
+  // Ankara
+  adnan_beker: '/mps/adnan_beker.jpg',
+  ahmet_esref_fakibaba: '/mps/ahmet_esref_fakibaba.jpg',
+  ahmet_fethan_baykoc: '/mps/ahmet_fethan_baykoc.jpg',
+  aliye_timisi_ersever: '/mps/aliye_timisi_ersever.jpg',
+  asuman_erdogan: '/mps/asuman_erdogan.jpg',
+  aylin_yaman: '/mps/aylin_yaman.jpg',
+  deniz_demir: '/mps/deniz_demir.jpg',
+  fuat_oktay: '/mps/fuat_oktay.jpg',
+  gamze_tascier: '/mps/gamze_tascier.jpg',
+  idris_sahin: '/mps/idris_sahin.jpg',
+  julide_sarieroglu: '/mps/julide_sarieroglu.jpg',
+  koray_aydin: '/mps/koray_aydin.jpg',
 };
 
 export function resolveMpPhoto(mpId: string, customUrl?: string): string | undefined {

@@ -249,18 +249,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </button>
 
           {/* Quick Controversy Filter Toggle Pill */}
-          <button
-            id="filter-has-controversy"
-            onClick={() => setHasControversyOnly(!hasControversyOnly)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap border flex items-center gap-1.5 transition-all ${
-              hasControversyOnly
-                ? 'bg-rose-600 text-white border-rose-700 shadow-xs'
-                : 'bg-rose-50/80 text-rose-700 border-rose-200 hover:bg-rose-100'
-            }`}
-          >
-            <ShieldAlert className="w-3.5 h-3.5" />
-            <span>İddiası / Fezlekesi Olanlar ({Object.keys(mpControversyCounts).length})</span>
-          </button>
+          {Object.keys(mpControversyCounts).length > 0 && (
+            <button
+              id="filter-has-controversy"
+              onClick={() => setHasControversyOnly(!hasControversyOnly)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap border flex items-center gap-1.5 transition-all ${
+                hasControversyOnly
+                  ? 'bg-rose-600 text-white border-rose-700 shadow-xs'
+                  : 'bg-rose-50/80 text-rose-700 border-rose-200 hover:bg-rose-100'
+              }`}
+            >
+              <ShieldAlert className="w-3.5 h-3.5" />
+              <span>Bildirilen İddia / Fezleke ({Object.keys(mpControversyCounts).length})</span>
+            </button>
+          )}
 
           {UNIQUE_PARTIES.map((party) => {
             const count = mps.filter(m => m.partyId === party.id || PARTIES[m.partyId]?.id === party.id).length;

@@ -130,10 +130,10 @@ export const MpControversiesSection: React.FC<MpControversiesSectionProps> = ({
       </div>
 
       {/* Principle / Legal Disclaimer Banner */}
-      <div className="p-4 bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/60 rounded-2xl flex items-start gap-3 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
-        <Info className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+      <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-start gap-3 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
         <div>
-          <strong className="font-bold">Doğruluk ve Masumiyet Karinesi Esası:</strong> Buradaki kayıtlar, kamuoyuna mal olmuş haberler, basın açıklamaları ve TBMM fezleke kayıtlarından derlenmiştir. Kesinleşmiş yargı kararı bulunmayan iddialarda Anayasa'nın masumiyet karinesi ilkesi geçerlidir. Milletvekillerinin resmi tekzip ve savunma beyanları şeffaf bir şekilde yan yana sunulur.
+          <strong className="font-bold text-slate-900 dark:text-white">Kullanıcı Bildirimi ve Tarafsızlık İlkesi:</strong> Sistemde varsayılan/önyüklü herhangi bir skandal veya fezleke kaydı yer almaz. Tüm dosyalar yalnızca kullanıcıların sunduğu resmi kaynaklı (TBMM tutanakları, yargı kararları, doğrulanmış basın haberleri) bildirimler ile oluşturulur.
         </div>
       </div>
 
@@ -199,10 +199,10 @@ export const MpControversiesSection: React.FC<MpControversiesSectionProps> = ({
             <h3 className="text-sm font-bold text-slate-700 dark:text-slate-200">
               {searchQuery || categoryFilter !== 'all'
                 ? 'Filtreye uygun iddia / dosya kaydı bulunamadı.'
-                : 'Bu milletvekili hakkında henüz kayıtlı bir iddia veya fezleke bulunmuyor.'}
+                : 'Bu milletvekili hakkında henüz kayıtlı bir skandal veya fezleke bulunmuyor.'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-              Kamuoyuna yansımış belgeli bir haber, fezleke veya tartışma biliyorsanız "+ Yeni İddia / Skandal Ekle" butonunu kullanarak ekleyebilirsiniz.
+              Sistemde önyüklü iddia bulunmamaktadır. Resmi veya belgeli bir haber, TBMM fezlekesi ya da kamuoyuna yansımış bir tartışma biliyorsanız siz veya diğer kullanıcılar "+ Yeni İddia / Skandal Ekle" butonu ile bildirebilir.
             </p>
             <button
               onClick={handleOpenAdd}

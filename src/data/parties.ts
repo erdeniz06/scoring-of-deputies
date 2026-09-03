@@ -19,7 +19,7 @@ export const PARTIES: Record<string, Party> = {
     textColor: '#ffffff',
     bgColor: '#ccfbf1',
     borderColor: '#5eead4',
-    seatCount: 91,
+    seatCount: 92,
   },
   dem: {
     id: 'dem',
@@ -59,7 +59,7 @@ export const PARTIES: Record<string, Party> = {
     textColor: '#ffffff',
     bgColor: '#e0f2fe',
     borderColor: '#7dd3fc',
-    seatCount: 27,
+    seatCount: 26,
   },
   yeni_yol: {
     id: 'yeni_yol',
@@ -79,7 +79,7 @@ export const PARTIES: Record<string, Party> = {
     textColor: '#ffffff',
     bgColor: '#f1f5f9',
     borderColor: '#cbd5e1',
-    seatCount: 11,
+    seatCount: 13,
   },
   huda_par: {
     id: 'huda_par',
@@ -109,7 +109,7 @@ export const PARTIES: Record<string, Party> = {
     textColor: '#ffffff',
     bgColor: '#fee2e2',
     borderColor: '#fca5a5',
-    seatCount: 3,
+    seatCount: 4,
   },
   dbp: {
     id: 'dbp',
