@@ -668,11 +668,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Bekir_Bozdag_2022.jpg/600px-Bekir_Bozdag_2022.jpg',
+    photoUrl: '/mps/bekir_bozdag.jpg',
     term: '28. Dönem',
     title: 'TBMM Başkanvekili & Şanlıurfa Milletvekili',
     bio: 'Hukukçu, ilahiyatçı. Eski Adalet Bakanı ve Başbakan Yardımcısı. 22, 23, 24, 26, 27. Dönem Yozgat, 28. Dönem Şanlıurfa Milletvekili ve TBMM Başkanvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#sanliurfa-63',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-ce2d-037b-e050-007f01005610',
     stances: {
       'infaz_duzenlemesi_2023': {
         id: 'st_bb_infaz',
@@ -704,10 +704,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/abdulkadir_emin_onen.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili & Eski Pekin Büyükelçisi',
     bio: 'Siyaset bilimci, diplomat. Türkiye’nin Pekin eski Büyükelçisi. 23, 24 ve 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-c8ba-037b-e050-007f01005610',
     stances: {}
   },
   {
@@ -716,10 +717,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/abdurrahim_dusak.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Tıp doktoru, radyoloji profesörü. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=ea663758-7136-4d49-b027-018871154525',
     stances: {}
   },
   {
@@ -728,10 +730,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/mehmet_ali_cevheri.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Ziraat mühendisi, iktisatçı. 26, 27 ve 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9b5-037b-e050-007f01005610',
     stances: {}
   },
   {
@@ -740,10 +743,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/cevahir_asuman_yazmaci.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Girişimci, TOBB Şanlıurfa Kadın Girişimciler Kurulu eski Başkanı. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=bfd7f6e4-866c-4741-9c2b-01887111567a',
     stances: {}
   },
   {
@@ -752,10 +756,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/ibrahim_eyyupoglu.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Hukukçu, avukat. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=c935c0cd-f4bf-438f-a576-018870fb8260',
     stances: {}
   },
   {
@@ -764,10 +769,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/hikmet_basak.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Ziraat odası yöneticisi, çiftçi. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=753fc85d-d760-4e09-9178-01886c4704cc',
     stances: {}
   },
   {
@@ -776,10 +782,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/mehmet_faruk_pinarbasi.jpg',
     term: '28. Dönem',
     title: 'AK Parti Şanlıurfa Milletvekili',
     bio: 'Birecik eski Belediye Başkanı, avukat. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=d99484d9-f545-47ed-8972-01887104015a',
     stances: {}
   },
   {
@@ -788,11 +795,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Mithat_Sancar_2022.jpg/600px-Mithat_Sancar_2022.jpg',
+    photoUrl: '/mps/mithat_sancar.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Şanlıurfa Milletvekili & Eski Eş Genel Başkan',
     bio: 'Anayasa hukuku profesörü, akademisyen, yazar. HDP/DEM Parti eski Eş Genel Başkanı (2020-2023) ve TBMM eski Başkanvekili. 25, 26. Dönem Mardin, 28. Dönem Şanlıurfa Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#sanliurfa-63',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d936-037b-e050-007f01005610',
     stances: {
       'cerceve_yasa': {
         id: 'st_ms_cerceve',
@@ -824,10 +831,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/omer_ocalan.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Şanlıurfa Milletvekili',
     bio: 'Gazeteci, siyasetçi. 27. ve 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc5b-037b-e050-007f01005610',
     stances: {
       'cerceve_yasa': {
         id: 'st_oo_cerceve',
@@ -848,10 +856,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/dilan_kunt_ayan.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Şanlıurfa Milletvekili & TBMM Adalet Komisyonu Üyesi',
     bio: 'Hukukçu, insan hakları savunucusu avukat. 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=0a18a768-5a18-48b6-ab42-0188762435d7',
     stances: {}
   },
   {
@@ -860,10 +869,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/ferit_senyasar.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Şanlıurfa Milletvekili & TBMM İnsan Hakları Komisyonu Üyesi',
     bio: 'Adalet nöbeti mücadelesiyle tanınan siyasetçi. 28. Dönem TBMM Şanlıurfa Milletvekili ve TBMM İnsan Haklarını İnceleme Komisyonu Üyesi.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=5ccd3e97-6fbe-4d60-8bb0-0188766266f6',
     stances: {
       'infaz_duzenlemesi_2023': {
         id: 'st_fs_infaz',
@@ -881,14 +891,14 @@ export const PROVINCES_NEW_MPS: MP[] = [
   {
     id: 'mahmut_tanal',
     fullName: 'Mahmut Tanal',
-    partyId: 'chp',
+    partyId: 'yeni_parti',
     electedPartyId: 'chp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/mahmut_tanal.jpg',
     term: '28. Dönem',
     title: 'CHP Şanlıurfa Milletvekili & TBMM İnsan Hakları Komisyonu Üyesi',
     bio: 'Hukukçu, avukat. 24, 25, 26, 27. Dönem İstanbul, 28. Dönem Şanlıurfa Milletvekili. Sahadaki aktif hak savunuculuğuyla tanınır.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#sanliurfa-63',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d93b-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_mt_sokak',
@@ -920,10 +930,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'mhp',
     electedPartyId: 'mhp',
     province: 'Şanlıurfa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/ibrahim_ozyavuz.jpg',
     term: '28. Dönem',
     title: 'MHP Şanlıurfa Milletvekili',
     bio: 'Harran eski Belediye Başkanı. 27. ve 28. Dönem TBMM Şanlıurfa Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9ce-037b-e050-007f01005610',
     stances: {}
   },
 
@@ -1464,11 +1475,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Pervin_Buldan_2022.jpg/600px-Pervin_Buldan_2022.jpg',
+    photoUrl: '/mps/pervin_buldan.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili & Eski Eş Genel Başkan',
     bio: 'Siyasetçi. Eski HDP Eş Genel Başkanı (2018-2023) ve TBMM eski Başkanvekili. 23. Dönem Iğdır, 24, 25, 26. Dönem İstanbul, 27. Dönem Siirt, 28. Dönem Van Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/liste#van-65',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dd17-037b-e050-007f01005610',
     stances: {
       'cerceve_yasa': {
         id: 'st_pb_cerceve',
@@ -1500,10 +1511,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/zulkuf_ucar.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili & TBMM Adalet Komisyonu Üyesi',
     bio: 'Hukukçu, eski Van Barosu Başkanı. 28. Dönem TBMM Van Milletvekili ve TBMM Adalet Komisyonu Üyesi.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=740370a1-5725-437c-aaa4-0188762c5492',
     stances: {
       'kayyum_uygulamalari': {
         id: 'st_zu_kayyum',
@@ -1524,10 +1536,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/gulcan_kacmaz_sayyigit.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili & TBMM Milli Eğitim Komisyonu Üyesi',
     bio: 'Eğitimci, sendikacı (Eğitim-Sen). Edremit eski Belediye Eşbaşkanı. 28. Dönem TBMM Van Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=8b958ff4-ffaa-4624-b074-01887167000e',
     stances: {}
   },
   {
@@ -1536,10 +1549,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/sinan_ciftyurek.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili & Kürdistan Komünist Partisi Kurucusu',
     bio: 'Yazar, araştırmacı, siyasetçi. KKP eski Genel Başkanı. 28. Dönem TBMM Van Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=46826fa5-4ff3-4311-ba8c-01887180f054',
     stances: {
       'cerceve_yasa': {
         id: 'st_sc_cerceve',
@@ -1560,10 +1574,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/gulderen_varli.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili',
     bio: 'Siyasetçi, yerel yönetim aktivisti. 28. Dönem TBMM Van Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=30e61b16-e8b8-45cc-a9d8-01887168aa42',
     stances: {}
   },
   {
@@ -1572,10 +1587,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'dem',
     electedPartyId: 'dem',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/mahmut_dindar.jpg',
     term: '28. Dönem',
     title: 'DEM Parti Van Milletvekili',
     bio: 'Sendikacı, işçi emeklisi. 28. Dönem TBMM Van Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=0f9f1b77-9b84-4b7a-be12-01887157c7fd',
     stances: {}
   },
   {
@@ -1584,10 +1600,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/burhan_kayaturk.jpg',
     term: '28. Dönem',
     title: 'AK Parti Van Milletvekili & TBMM Dışişleri Komisyonu Üyesi',
     bio: 'Elektrik-elektronik mühendisi, uluslararası iş insanı. 23. Dönem Ankara, 24, 26 ve 28. Dönem Van Milletvekili. TBMM APA Türk Grubu Başkanı.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-cd06-037b-e050-007f01005610',
     stances: {}
   },
   {
@@ -1596,10 +1613,11 @@ export const PROVINCES_NEW_MPS: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Van',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/kayhan_turkmenoglu.jpg',
     term: '28. Dönem',
     title: 'AK Parti Van Milletvekili & Eski İl Başkanı',
     bio: 'İş insanı, Van TSO eski Başkanı. 23. ve 28. Dönem TBMM Van Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-cce6-037b-e050-007f01005610',
     stances: {}
   },
 

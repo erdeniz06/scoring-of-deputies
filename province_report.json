@@ -1,0 +1,3383 @@
+{
+  "totalMps": 616,
+  "loadedCount": 226,
+  "missingCount": 390,
+  "fullyLoaded": [
+    {
+      "prov": "Ankara",
+      "total": 36
+    },
+    {
+      "prov": "Çanakkale",
+      "total": 4
+    },
+    {
+      "prov": "Erzurum",
+      "total": 6
+    },
+    {
+      "prov": "Eskişehir",
+      "total": 6
+    },
+    {
+      "prov": "Isparta",
+      "total": 4
+    },
+    {
+      "prov": "Kütahya",
+      "total": 5
+    },
+    {
+      "prov": "Manisa",
+      "total": 10
+    },
+    {
+      "prov": "Ordu",
+      "total": 6
+    },
+    {
+      "prov": "Sivas",
+      "total": 5
+    },
+    {
+      "prov": "Şanlıurfa",
+      "total": 14
+    },
+    {
+      "prov": "Van",
+      "total": 8
+    },
+    {
+      "prov": "Zonguldak",
+      "total": 5
+    }
+  ],
+  "partiallyLoaded": [
+    {
+      "prov": "Adana",
+      "loaded": 3,
+      "total": 15
+    },
+    {
+      "prov": "Antalya",
+      "loaded": 1,
+      "total": 17
+    },
+    {
+      "prov": "Balıkesir",
+      "loaded": 1,
+      "total": 9
+    },
+    {
+      "prov": "Bursa",
+      "loaded": 2,
+      "total": 20
+    },
+    {
+      "prov": "Hatay",
+      "loaded": 1,
+      "total": 11
+    },
+    {
+      "prov": "İstanbul",
+      "loaded": 98,
+      "total": 122
+    },
+    {
+      "prov": "İzmir",
+      "loaded": 1,
+      "total": 28
+    },
+    {
+      "prov": "Kayseri",
+      "loaded": 1,
+      "total": 10
+    },
+    {
+      "prov": "Mersin",
+      "loaded": 2,
+      "total": 13
+    },
+    {
+      "prov": "Osmaniye",
+      "loaded": 2,
+      "total": 4
+    },
+    {
+      "prov": "Samsun",
+      "loaded": 1,
+      "total": 9
+    },
+    {
+      "prov": "Siirt",
+      "loaded": 1,
+      "total": 3
+    },
+    {
+      "prov": "Tekirdağ",
+      "loaded": 1,
+      "total": 8
+    },
+    {
+      "prov": "Tokat",
+      "loaded": 1,
+      "total": 6
+    },
+    {
+      "prov": "Trabzon",
+      "loaded": 1,
+      "total": 6
+    }
+  ],
+  "zeroLoaded": [
+    {
+      "prov": "Adıyaman",
+      "total": 4
+    },
+    {
+      "prov": "Afyonkarahisar",
+      "total": 5
+    },
+    {
+      "prov": "Ağrı",
+      "total": 4
+    },
+    {
+      "prov": "Aksaray",
+      "total": 4
+    },
+    {
+      "prov": "Amasya",
+      "total": 3
+    },
+    {
+      "prov": "Ardahan",
+      "total": 2
+    },
+    {
+      "prov": "Artvin",
+      "total": 2
+    },
+    {
+      "prov": "Aydın",
+      "total": 8
+    },
+    {
+      "prov": "Bartın",
+      "total": 2
+    },
+    {
+      "prov": "Batman",
+      "total": 5
+    },
+    {
+      "prov": "Bayburt",
+      "total": 1
+    },
+    {
+      "prov": "Bilecik",
+      "total": 2
+    },
+    {
+      "prov": "Bingöl",
+      "total": 3
+    },
+    {
+      "prov": "Bitlis",
+      "total": 3
+    },
+    {
+      "prov": "Bolu",
+      "total": 3
+    },
+    {
+      "prov": "Burdur",
+      "total": 3
+    },
+    {
+      "prov": "Çankırı",
+      "total": 2
+    },
+    {
+      "prov": "Çorum",
+      "total": 4
+    },
+    {
+      "prov": "Denizli",
+      "total": 7
+    },
+    {
+      "prov": "Diyarbakır",
+      "total": 11
+    },
+    {
+      "prov": "Düzce",
+      "total": 3
+    },
+    {
+      "prov": "Edirne",
+      "total": 4
+    },
+    {
+      "prov": "Elazığ",
+      "total": 5
+    },
+    {
+      "prov": "Erzincan",
+      "total": 2
+    },
+    {
+      "prov": "Gaziantep",
+      "total": 14
+    },
+    {
+      "prov": "Giresun",
+      "total": 4
+    },
+    {
+      "prov": "Gümüşhane",
+      "total": 2
+    },
+    {
+      "prov": "Hakkâri",
+      "total": 3
+    },
+    {
+      "prov": "Iğdır",
+      "total": 2
+    },
+    {
+      "prov": "Kahramanmaraş",
+      "total": 7
+    },
+    {
+      "prov": "Karabük",
+      "total": 3
+    },
+    {
+      "prov": "Karaman",
+      "total": 3
+    },
+    {
+      "prov": "Kars",
+      "total": 3
+    },
+    {
+      "prov": "Kastamonu",
+      "total": 2
+    },
+    {
+      "prov": "Kırıkkale",
+      "total": 2
+    },
+    {
+      "prov": "Kırklareli",
+      "total": 3
+    },
+    {
+      "prov": "Kırşehir",
+      "total": 2
+    },
+    {
+      "prov": "Kilis",
+      "total": 2
+    },
+    {
+      "prov": "Kocaeli",
+      "total": 11
+    },
+    {
+      "prov": "Konya",
+      "total": 15
+    },
+    {
+      "prov": "Malatya",
+      "total": 6
+    },
+    {
+      "prov": "Mardin",
+      "total": 6
+    },
+    {
+      "prov": "Muğla",
+      "total": 7
+    },
+    {
+      "prov": "Muş",
+      "total": 3
+    },
+    {
+      "prov": "Nevşehir",
+      "total": 3
+    },
+    {
+      "prov": "Niğde",
+      "total": 3
+    },
+    {
+      "prov": "Rize",
+      "total": 3
+    },
+    {
+      "prov": "Sakarya",
+      "total": 8
+    },
+    {
+      "prov": "Sinop",
+      "total": 2
+    },
+    {
+      "prov": "Şırnak",
+      "total": 4
+    },
+    {
+      "prov": "Tunceli",
+      "total": 1
+    },
+    {
+      "prov": "Uşak",
+      "total": 3
+    },
+    {
+      "prov": "Yalova",
+      "total": 3
+    },
+    {
+      "prov": "Yozgat",
+      "total": 4
+    }
+  ],
+  "provinceStats": {
+    "Manisa": {
+      "total": 10,
+      "loaded": 10,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Özgür Özel",
+          "loaded": true
+        },
+        {
+          "name": "Bekir Başevirgen",
+          "loaded": true
+        },
+        {
+          "name": "Bahadır Nahit Yenişehirlioğlu",
+          "loaded": true
+        },
+        {
+          "name": "Murat Baybatur",
+          "loaded": true
+        },
+        {
+          "name": "Tamer Akkal",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Mücahit Arınç",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Vehbi Bakırlıoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Selma Aliye Kavaf",
+          "loaded": true
+        },
+        {
+          "name": "Erkan Akçay",
+          "loaded": true
+        },
+        {
+          "name": "Şenol Sunat",
+          "loaded": true
+        }
+      ]
+    },
+    "Mersin": {
+      "total": 13,
+      "loaded": 2,
+      "missing": 11,
+      "mps": [
+        {
+          "name": "Ali Mahir Başarır",
+          "loaded": true
+        },
+        {
+          "name": "Gülcan Kış",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Emin Ekmen",
+          "loaded": false
+        },
+        {
+          "name": "Talat Dinçer",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Ufuk Çakır",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Nureddin Nebati",
+          "loaded": true
+        },
+        {
+          "name": "Ali Kıratlı",
+          "loaded": false
+        },
+        {
+          "name": "Havva Sibel Söylemez",
+          "loaded": false
+        },
+        {
+          "name": "Faruk Dinç",
+          "loaded": false
+        },
+        {
+          "name": "Levent Uysal",
+          "loaded": false
+        },
+        {
+          "name": "Burhanettin Kocamaz",
+          "loaded": false
+        },
+        {
+          "name": "Ali Bozan",
+          "loaded": false
+        },
+        {
+          "name": "Perihan Koca",
+          "loaded": false
+        }
+      ]
+    },
+    "Ankara": {
+      "total": 36,
+      "loaded": 36,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Murat Emir",
+          "loaded": true
+        },
+        {
+          "name": "Umut Akdoğan",
+          "loaded": true
+        },
+        {
+          "name": "Gamze Taşcıer",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Leyla Şahin Usta",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Ömer İleri",
+          "loaded": true
+        },
+        {
+          "name": "Asuman Erdoğan",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Fethan Baykoç",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Tekin Bingöl",
+          "loaded": true
+        },
+        {
+          "name": "Mesut Doğan",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Aylin Yaman",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Kürşad Zorlu",
+          "loaded": true
+        },
+        {
+          "name": "Yüksel Arslan",
+          "loaded": true
+        },
+        {
+          "name": "Yaşar Yıldırım",
+          "loaded": true
+        },
+        {
+          "name": "Yıldırım Tuğrul Türkeş",
+          "loaded": true
+        },
+        {
+          "name": "Jülide Sarıeroğlu",
+          "loaded": true
+        },
+        {
+          "name": "Fuat Oktay",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Vedat Bilgin",
+          "loaded": true
+        },
+        {
+          "name": "Osman Gökçek",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Mevlüt Karakaya",
+          "loaded": true
+        },
+        {
+          "name": "Sadir Durmaz",
+          "loaded": true
+        },
+        {
+          "name": "Semra Dinçer",
+          "loaded": true
+        },
+        {
+          "name": "Deniz Demir",
+          "loaded": true
+        },
+        {
+          "name": "Sadullah Ergin",
+          "loaded": true
+        },
+        {
+          "name": "İdris Şahin",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Ahmet Eşref Fakıbaba",
+          "loaded": true
+        },
+        {
+          "name": "Adnan Beker",
+          "loaded": true
+        },
+        {
+          "name": "Koray Aydın",
+          "loaded": true
+        },
+        {
+          "name": "Aliye Timisi Ersever",
+          "loaded": true
+        },
+        {
+          "name": "Orhan Yegin",
+          "loaded": true
+        },
+        {
+          "name": "Zehra Nur Aydemir",
+          "loaded": true
+        },
+        {
+          "name": "Lütfiye Selva Çam",
+          "loaded": true
+        },
+        {
+          "name": "Murat Alparslan",
+          "loaded": true
+        },
+        {
+          "name": "Okan Konuralp",
+          "loaded": true
+        },
+        {
+          "name": "Kurtcan Çelebi",
+          "loaded": true
+        },
+        {
+          "name": "Av. Zeynep Yıldız",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Mustafa Nedim Yamalı",
+          "loaded": true
+        }
+      ]
+    },
+    "İstanbul": {
+      "total": 122,
+      "loaded": 98,
+      "missing": 24,
+      "mps": [
+        {
+          "name": "Gökhan Günaydın",
+          "loaded": true
+        },
+        {
+          "name": "Ali Gökçek",
+          "loaded": true
+        },
+        {
+          "name": "Ayşe Sibel Yanıkömeroğlu",
+          "loaded": true
+        },
+        {
+          "name": "Özgür Karabat",
+          "loaded": true
+        },
+        {
+          "name": "Turan Taşkın Özer",
+          "loaded": true
+        },
+        {
+          "name": "Evrim Rızvanoğlu Emir",
+          "loaded": true
+        },
+        {
+          "name": "Fethi Açıkel",
+          "loaded": true
+        },
+        {
+          "name": "Gökan Zeybek",
+          "loaded": true
+        },
+        {
+          "name": "Murat Kurum",
+          "loaded": true
+        },
+        {
+          "name": "Gamze Akkuş İlgezdi",
+          "loaded": true
+        },
+        {
+          "name": "Edip Semih Yalçın",
+          "loaded": true
+        },
+        {
+          "name": "Oğuz Kaan Salıcı",
+          "loaded": true
+        },
+        {
+          "name": "Serkan Bayram",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Ersagun Yücel",
+          "loaded": true
+        },
+        {
+          "name": "Suat Özçağdaş",
+          "loaded": true
+        },
+        {
+          "name": "Sırrı Süreyya Önder",
+          "loaded": true
+        },
+        {
+          "name": "Suat Pamukçu",
+          "loaded": true
+        },
+        {
+          "name": "Hasan Karal",
+          "loaded": true
+        },
+        {
+          "name": "Birol Aydın",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Yeneroğlu",
+          "loaded": true
+        },
+        {
+          "name": "Süleyman Soylu",
+          "loaded": true
+        },
+        {
+          "name": "Namık Tan",
+          "loaded": true
+        },
+        {
+          "name": "Hulki Cevizoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Şık",
+          "loaded": true
+        },
+        {
+          "name": "Buğra Kavuncu",
+          "loaded": true
+        },
+        {
+          "name": "Cemal Enginyurt",
+          "loaded": true
+        },
+        {
+          "name": "Fatih Erbakan",
+          "loaded": true
+        },
+        {
+          "name": "Numan Kurtulmuş",
+          "loaded": true
+        },
+        {
+          "name": "Engin Altay",
+          "loaded": true
+        },
+        {
+          "name": "Sera Kadıgil",
+          "loaded": true
+        },
+        {
+          "name": "Feti Yıldız",
+          "loaded": true
+        },
+        {
+          "name": "Çiğdem Kılıçgün Uçar",
+          "loaded": true
+        },
+        {
+          "name": "Seyithan İzsiz",
+          "loaded": true
+        },
+        {
+          "name": "Celal Adan",
+          "loaded": true
+        },
+        {
+          "name": "Adem Yıldırım",
+          "loaded": true
+        },
+        {
+          "name": "Bayram Şenocak",
+          "loaded": true
+        },
+        {
+          "name": "Burak Akburak",
+          "loaded": true
+        },
+        {
+          "name": "Cüneyt Yüksel",
+          "loaded": true
+        },
+        {
+          "name": "Çiçek Otlu",
+          "loaded": true
+        },
+        {
+          "name": "Derya Ayaydın",
+          "loaded": true
+        },
+        {
+          "name": "Ayşe Sibel Yanıkömeroğlu",
+          "loaded": true
+        },
+        {
+          "name": "Erkan Kandemir",
+          "loaded": true
+        },
+        {
+          "name": "Ersin Beyaz",
+          "loaded": true
+        },
+        {
+          "name": "Hulusi Şentürk",
+          "loaded": true
+        },
+        {
+          "name": "İsmail Erdem",
+          "loaded": true
+        },
+        {
+          "name": "Keziban Konukcu Kok",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Selim Ensarioğlu",
+          "loaded": true
+        },
+        {
+          "name": "Müşerref Pervin Tuba Durgut",
+          "loaded": true
+        },
+        {
+          "name": "Nilhan Ayan",
+          "loaded": true
+        },
+        {
+          "name": "Nimet Özdemir",
+          "loaded": true
+        },
+        {
+          "name": "Rümeysa Kadak",
+          "loaded": true
+        },
+        {
+          "name": "Seda Gören",
+          "loaded": true
+        },
+        {
+          "name": "Sena Nur Çelik Kanat",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Sevan Sıvacıoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Türkan Elçi",
+          "loaded": true
+        },
+        {
+          "name": "Ümmügülşen Öztürk",
+          "loaded": true
+        },
+        {
+          "name": "Yıldız Konal Süslü",
+          "loaded": true
+        },
+        {
+          "name": "Yücel Arzen Hacıoğulları",
+          "loaded": true
+        },
+        {
+          "name": "Erkan Baş",
+          "loaded": true
+        },
+        {
+          "name": "Cengiz Çiçek",
+          "loaded": true
+        },
+        {
+          "name": "İzzet Ulvi Yönter",
+          "loaded": true
+        },
+        {
+          "name": "Doç. Dr. Yunus Emre",
+          "loaded": true
+        },
+        {
+          "name": "İlhan Kesici",
+          "loaded": true
+        },
+        {
+          "name": "Elif Esen",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Selim Temurci",
+          "loaded": true
+        },
+        {
+          "name": "İsmail Emrah Karayel",
+          "loaded": true
+        },
+        {
+          "name": "Zafer Sırakaya",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Demir",
+          "loaded": true
+        },
+        {
+          "name": "Kadri Enis Berberoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Av. İsa Mesih Şahin",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Kaya",
+          "loaded": true
+        },
+        {
+          "name": "Önder Aksakal",
+          "loaded": true
+        },
+        {
+          "name": "Halis Dalkılıç",
+          "loaded": true
+        },
+        {
+          "name": "Erdoğan Toprak",
+          "loaded": true
+        },
+        {
+          "name": "Zeynel Emre",
+          "loaded": true
+        },
+        {
+          "name": "Celal Fırat",
+          "loaded": true
+        },
+        {
+          "name": "İskender Bayhan",
+          "loaded": true
+        },
+        {
+          "name": "Av. Bülent Kaya",
+          "loaded": true
+        },
+        {
+          "name": "Doğan Bekin",
+          "loaded": true
+        },
+        {
+          "name": "Şahzade Demir",
+          "loaded": false
+        },
+        {
+          "name": "Müşerref Tuba Durgut",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Turan",
+          "loaded": true
+        },
+        {
+          "name": "Azmi Ekinci",
+          "loaded": true
+        },
+        {
+          "name": "Yahya Çelik",
+          "loaded": true
+        },
+        {
+          "name": "Büşra Paker",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Cihan Paçacı",
+          "loaded": true
+        },
+        {
+          "name": "Özgül Saki",
+          "loaded": true
+        },
+        {
+          "name": "Kehime Yıldırım",
+          "loaded": false
+        },
+        {
+          "name": "Rabia Kalender İlhan",
+          "loaded": true
+        },
+        {
+          "name": "Av. Şengül Karslı",
+          "loaded": true
+        },
+        {
+          "name": "Oğuz Üçüncü",
+          "loaded": true
+        },
+        {
+          "name": "Şamil Ayrım",
+          "loaded": true
+        },
+        {
+          "name": "Doğan Demir",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Medeni Yılmaz",
+          "loaded": true
+        },
+        {
+          "name": "İsmail Faruk Aksu",
+          "loaded": true
+        },
+        {
+          "name": "Ayşegül Doğan",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Sibel Özdemir",
+          "loaded": false
+        },
+        {
+          "name": "Yüksel Mansur Kılınç",
+          "loaded": true
+        },
+        {
+          "name": "Doç. Dr. Halit Yerebakan",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Ümmügülşen Öztürk",
+          "loaded": false
+        },
+        {
+          "name": "Behiye Eker",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Hasan Sert",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Ataş",
+          "loaded": false
+        },
+        {
+          "name": "Tuğba Işık Ercan",
+          "loaded": true
+        },
+        {
+          "name": "Nurettin Alan",
+          "loaded": true
+        },
+        {
+          "name": "Ali Seydi Koca",
+          "loaded": false
+        },
+        {
+          "name": "Harun Karaca",
+          "loaded": false
+        },
+        {
+          "name": "Seda Gören Bölük",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Coşkun Çakır",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Hamdi Çamlı",
+          "loaded": false
+        },
+        {
+          "name": "İskender Ertuş",
+          "loaded": false
+        },
+        {
+          "name": "Berran Bilgiç",
+          "loaded": false
+        },
+        {
+          "name": "Nilgün Sayar",
+          "loaded": false
+        },
+        {
+          "name": "Ali Gökçe",
+          "loaded": false
+        },
+        {
+          "name": "Bülent Tezcan",
+          "loaded": false
+        },
+        {
+          "name": "Zekeriya Yapıcıoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Fatma Betül Sayan Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Av. Sevgi Kılıç",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Hasan Kalyoncu",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Enes Emiroğlu",
+          "loaded": false
+        },
+        {
+          "name": "Salih Çoruh",
+          "loaded": false
+        },
+        {
+          "name": "Yasin Özyurt",
+          "loaded": false
+        }
+      ]
+    },
+    "Zonguldak": {
+      "total": 5,
+      "loaded": 5,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Deniz Yavuzyılmaz",
+          "loaded": true
+        },
+        {
+          "name": "Muammer Avcı",
+          "loaded": true
+        },
+        {
+          "name": "Saffet Bozkurt",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Çolakoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Eylem Ertuğ Ertuğrul",
+          "loaded": true
+        }
+      ]
+    },
+    "Samsun": {
+      "total": 9,
+      "loaded": 1,
+      "missing": 8,
+      "mps": [
+        {
+          "name": "Murat Çan",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Mehmet Muş",
+          "loaded": true
+        },
+        {
+          "name": "Çiğdem Karaaslan",
+          "loaded": false
+        },
+        {
+          "name": "Yusuf Ziya Yılmaz",
+          "loaded": false
+        },
+        {
+          "name": "Orhan Kırcalı",
+          "loaded": false
+        },
+        {
+          "name": "Ersan Aksu",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. İlyas Topsakal",
+          "loaded": false
+        },
+        {
+          "name": "Erhan Usta",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Karaman",
+          "loaded": false
+        }
+      ]
+    },
+    "Adana": {
+      "total": 15,
+      "loaded": 3,
+      "missing": 12,
+      "mps": [
+        {
+          "name": "Burhanettin Bulut",
+          "loaded": true
+        },
+        {
+          "name": "Orhan Sümer",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Çelik",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Zenbilci",
+          "loaded": false
+        },
+        {
+          "name": "Sunay Karamık",
+          "loaded": false
+        },
+        {
+          "name": "Abdullah Doğru",
+          "loaded": false
+        },
+        {
+          "name": "Faruk Aytek",
+          "loaded": false
+        },
+        {
+          "name": "Müzeyyen Şevkin",
+          "loaded": false
+        },
+        {
+          "name": "Sadullah Kısacık",
+          "loaded": false
+        },
+        {
+          "name": "Ayhan Barut",
+          "loaded": false
+        },
+        {
+          "name": "Muharrem Varlı",
+          "loaded": false
+        },
+        {
+          "name": "Ayşe Sibel Ersoy",
+          "loaded": false
+        },
+        {
+          "name": "Ayyüce Türkeş Taş",
+          "loaded": false
+        },
+        {
+          "name": "Bilal Bilici",
+          "loaded": false
+        },
+        {
+          "name": "Tülay Hatimoğulları Oruç",
+          "loaded": true
+        }
+      ]
+    },
+    "Ardahan": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Özgür Erdem İncesu",
+          "loaded": false
+        },
+        {
+          "name": "Kaan Koç",
+          "loaded": false
+        }
+      ]
+    },
+    "Hatay": {
+      "total": 11,
+      "loaded": 1,
+      "missing": 10,
+      "mps": [
+        {
+          "name": "Servet Mullaoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Adem Yeşildal",
+          "loaded": false
+        },
+        {
+          "name": "Abdulkadir Özel",
+          "loaded": false
+        },
+        {
+          "name": "Hüseyin Yayman",
+          "loaded": false
+        },
+        {
+          "name": "Kemal Karahan",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Güzelmansur",
+          "loaded": false
+        },
+        {
+          "name": "Nermin Yıldırım Kara",
+          "loaded": false
+        },
+        {
+          "name": "Necmettin Çalışkan",
+          "loaded": false
+        },
+        {
+          "name": "Lütfi Kaşıkçı",
+          "loaded": false
+        },
+        {
+          "name": "Adnan Şefik Çirkin",
+          "loaded": false
+        },
+        {
+          "name": "Şerafettin Can Atalay",
+          "loaded": true
+        }
+      ]
+    },
+    "Ordu": {
+      "total": 6,
+      "loaded": 6,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Seyit Torun",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Mahmut Özer",
+          "loaded": true
+        },
+        {
+          "name": "İbrahim Ufuk Kaynak",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Hamarat",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Mustafa Adıgüzel",
+          "loaded": true
+        },
+        {
+          "name": "Naci Şanlıtürk",
+          "loaded": true
+        }
+      ]
+    },
+    "Isparta": {
+      "total": 4,
+      "loaded": 4,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Hikmet Yalım Halıcı",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Uğur Gökgöz",
+          "loaded": true
+        },
+        {
+          "name": "Osman Zabun",
+          "loaded": true
+        },
+        {
+          "name": "Hasan Basri Sönmez",
+          "loaded": true
+        }
+      ]
+    },
+    "Malatya": {
+      "total": 6,
+      "loaded": 0,
+      "missing": 6,
+      "mps": [
+        {
+          "name": "Veli Ağbaba",
+          "loaded": false
+        },
+        {
+          "name": "Bülent Tüfenkci",
+          "loaded": false
+        },
+        {
+          "name": "İhsan Koca",
+          "loaded": false
+        },
+        {
+          "name": "İnanç Siraç Kara Ölmeztoprak",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Abdurrahman Babacan",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Celal Fendoğlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Şanlıurfa": {
+      "total": 14,
+      "loaded": 14,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Mahmut Tanal",
+          "loaded": true
+        },
+        {
+          "name": "Bekir Bozdağ",
+          "loaded": true
+        },
+        {
+          "name": "Abdulkadir Emin Önen",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Abdürrahim Dusak",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Ali Cevheri",
+          "loaded": true
+        },
+        {
+          "name": "Cevahir Asuman Yazmacı",
+          "loaded": true
+        },
+        {
+          "name": "İbrahim Eyyüpoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Hikmet Başak",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Faruk Pınarbaşı",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Mithat Sancar",
+          "loaded": true
+        },
+        {
+          "name": "Ömer Öcalan",
+          "loaded": true
+        },
+        {
+          "name": "Dilan Kunt Ayan",
+          "loaded": true
+        },
+        {
+          "name": "Ferit Şenyaşar",
+          "loaded": true
+        },
+        {
+          "name": "İbrahim Özyavuz",
+          "loaded": true
+        }
+      ]
+    },
+    "Bursa": {
+      "total": 20,
+      "loaded": 2,
+      "missing": 18,
+      "mps": [
+        {
+          "name": "Mustafa Varank",
+          "loaded": true
+        },
+        {
+          "name": "Efkan Ala",
+          "loaded": true
+        },
+        {
+          "name": "Refik Özen",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Kılıç",
+          "loaded": false
+        },
+        {
+          "name": "Emine Yavuz Gözgeç",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Yavuz",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Kayıhan Pala",
+          "loaded": false
+        },
+        {
+          "name": "Nurhayat Altaca Kayışoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Atmaca",
+          "loaded": false
+        },
+        {
+          "name": "İsmet Büyükataman",
+          "loaded": false
+        },
+        {
+          "name": "Yüksel Selçuk Türkoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Ayhan Salman",
+          "loaded": false
+        },
+        {
+          "name": "Osman Mesten",
+          "loaded": false
+        },
+        {
+          "name": "Emel Gözükara Durmaz",
+          "loaded": false
+        },
+        {
+          "name": "Muhammet Müfit Aydın",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Öztürk",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Cemalettin Kani Torun",
+          "loaded": false
+        },
+        {
+          "name": "Orhan Sarıbal",
+          "loaded": false
+        },
+        {
+          "name": "Fevzi Zırhlıoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Toktaş",
+          "loaded": false
+        }
+      ]
+    },
+    "Tokat": {
+      "total": 6,
+      "loaded": 1,
+      "missing": 5,
+      "mps": [
+        {
+          "name": "Özlem Zengin",
+          "loaded": true
+        },
+        {
+          "name": "Yusuf Beyazıt",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Arslan",
+          "loaded": false
+        },
+        {
+          "name": "Cüneyt Aldemir",
+          "loaded": false
+        },
+        {
+          "name": "Kadim Durmaz",
+          "loaded": false
+        },
+        {
+          "name": "Yücel Bulut",
+          "loaded": false
+        }
+      ]
+    },
+    "Sivas": {
+      "total": 5,
+      "loaded": 5,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Abdullah Güler",
+          "loaded": true
+        },
+        {
+          "name": "Hakan Aksu",
+          "loaded": true
+        },
+        {
+          "name": "Rukiye Toy",
+          "loaded": true
+        },
+        {
+          "name": "Ulaş Karasu",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Özyürek",
+          "loaded": true
+        }
+      ]
+    },
+    "Balıkesir": {
+      "total": 9,
+      "loaded": 1,
+      "missing": 8,
+      "mps": [
+        {
+          "name": "Dr. Turhan Çömez",
+          "loaded": true
+        },
+        {
+          "name": "İsmail Ok",
+          "loaded": false
+        },
+        {
+          "name": "Belgin Uygur",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Mustafa Canbey",
+          "loaded": false
+        },
+        {
+          "name": "Ali Taylan Öztaylan",
+          "loaded": false
+        },
+        {
+          "name": "Ensar Aytekin",
+          "loaded": false
+        },
+        {
+          "name": "Serkan Sarı",
+          "loaded": false
+        },
+        {
+          "name": "Burak Dalgın",
+          "loaded": false
+        },
+        {
+          "name": "Ekrem Gökay Yüksel",
+          "loaded": false
+        }
+      ]
+    },
+    "İzmir": {
+      "total": 28,
+      "loaded": 1,
+      "missing": 27,
+      "mps": [
+        {
+          "name": "Müsavat Dervişoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Yüksel Taşkın",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Tuncay Özkan",
+          "loaded": false
+        },
+        {
+          "name": "Sevda Erdan Kılıç",
+          "loaded": false
+        },
+        {
+          "name": "Murat Bakan",
+          "loaded": false
+        },
+        {
+          "name": "Ednan Arslan",
+          "loaded": false
+        },
+        {
+          "name": "Seda Kaya Ösen",
+          "loaded": false
+        },
+        {
+          "name": "Haydar Altıntaş",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Muharrem Kasapoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Mahmut Atilla Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Şebnem Bursalı",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Ali Çelebi",
+          "loaded": false
+        },
+        {
+          "name": "Ümit Özlale",
+          "loaded": false
+        },
+        {
+          "name": "Burcugül Çubuk",
+          "loaded": false
+        },
+        {
+          "name": "Gökçe Gökçen",
+          "loaded": false
+        },
+        {
+          "name": "Rıfat Turuntay Nalbantoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Rahmi Aşkın Türeli",
+          "loaded": false
+        },
+        {
+          "name": "Mahir Polat",
+          "loaded": false
+        },
+        {
+          "name": "Salih Uzun",
+          "loaded": false
+        },
+        {
+          "name": "Deniz Yücel",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Bilici",
+          "loaded": false
+        },
+        {
+          "name": "Eyyüp Kadir İnan",
+          "loaded": false
+        },
+        {
+          "name": "Fehmi Alpay Özalan",
+          "loaded": false
+        },
+        {
+          "name": "Ceyda Bölünmez Çankırı",
+          "loaded": false
+        },
+        {
+          "name": "Yaşar Kırkpınar",
+          "loaded": false
+        },
+        {
+          "name": "Tamer Osmanağaoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Hüsmen Kırkpınar",
+          "loaded": false
+        },
+        {
+          "name": "İbrahim Akın",
+          "loaded": false
+        }
+      ]
+    },
+    "Osmaniye": {
+      "total": 4,
+      "loaded": 2,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Devlet Bahçeli",
+          "loaded": true
+        },
+        {
+          "name": "Derya Yanık",
+          "loaded": true
+        },
+        {
+          "name": "Seydi Gülsoy",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Asu Kaya",
+          "loaded": false
+        }
+      ]
+    },
+    "Siirt": {
+      "total": 3,
+      "loaded": 1,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Tuncer Bakırhan",
+          "loaded": true
+        },
+        {
+          "name": "Sabahat Erdoğan Sarıtaş",
+          "loaded": false
+        },
+        {
+          "name": "Mervan Gül",
+          "loaded": false
+        }
+      ]
+    },
+    "Giresun": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Ali Temür",
+          "loaded": false
+        },
+        {
+          "name": "Elvan Işık Gezmiş",
+          "loaded": false
+        },
+        {
+          "name": "Ertuğrul Gazi Konal",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Nazım Elmas",
+          "loaded": false
+        }
+      ]
+    },
+    "Gümüşhane": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Celalettin Köse",
+          "loaded": false
+        },
+        {
+          "name": "Musa Küçük",
+          "loaded": false
+        }
+      ]
+    },
+    "Hakkâri": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Vezir Coşkun Parlak",
+          "loaded": false
+        },
+        {
+          "name": "Öznur Bartin",
+          "loaded": false
+        },
+        {
+          "name": "Onur Düşünmez",
+          "loaded": false
+        }
+      ]
+    },
+    "Iğdır": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Cantürk Alagöz",
+          "loaded": false
+        },
+        {
+          "name": "Yılmaz Hun",
+          "loaded": false
+        }
+      ]
+    },
+    "Kars": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Adem Çalkın",
+          "loaded": false
+        },
+        {
+          "name": "İnan Akgün Alp",
+          "loaded": false
+        },
+        {
+          "name": "Gülistan Kılıç Koçyiğit",
+          "loaded": false
+        }
+      ]
+    },
+    "Kastamonu": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Halil Uluay",
+          "loaded": false
+        },
+        {
+          "name": "Fatma Serap Ekmekci",
+          "loaded": false
+        }
+      ]
+    },
+    "Kayseri": {
+      "total": 10,
+      "loaded": 1,
+      "missing": 9,
+      "mps": [
+        {
+          "name": "Hulusi Akar",
+          "loaded": true
+        },
+        {
+          "name": "Ayşe Böhürler",
+          "loaded": false
+        },
+        {
+          "name": "Şaban Çopuroğlu",
+          "loaded": false
+        },
+        {
+          "name": "Murat Cahid Cıngı",
+          "loaded": false
+        },
+        {
+          "name": "Sayın Bayar Özsoy",
+          "loaded": false
+        },
+        {
+          "name": "Aşkın Genç",
+          "loaded": false
+        },
+        {
+          "name": "Mahmut Arıkan",
+          "loaded": false
+        },
+        {
+          "name": "İsmail Özdemir",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Baki Ersoy",
+          "loaded": false
+        },
+        {
+          "name": "Dursun Ataş",
+          "loaded": false
+        }
+      ]
+    },
+    "Kırıkkale": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Mustafa Kaplan",
+          "loaded": false
+        },
+        {
+          "name": "Halil Öztürk",
+          "loaded": false
+        }
+      ]
+    },
+    "Kırklareli": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Vecdi Gündoğdu",
+          "loaded": false
+        },
+        {
+          "name": "Fahri Özkan",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Gökhan Sarıçam",
+          "loaded": false
+        }
+      ]
+    },
+    "Kırşehir": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Necmettin Erkan",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Metin İlhan",
+          "loaded": false
+        }
+      ]
+    },
+    "Kilis": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Ahmet Salih Dal",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Demir",
+          "loaded": false
+        }
+      ]
+    },
+    "Sinop": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Dr. Nazım Maviş",
+          "loaded": false
+        },
+        {
+          "name": "Barış Karadeniz",
+          "loaded": false
+        }
+      ]
+    },
+    "Şırnak": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Nevroz Uysal Aslan",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Zeki İrmez",
+          "loaded": false
+        },
+        {
+          "name": "Ayşegül Doğan Dağlı",
+          "loaded": false
+        },
+        {
+          "name": "Arslan Tatar",
+          "loaded": false
+        }
+      ]
+    },
+    "Tekirdağ": {
+      "total": 8,
+      "loaded": 1,
+      "missing": 7,
+      "mps": [
+        {
+          "name": "Faik Öztrak",
+          "loaded": true
+        },
+        {
+          "name": "Dr. İlhami Özcan Aygun",
+          "loaded": false
+        },
+        {
+          "name": "Cem Avşar",
+          "loaded": false
+        },
+        {
+          "name": "Nurten Yontar",
+          "loaded": false
+        },
+        {
+          "name": "Mestan Özcan",
+          "loaded": false
+        },
+        {
+          "name": "Gökhan Diktaş",
+          "loaded": false
+        },
+        {
+          "name": "Çiğdem Koncagül",
+          "loaded": false
+        },
+        {
+          "name": "Selcan Hamşıoğlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Trabzon": {
+      "total": 6,
+      "loaded": 1,
+      "missing": 5,
+      "mps": [
+        {
+          "name": "Adil Karaismailoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Şen",
+          "loaded": false
+        },
+        {
+          "name": "Yılmaz Büyükaydın",
+          "loaded": false
+        },
+        {
+          "name": "Vehbi Koç",
+          "loaded": false
+        },
+        {
+          "name": "Av. Sibel Suiçmez",
+          "loaded": false
+        },
+        {
+          "name": "Yavuz Aydın",
+          "loaded": false
+        }
+      ]
+    },
+    "Tunceli": {
+      "total": 1,
+      "loaded": 0,
+      "missing": 1,
+      "mps": [
+        {
+          "name": "Ayten Kordu",
+          "loaded": false
+        }
+      ]
+    },
+    "Uşak": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Dr. İsmail Güneş",
+          "loaded": false
+        },
+        {
+          "name": "Fahrettin Tuğrul",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Ali Karaoba",
+          "loaded": false
+        }
+      ]
+    },
+    "Van": {
+      "total": 8,
+      "loaded": 8,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Pervin Buldan",
+          "loaded": true
+        },
+        {
+          "name": "Zülküf Uçar",
+          "loaded": true
+        },
+        {
+          "name": "Gülcan Kaçmaz Sayyiğit",
+          "loaded": true
+        },
+        {
+          "name": "Sinan Çiftyürek",
+          "loaded": true
+        },
+        {
+          "name": "Gülderen Varlı",
+          "loaded": true
+        },
+        {
+          "name": "Mahmut Dindar",
+          "loaded": true
+        },
+        {
+          "name": "Burhan Kayatürk",
+          "loaded": true
+        },
+        {
+          "name": "Kayhan Türkmenoğlu",
+          "loaded": true
+        }
+      ]
+    },
+    "Yalova": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Ahmet Büyükgümüş",
+          "loaded": false
+        },
+        {
+          "name": "Meliha Akyol",
+          "loaded": false
+        },
+        {
+          "name": "Tahsin Becan",
+          "loaded": false
+        }
+      ]
+    },
+    "Yozgat": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Abdulkadir Akgül",
+          "loaded": false
+        },
+        {
+          "name": "Süleyman Şahan",
+          "loaded": false
+        },
+        {
+          "name": "İbrahim Ethem Sedef",
+          "loaded": false
+        },
+        {
+          "name": "Lütfullah Kayalar",
+          "loaded": false
+        }
+      ]
+    },
+    "Karaman": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Selman Oğuzhan Eser",
+          "loaded": false
+        },
+        {
+          "name": "Osman Sağlam",
+          "loaded": false
+        },
+        {
+          "name": "İsmail Atakan Ünver",
+          "loaded": false
+        }
+      ]
+    },
+    "Konya": {
+      "total": 15,
+      "loaded": 0,
+      "missing": 15,
+      "mps": [
+        {
+          "name": "Tahir Akyürek",
+          "loaded": false
+        },
+        {
+          "name": "Orhan Erdem",
+          "loaded": false
+        },
+        {
+          "name": "Selman Özboyacı",
+          "loaded": false
+        },
+        {
+          "name": "Meryem Göka",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Abdullah Ağralı",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Baykan",
+          "loaded": false
+        },
+        {
+          "name": "Ziya Altunyıldız",
+          "loaded": false
+        },
+        {
+          "name": "Latif Selvi",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Hakan Özer",
+          "loaded": false
+        },
+        {
+          "name": "Barış Bektaş",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Ekici",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Kalaycı",
+          "loaded": false
+        },
+        {
+          "name": "Konur Alp Koçak",
+          "loaded": false
+        },
+        {
+          "name": "Ünal Karaman",
+          "loaded": false
+        },
+        {
+          "name": "Ali Yüksel",
+          "loaded": false
+        }
+      ]
+    },
+    "Kütahya": {
+      "total": 5,
+      "loaded": 5,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Adil Biçer",
+          "loaded": true
+        },
+        {
+          "name": "İsmail Çağlar Bayırcı",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Demir",
+          "loaded": true
+        },
+        {
+          "name": "Ali Fazıl Kasap",
+          "loaded": true
+        },
+        {
+          "name": "Ahmet Erbaş",
+          "loaded": true
+        }
+      ]
+    },
+    "Mardin": {
+      "total": 6,
+      "loaded": 0,
+      "missing": 6,
+      "mps": [
+        {
+          "name": "Salihe Aydeniz",
+          "loaded": false
+        },
+        {
+          "name": "Kamuran Tanhan",
+          "loaded": false
+        },
+        {
+          "name": "Beritan Güneş Altın",
+          "loaded": false
+        },
+        {
+          "name": "George Aslan",
+          "loaded": false
+        },
+        {
+          "name": "Faruk Kılınç",
+          "loaded": false
+        },
+        {
+          "name": "Muhammed Adak",
+          "loaded": false
+        }
+      ]
+    },
+    "Niğde": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Prof. Dr. Cevahir Uzkurt",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Fethi Gürer",
+          "loaded": false
+        },
+        {
+          "name": "Cumali İnce",
+          "loaded": false
+        }
+      ]
+    },
+    "Rize": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Muhammed Avcı",
+          "loaded": false
+        },
+        {
+          "name": "Harun Mertoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Tahsin Ocaklı",
+          "loaded": false
+        }
+      ]
+    },
+    "Sakarya": {
+      "total": 8,
+      "loaded": 0,
+      "missing": 8,
+      "mps": [
+        {
+          "name": "Lütfi Bayraktar",
+          "loaded": false
+        },
+        {
+          "name": "Çiğdem Erdoğan Atabek",
+          "loaded": false
+        },
+        {
+          "name": "Ali İnci",
+          "loaded": false
+        },
+        {
+          "name": "Ertuğrul Kocacık",
+          "loaded": false
+        },
+        {
+          "name": "Murat Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Ayça Taşkent",
+          "loaded": false
+        },
+        {
+          "name": "Muhammet Levent Bülbül",
+          "loaded": false
+        },
+        {
+          "name": "Ümit Dikbayır",
+          "loaded": false
+        }
+      ]
+    },
+    "Adıyaman": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Doç. Dr. Resul Kurt",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. İshak Şan",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Alkayış",
+          "loaded": false
+        },
+        {
+          "name": "Hüseyin Özhan",
+          "loaded": false
+        }
+      ]
+    },
+    "Afyonkarahisar": {
+      "total": 5,
+      "loaded": 0,
+      "missing": 5,
+      "mps": [
+        {
+          "name": "Ali Özkaya",
+          "loaded": false
+        },
+        {
+          "name": "İbrahim Yurdunuseven",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Hasan Arslan",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Taytak",
+          "loaded": false
+        },
+        {
+          "name": "Hakan Şeref Olgun",
+          "loaded": false
+        }
+      ]
+    },
+    "Ağrı": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Sırrı Sakık",
+          "loaded": false
+        },
+        {
+          "name": "Nejla Demir",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Heval Bozdağ",
+          "loaded": false
+        },
+        {
+          "name": "Ruken Kilerci",
+          "loaded": false
+        }
+      ]
+    },
+    "Aksaray": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Cengiz Aydoğdu",
+          "loaded": false
+        },
+        {
+          "name": "Hüseyin Altınsoy",
+          "loaded": false
+        },
+        {
+          "name": "Ramazan Kaşlı",
+          "loaded": false
+        },
+        {
+          "name": "Turan Yaldır",
+          "loaded": false
+        }
+      ]
+    },
+    "Amasya": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Haluk İpek",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Çilez",
+          "loaded": false
+        },
+        {
+          "name": "Reşat Karagöz",
+          "loaded": false
+        }
+      ]
+    },
+    "Antalya": {
+      "total": 17,
+      "loaded": 1,
+      "missing": 16,
+      "mps": [
+        {
+          "name": "Mevlüt Çavuşoğlu",
+          "loaded": true
+        },
+        {
+          "name": "Mustafa Köse",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Tuba Vural Çokal",
+          "loaded": false
+        },
+        {
+          "name": "Kemal Çelik",
+          "loaded": false
+        },
+        {
+          "name": "Atay Uslu",
+          "loaded": false
+        },
+        {
+          "name": "İbrahim Ethem Taş",
+          "loaded": false
+        },
+        {
+          "name": "Sururi Çorabatır",
+          "loaded": false
+        },
+        {
+          "name": "Cavit Arı",
+          "loaded": false
+        },
+        {
+          "name": "Aliye Coşar",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Serap Yazıcı Özbudun",
+          "loaded": false
+        },
+        {
+          "name": "Şerafettin Kılıç",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Erdem",
+          "loaded": false
+        },
+        {
+          "name": "Abdurrahman Başkan",
+          "loaded": false
+        },
+        {
+          "name": "Hilmi Durgun",
+          "loaded": false
+        },
+        {
+          "name": "Uğur Poyraz",
+          "loaded": false
+        },
+        {
+          "name": "Aykut Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Hakkı Saruhan Oluç",
+          "loaded": false
+        }
+      ]
+    },
+    "Bilecik": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Halil Eldemir",
+          "loaded": false
+        },
+        {
+          "name": "Yaşar Tüzün",
+          "loaded": false
+        }
+      ]
+    },
+    "Bingöl": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Feyzi Berdibek",
+          "loaded": false
+        },
+        {
+          "name": "Zeki Korkutata",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Faruk Hülakü",
+          "loaded": false
+        }
+      ]
+    },
+    "Bitlis": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Hüseyin Olan",
+          "loaded": false
+        },
+        {
+          "name": "Semra Çağlar Gökalp",
+          "loaded": false
+        },
+        {
+          "name": "Turan Bedirhanoğlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Bolu": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Yüksel Coşkunyürek",
+          "loaded": false
+        },
+        {
+          "name": "Türker Ateş",
+          "loaded": false
+        },
+        {
+          "name": "İsmail Akgül",
+          "loaded": false
+        }
+      ]
+    },
+    "Burdur": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Prof. Dr. Adem Korkmaz",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Oğuz",
+          "loaded": false
+        },
+        {
+          "name": "İzzet Akbulut",
+          "loaded": false
+        }
+      ]
+    },
+    "Çanakkale": {
+      "total": 4,
+      "loaded": 4,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "İsmet Güneşhan",
+          "loaded": true
+        },
+        {
+          "name": "Özgür Ceylan",
+          "loaded": true
+        },
+        {
+          "name": "Ayhan Gider",
+          "loaded": true
+        },
+        {
+          "name": "Rıdvan Uz",
+          "loaded": true
+        }
+      ]
+    },
+    "Çankırı": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Muhammet Emin Akbaşoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Pelin Yılık",
+          "loaded": false
+        }
+      ]
+    },
+    "Çorum": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Yusuf Ahlatcı",
+          "loaded": false
+        },
+        {
+          "name": "Oğuzhan Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Tahtasız",
+          "loaded": false
+        },
+        {
+          "name": "Vahit Kayrıcı",
+          "loaded": false
+        }
+      ]
+    },
+    "Denizli": {
+      "total": 7,
+      "loaded": 0,
+      "missing": 7,
+      "mps": [
+        {
+          "name": "Cahit Özkan",
+          "loaded": false
+        },
+        {
+          "name": "Şahin Tin",
+          "loaded": false
+        },
+        {
+          "name": "Nilgün Ök",
+          "loaded": false
+        },
+        {
+          "name": "Gülizar Biçer Karaca",
+          "loaded": false
+        },
+        {
+          "name": "Şeref Arpacı",
+          "loaded": false
+        },
+        {
+          "name": "Sema Silkin Ün",
+          "loaded": false
+        },
+        {
+          "name": "Yasin Öztürk",
+          "loaded": false
+        }
+      ]
+    },
+    "Diyarbakır": {
+      "total": 11,
+      "loaded": 0,
+      "missing": 11,
+      "mps": [
+        {
+          "name": "Berdan Öztürk",
+          "loaded": false
+        },
+        {
+          "name": "Halide Türkoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Osman Cengiz Çandar",
+          "loaded": false
+        },
+        {
+          "name": "Adalet Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Ceylan Akça Cupolo",
+          "loaded": false
+        },
+        {
+          "name": "Serhat Eren",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Kamaç",
+          "loaded": false
+        },
+        {
+          "name": "Suna Kepolu Ataman",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Said Yaz",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Sevilay Çelenk",
+          "loaded": false
+        },
+        {
+          "name": "Galip Ensarioğlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Artvin": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Faruk Çelik",
+          "loaded": false
+        },
+        {
+          "name": "Uğur Bayraktutan",
+          "loaded": false
+        }
+      ]
+    },
+    "Aydın": {
+      "total": 8,
+      "loaded": 0,
+      "missing": 8,
+      "mps": [
+        {
+          "name": "Bülent Tezcan",
+          "loaded": false
+        },
+        {
+          "name": "Hüseyin Yıldız",
+          "loaded": false
+        },
+        {
+          "name": "Süleyman Bülbül",
+          "loaded": false
+        },
+        {
+          "name": "Evrim Karakoz",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Savaş",
+          "loaded": false
+        },
+        {
+          "name": "Seda Sarıbaş",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Özmen",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Karakaş",
+          "loaded": false
+        }
+      ]
+    },
+    "Bartın": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Yusuf Ziya Aldatmaz",
+          "loaded": false
+        },
+        {
+          "name": "Aysu Bankoğlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Batman": {
+      "total": 5,
+      "loaded": 0,
+      "missing": 5,
+      "mps": [
+        {
+          "name": "Keskin Bayındır",
+          "loaded": false
+        },
+        {
+          "name": "Zeynep Oduncu",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Rüştü Tiryaki",
+          "loaded": false
+        },
+        {
+          "name": "Ferhat Nasıroğlu",
+          "loaded": false
+        },
+        {
+          "name": "Serkan Ramanlı",
+          "loaded": false
+        }
+      ]
+    },
+    "Bayburt": {
+      "total": 1,
+      "loaded": 0,
+      "missing": 1,
+      "mps": [
+        {
+          "name": "Prof. Dr. Orhan Ateş",
+          "loaded": false
+        }
+      ]
+    },
+    "Edirne": {
+      "total": 4,
+      "loaded": 0,
+      "missing": 4,
+      "mps": [
+        {
+          "name": "Ediz Ün",
+          "loaded": false
+        },
+        {
+          "name": "Ahmet Baran Yazgan",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Fatma Aksal",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Mehmet Akalın",
+          "loaded": false
+        }
+      ]
+    },
+    "Elazığ": {
+      "total": 5,
+      "loaded": 0,
+      "missing": 5,
+      "mps": [
+        {
+          "name": "Prof. Dr. Erol Keleş",
+          "loaded": false
+        },
+        {
+          "name": "Ejder Açıkkapı",
+          "loaded": false
+        },
+        {
+          "name": "Mahmut Rıdvan Nazırlı",
+          "loaded": false
+        },
+        {
+          "name": "Gürsel Erol",
+          "loaded": false
+        },
+        {
+          "name": "Semih Işıkver",
+          "loaded": false
+        }
+      ]
+    },
+    "Erzincan": {
+      "total": 2,
+      "loaded": 0,
+      "missing": 2,
+      "mps": [
+        {
+          "name": "Süleyman Karaman",
+          "loaded": false
+        },
+        {
+          "name": "Mustafa Sarıgül",
+          "loaded": false
+        }
+      ]
+    },
+    "Erzurum": {
+      "total": 6,
+      "loaded": 6,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Selami Altınok",
+          "loaded": true
+        },
+        {
+          "name": "Fatma Öncü",
+          "loaded": true
+        },
+        {
+          "name": "Mehmet Emin Öz",
+          "loaded": true
+        },
+        {
+          "name": "Abdurrahim Fırat",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Kamil Aydın",
+          "loaded": true
+        },
+        {
+          "name": "Meral Danış Beştaş",
+          "loaded": true
+        }
+      ]
+    },
+    "Eskişehir": {
+      "total": 6,
+      "loaded": 6,
+      "missing": 0,
+      "mps": [
+        {
+          "name": "Utku Çakırözer",
+          "loaded": true
+        },
+        {
+          "name": "Dr. Jale Nur Süllü",
+          "loaded": true
+        },
+        {
+          "name": "İbrahim Arslan",
+          "loaded": true
+        },
+        {
+          "name": "Fatih Dönmez",
+          "loaded": true
+        },
+        {
+          "name": "Prof. Dr. Ayşen Gürcan",
+          "loaded": true
+        },
+        {
+          "name": "İdris Nebi Hatipoğlu",
+          "loaded": true
+        }
+      ]
+    },
+    "Gaziantep": {
+      "total": 14,
+      "loaded": 0,
+      "missing": 14,
+      "mps": [
+        {
+          "name": "Abdulhamit Gül",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Eyup Özkeçeci",
+          "loaded": false
+        },
+        {
+          "name": "Ali Şahin",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Derya Bakbak",
+          "loaded": false
+        },
+        {
+          "name": "Mesut Bozatlı",
+          "loaded": false
+        },
+        {
+          "name": "Hasan Öztürkmen",
+          "loaded": false
+        },
+        {
+          "name": "Melih Meriç",
+          "loaded": false
+        },
+        {
+          "name": "Ertuğrul Kaya",
+          "loaded": false
+        },
+        {
+          "name": "Sermet Atay",
+          "loaded": false
+        },
+        {
+          "name": "Sevda Karaca Demir",
+          "loaded": false
+        },
+        {
+          "name": "Eyüp Özkeçeci",
+          "loaded": false
+        },
+        {
+          "name": "Sevda Karaca",
+          "loaded": false
+        },
+        {
+          "name": "Bünyamin Bozgeyik",
+          "loaded": false
+        },
+        {
+          "name": "İrfan Çelikaslan",
+          "loaded": false
+        }
+      ]
+    },
+    "Düzce": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Ayşe Keşir",
+          "loaded": false
+        },
+        {
+          "name": "Ercan Öztürk",
+          "loaded": false
+        },
+        {
+          "name": "Talih Özcan",
+          "loaded": false
+        }
+      ]
+    },
+    "Kahramanmaraş": {
+      "total": 7,
+      "loaded": 0,
+      "missing": 7,
+      "mps": [
+        {
+          "name": "Prof. Dr. Vahit Kirişci",
+          "loaded": false
+        },
+        {
+          "name": "Ömer Oruç Bilal Debgici",
+          "loaded": false
+        },
+        {
+          "name": "Ali Öztunç",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Zuhal Karakoç Dora",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Mehmet Şahin",
+          "loaded": false
+        },
+        {
+          "name": "Tuba Köksal",
+          "loaded": false
+        },
+        {
+          "name": "Uzm. Dr. İrfan Karatutlu",
+          "loaded": false
+        }
+      ]
+    },
+    "Karabük": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Cem Şahin",
+          "loaded": false
+        },
+        {
+          "name": "Ali Keskinkılıç",
+          "loaded": false
+        },
+        {
+          "name": "Cevdet Akay",
+          "loaded": false
+        }
+      ]
+    },
+    "Kocaeli": {
+      "total": 11,
+      "loaded": 0,
+      "missing": 11,
+      "mps": [
+        {
+          "name": "Prof. Dr. Sadettin Hülagü",
+          "loaded": false
+        },
+        {
+          "name": "Radiye Sezer Katırcıoğlu",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Muhip Kanko",
+          "loaded": false
+        },
+        {
+          "name": "Harun Özgür Yıldızlı",
+          "loaded": false
+        },
+        {
+          "name": "Nail Çiler",
+          "loaded": false
+        },
+        {
+          "name": "Saffet Sancaklı",
+          "loaded": false
+        },
+        {
+          "name": "Dr. Ömer Faruk Gergerlioğlu",
+          "loaded": false
+        },
+        {
+          "name": "Veysel Tipioğlu",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Akif Yılmaz",
+          "loaded": false
+        },
+        {
+          "name": "Lütfü Türkkan",
+          "loaded": false
+        },
+        {
+          "name": "Cemil Yaman",
+          "loaded": false
+        }
+      ]
+    },
+    "Muğla": {
+      "total": 7,
+      "loaded": 0,
+      "missing": 7,
+      "mps": [
+        {
+          "name": "Kadem Mete",
+          "loaded": false
+        },
+        {
+          "name": "Yakup Otgöz",
+          "loaded": false
+        },
+        {
+          "name": "Cumhur Uzun",
+          "loaded": false
+        },
+        {
+          "name": "Gizem Özcan",
+          "loaded": false
+        },
+        {
+          "name": "Süreyya Öneş Derici",
+          "loaded": false
+        },
+        {
+          "name": "Doç. Dr. Selçuk Özdağ",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Metin Ergun",
+          "loaded": false
+        }
+      ]
+    },
+    "Muş": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Sezai Temelli",
+          "loaded": false
+        },
+        {
+          "name": "Sümeyye Boz",
+          "loaded": false
+        },
+        {
+          "name": "Mehmet Emin Şimşek",
+          "loaded": false
+        }
+      ]
+    },
+    "Nevşehir": {
+      "total": 3,
+      "loaded": 0,
+      "missing": 3,
+      "mps": [
+        {
+          "name": "Süleyman Özgün",
+          "loaded": false
+        },
+        {
+          "name": "Emre Çalışkan",
+          "loaded": false
+        },
+        {
+          "name": "Prof. Dr. Filiz Kılıç",
+          "loaded": false
+        }
+      ]
+    }
+  }
+}

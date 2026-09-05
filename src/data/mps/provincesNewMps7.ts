@@ -772,11 +772,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/gamze_tascier.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & CHP Çalışma ve Sosyal Güvenlik Genel Başkan Yardımcısı',
     bio: 'Eczacı, CHP Sosyal Politikalar ve Çalışma Hayatından Sorumlu Genel Başkan Yardımcısı. 27 ve 28. Dönem Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1477',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9e0-037b-e050-007f01005610',
     stances: {
       '2023_kk_oo_kurultay': {
         id: 'st_gtas_kurultay',
@@ -809,11 +809,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/tekin_bingol.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & Eski Genel Başkan Yardımcısı',
     bio: 'Tıp doktoru, eski CHP Örgütlerden Sorumlu Genel Başkan Yardımcısı. 23, 24, 25, 26, 27 ve 28. Dönem Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1478',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d95c-037b-e050-007f01005610',
     stances: {
       '2023_kk_oo_kurultay': {
         id: 'st_tbing_kurultay',
@@ -835,11 +835,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/ahmet_fethan_baykoc.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & Uluslararası Ticaret Uzmanı',
     bio: 'İktisatçı, AK Parti Dış İlişkiler Başkan Yardımcısı. 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1479',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=d4d6dc2c-05cf-4b41-b209-018866ff30ad',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_afb_kopek',
@@ -861,11 +861,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/kurtcan_celebi.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & AK Parti MKYK Üyesi',
     bio: 'Kamu yöneticisi, AK Parti Teşkilat Başkan Yardımcısı. 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1480',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=0a6ddb60-d406-40e0-b790-018866dae96b',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_kcel_kopek',
@@ -887,11 +887,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/zeynep_yildiz.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & AK Parti Bilgi ve İletişim Başkan Yardımcısı',
     bio: 'Hukukçu, bilişim hukuku uzmanı, AK Parti Genel Merkez Bilgi ve İletişim Teknolojileri Başkan Yardımcısı. 27 ve 28. Dönem Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1481',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcce-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_zy_kopek',
@@ -913,11 +913,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/asuman_erdogan.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM Dışişleri Komisyonu Üyesi',
     bio: 'Uluslararası ilişkiler uzmanı, AK Parti MKYK üyesi. 27 ve 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1482',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d994-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_aerd_kopek',
@@ -1524,11 +1524,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/sadullah_ergin.jpg',
     term: '28. Dönem',
     title: 'DEVA Partisi Ankara Milletvekili & Eski Adalet Bakanı',
     bio: 'Hukukçu, eski Adalet Bakanı, DEVA Partisi Kurucular Kurulu üyesi ve Genel Başkan Yardımcısı. 22, 23, 24 ve 28. Dönem Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1502',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d5a8-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_serg_adaylik',
@@ -1550,11 +1550,11 @@ export const PROVINCES_NEW_MPS_7: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/mustafa_nedim_yamali.jpg',
     term: '28. Dönem',
     title: 'Gelecek Partisi Ankara Milletvekili & Diş Hekimi',
     bio: 'Diş hekimi, eski AK Parti Ankara İl Başkanı, Gelecek Partisi Genel Başkan Yardımcısı. 28. Dönem Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1503',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=96f315c3-250a-455d-91c1-0188570cf766',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_mny_adaylik',

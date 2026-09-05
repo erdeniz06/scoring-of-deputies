@@ -1,0 +1,674 @@
+[
+  {
+    "name": "Adem YILDIRIM",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=d9ca7fad-635c-4101-b146-0188710bbb30",
+    "id": "adem_yildirim",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d3556865-a1d0-4903-9b38-01881f4cb214.jpe"
+  },
+  {
+    "name": "Ahmet ŞIK",
+    "party": "TİP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dbfd-037b-e050-007f01005610",
+    "id": "ahmet_sik",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/591d628d-3ffe-48ff-a0e8-eefc69750cf7.jpe"
+  },
+  {
+    "name": "Ahmet Ersagun YÜCEL",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=3c2ad0c7-7a43-4ade-b57d-018866ca405c",
+    "id": "ahmet_ersagun_yucel",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4e882e6f-25cf-4abe-a9b4-01881f4cb900.jpe"
+  },
+  {
+    "name": "Ali GÖKÇEK",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=26a5cce4-1037-4f9c-870d-01887ae33197",
+    "id": "ali_gokcek",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d426c7c5-cb32-4eda-8d3f-01881f4cb92e.jpe"
+  },
+  {
+    "name": "Ayşe Sibel YANIKÖMEROĞLU",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=6de01e73-e390-44b4-a6dc-01886bea4456",
+    "id": "sibel_yanikomeroglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d4abe9f1-1b76-4924-9a51-01881f4cbcae.jpe"
+  },
+  {
+    "name": "Azmi EKİNCİ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-c377-037b-e050-007f01005610",
+    "id": "azmi_ekinci",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/08597e07-9c8d-4c3f-8e25-dfcef8599814.jpe"
+  },
+  {
+    "name": "Bayram ŞENOCAK",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=ba3358de-e73d-46df-b155-018877215482",
+    "id": "bayram_senocak",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c5c2f32b-9501-45a0-8189-01881f4cb255.jpe"
+  },
+  {
+    "name": "Behiye EKER",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=956eabca-154b-42af-9e07-01887b3df099",
+    "id": "behiye_eker",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4cc63ea3-b87a-4f05-bd19-01881f4cb1a5.jpe"
+  },
+  {
+    "name": "Birol AYDIN",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f00b8fa2-422e-40f1-8bb1-01886b4a2bde",
+    "id": "birol_aydin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/884a4ee3-ab81-4bf9-9762-01881f4cb8f8.jpe"
+  },
+  {
+    "name": "Burak AKBURAK",
+    "party": "İYİ Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=9042a2ec-7310-468b-b26c-01886774dc36",
+    "id": "burak_akburak",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/baf472a0-0d27-4546-a9d3-01881f4cbc86.jpe"
+  },
+  {
+    "name": "Bülent KAYA",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=b98e53f3-f17c-4ced-8ae9-01886b4b7840",
+    "id": "bulent_kaya",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/17ac54b8-685c-4d1c-bfb5-01881f4cb9b0.jpe"
+  },
+  {
+    "name": "Büşra PAKER",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=6b5c0649-ccf2-4d47-afaa-018876e78827",
+    "id": "busra_paker",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/7d33f26c-65c7-435c-8d3c-01881f4cb1fd.jpe"
+  },
+  {
+    "name": "Celal ADAN",
+    "party": "MHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc03-037b-e050-007f01005610",
+    "id": "celal_adan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/66e0eed9-7e90-4962-8af0-e05316abece7.jpe"
+  },
+  {
+    "name": "Celal FIRAT",
+    "party": "DEM PARTİ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=5caef7a9-0e2e-48b9-a1b0-01887616483c",
+    "id": "celal_firat",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/7c515420-a9c8-47f0-b93a-01881f4cbfb6.jpe"
+  },
+  {
+    "name": "Cemal ENGİNYURT",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d946-037b-e050-007f01005610",
+    "id": "cemal_enginyurt",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d1bb55d0-e998-4c90-a658-a88d931a10c0.jpe"
+  },
+  {
+    "name": "Cengiz ÇİÇEK",
+    "party": "DEM PARTİ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=3f2264f1-2e7f-4473-9793-01887b928822",
+    "id": "cengiz_cicek",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/f754a38b-74bf-4afa-bcf3-01881f4cbf8b.jpe"
+  },
+  {
+    "name": "Cüneyt YÜKSEL",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d854-037b-e050-007f01005610",
+    "id": "cuneyt_yuksel",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c17d377f-8e82-4ffa-b229-cbf82fe20971.jpe"
+  },
+  {
+    "name": "Çiçek OTLU",
+    "party": "DEM PARTİ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=dd44104f-4583-4975-b116-018876177287",
+    "id": "cicek_otlu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/f981b337-fb06-4f1d-ba57-01881f4cbfad.jpe"
+  },
+  {
+    "name": "Çiğdem KILIÇGÜN UÇAR",
+    "party": "DBP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=9e6f1427-ad23-4136-97a8-018870ab1eac",
+    "id": "cigdem_kilicgun_ucar",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/fa172401-4c51-42f1-aca7-01881f4cbf9b.jpe"
+  },
+  {
+    "name": "Derya AYAYDIN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=3af2ca46-971b-479c-8979-01887660e24f",
+    "id": "derya_ayaydin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/89d96b98-4f6e-4df5-bd7d-75c62c8af198.jpe"
+  },
+  {
+    "name": "Doğan BEKİN",
+    "party": "YENİDEN REFAH",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=954e2072-2ce8-4a84-9576-01885ccfafc3",
+    "id": "dogan_bekin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/2aa5a637-2637-4ef0-8993-01881f4cbe93.jpe"
+  },
+  {
+    "name": "Doğan DEMİR",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=d75f98eb-7c5d-4541-ad95-01886c409806",
+    "id": "dogan_demir",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/8c23aed5-4663-4e6f-83b9-01881f4cb9b9.jpe"
+  },
+  {
+    "name": "Edip Semih YALÇIN",
+    "party": "MHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d984-037b-e050-007f01005610",
+    "id": "semih_yalcin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/60289364-5827-4c42-8a74-11a374babb0a.jpe"
+  },
+  {
+    "name": "Elif ESEN",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=68e25323-7159-4dcb-9886-0188674d78ea",
+    "id": "elif_esen",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/2b1138c0-1d91-4093-98e5-01881f4cb90b.jpe"
+  },
+  {
+    "name": "Engin ALTAY",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dd18-037b-e050-007f01005610",
+    "id": "engin_altay",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/be6cf9b7-8c75-4bcc-be08-82d9a5beb4ed.jpe"
+  },
+  {
+    "name": "Erdoğan TOPRAK",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9ea-037b-e050-007f01005610",
+    "id": "erdogan_toprak",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/56961c6f-5300-4004-956e-5041b57f04f4.jpe"
+  },
+  {
+    "name": "Erkan BAŞ",
+    "party": "TİP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc70-037b-e050-007f01005610",
+    "id": "erkan_bas",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/8dc6690c-b74c-441e-9235-5a63b25b8e57.jpe"
+  },
+  {
+    "name": "Erkan KANDEMİR",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d937-037b-e050-007f01005610",
+    "id": "erkan_kandemir",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c872ac51-49aa-44d1-a98c-f5fafbeb62b4.jpe"
+  },
+  {
+    "name": "Ersin BEYAZ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=d6fb4f72-a872-4fc0-b7e9-018866b4893c",
+    "id": "ersin_beyaz",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/a1eb2f8e-14ad-4689-8c50-01881f4cbc9e.jpe"
+  },
+  {
+    "name": "Evrim RIZVANOĞLU EMİR",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=6103fefd-6837-4087-a153-018871102299",
+    "id": "evrim_rizvanoglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/5400ee79-816f-4762-b43e-01881f4cb977.jpe"
+  },
+  {
+    "name": "Fethi AÇIKEL",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d95d-037b-e050-007f01005610",
+    "id": "fethi_acikel",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/1624f010-9686-463b-a486-f5e0f4abc5c6.jpe"
+  },
+  {
+    "name": "Feti YILDIZ",
+    "party": "MHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc14-037b-e050-007f01005610",
+    "id": "feti_yildiz",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/6a8b45e0-d24e-451c-9239-944537d30d79.jpe"
+  },
+  {
+    "name": "Gamze AKKUŞ İLGEZDİ",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dbde-037b-e050-007f01005610",
+    "id": "gamze_akkus_ilgezdi",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/44aeeef9-1aa6-4378-bad0-e4880e917846.jpe"
+  },
+  {
+    "name": "Gökan ZEYBEK",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc6b-037b-e050-007f01005610",
+    "id": "gokan_zeybek",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/fd7340c3-18bc-4c75-a53a-c76767a1d084.jpe"
+  },
+  {
+    "name": "Gökhan GÜNAYDIN",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-c3f5-037b-e050-007f01005610",
+    "id": "gokhan_gunaydin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/09fdfc6f-ac7e-43b9-8eb9-0c0aa30c1787.jpe"
+  },
+  {
+    "name": "Halis DALKILIÇ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d95f-037b-e050-007f01005610",
+    "id": "halis_dalkilic",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/efadf6b0-c375-48f1-8770-dfdc17e6b7cf.jpe"
+  },
+  {
+    "name": "Halit YEREBAKAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=1986b16a-e20f-4e0d-9c59-01887b82754d",
+    "id": "halit_yerebakan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/21dbb9da-372d-4d69-9705-01881f4cb1d3.jpe"
+  },
+  {
+    "name": "Hasan KARAL",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-db72-037b-e050-007f01005610",
+    "id": "hasan_karal",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/67aedf79-7823-4040-8167-faed56bff2c8.jpe"
+  },
+  {
+    "name": "Hasan TURAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc77-037b-e050-007f01005610",
+    "id": "hasan_turan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/7cda85ed-b3d2-46c7-b0e4-c49eb984ec0e.jpe"
+  },
+  {
+    "name": "Hulusi ŞENTÜRK",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dbe8-037b-e050-007f01005610",
+    "id": "hulusi_senturk",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/aed6aa22-71f9-41e7-8f04-e62ccc549db5.jpe"
+  },
+  {
+    "name": "İlhan KESİCİ",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9f8-037b-e050-007f01005610",
+    "id": "ilhan_kesici",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/48a67157-6f79-48b7-9f25-d212023c6b15.jpe"
+  },
+  {
+    "name": "İsa Mesih ŞAHİN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=ee7f66fc-a32c-40a0-8d1c-01886cf17e01",
+    "id": "isa_mesih_sahin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/134d7fbd-4c88-400b-bca6-01881f4cb96c.jpe"
+  },
+  {
+    "name": "İskender BAYHAN",
+    "party": "EMEP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=5e7ef1d5-5b54-4c2b-8e2a-0188765ec27e",
+    "id": "iskender_bayhan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c6e8b289-98e4-4541-9e3f-01881f4cbfa4.jpe"
+  },
+  {
+    "name": "İsmail ERDEM",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=b45dd046-b137-450b-b2c9-018876e374e0",
+    "id": "ismail_erdem",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/decb6ee6-410a-445f-a771-01881f4cb194.jpe"
+  },
+  {
+    "name": "İsmail Emrah KARAYEL",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d94b-037b-e050-007f01005610",
+    "id": "ismail_emrah_karayel",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/01528615-3abe-4851-9d8e-7ead56ba5cc2.jpe"
+  },
+  {
+    "name": "İsmail Faruk AKSU",
+    "party": "MHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcc2-037b-e050-007f01005610",
+    "id": "ismail_faruk_aksu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d93d5b5a-0923-4c38-8ef8-981a0a961ddb.jpe"
+  },
+  {
+    "name": "İzzet Ulvi YÖNTER",
+    "party": "MHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-da0a-037b-e050-007f01005610",
+    "id": "izzet_ulvi_yonter",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/32b7b293-77f7-48ec-83c0-3797f92c4884.jpe"
+  },
+  {
+    "name": "Kadri Enis BERBEROĞLU",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc96-037b-e050-007f01005610",
+    "id": "enis_berberoglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/8a1dfe1a-727f-43f3-bba8-912fffc510ad.jpe"
+  },
+  {
+    "name": "Keziban KONUKCU KOK",
+    "party": "DEM PARTİ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=81a43efd-6009-47b5-ac19-01887697267d",
+    "id": "keziban_konukcu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/94ef4ac7-aa0d-44a8-8623-01881f4cbf83.jpe"
+  },
+  {
+    "name": "Medeni YILMAZ",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-cbb2-037b-e050-007f01005610",
+    "id": "medeni_yilmaz",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/1ad8079e-35f1-4fd3-8f38-cdbfcc6181da.jpe"
+  },
+  {
+    "name": "Mehmet Önder AKSAKAL",
+    "party": "DSP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=b460fa11-95d3-460f-b042-01886657b85c",
+    "id": "onder_aksakal",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/573397b0-fa7f-4ded-97b7-01881f4cb1e3.jpe"
+  },
+  {
+    "name": "Mehmet Satuk Buğra KAVUNCU",
+    "party": "İYİ Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=da649d8c-df44-45a4-b1e5-01886ca07aff",
+    "id": "bugra_kavuncu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/0a2ae86b-df06-4ffd-bc18-01881f4cbc92.jpe"
+  },
+  {
+    "name": "Mehmet Selim ENSARİOĞLU",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d12b-037b-e050-007f01005610",
+    "id": "mehmet_selim_ensarioglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/691b5b20-7f32-471c-bbd9-181f92cd9c32.jpe"
+  },
+  {
+    "name": "Muhammed Ali Fatih ERBAKAN",
+    "party": "YENİDEN REFAH",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=7848741c-ed21-4c4b-bca0-01887084df0f",
+    "id": "fatih_erbakan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/acddf5a2-3c5c-4cb3-8429-01881f4cbe8a.jpe"
+  },
+  {
+    "name": "Mustafa DEMİR",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9bb-037b-e050-007f01005610",
+    "id": "mustafa_demir",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d841fb6b-cb57-4f78-9795-2ec3040f0366.jpe"
+  },
+  {
+    "name": "Mustafa KAYA",
+    "party": "YENİ YOL",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=018e861a-15e1-48cb-994b-018876d54347",
+    "id": "mustafa_kaya",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/6cd76d10-cbb1-42d0-acc7-01881f4cb95a.jpe"
+  },
+  {
+    "name": "Mustafa YENEROĞLU",
+    "party": "BAĞIMSIZ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc8e-037b-e050-007f01005610",
+    "id": "mustafa_yeneroglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/ebb5f5b3-e30f-4d90-913c-ea4be70ce44d.jpe"
+  },
+  {
+    "name": "Mustafa Cihan PAÇACI",
+    "party": "İYİ Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d165-037b-e050-007f01005610",
+    "id": "cihan_pacaci",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/6af1e52f-847c-4450-8bb4-1f43840a0248.jpe"
+  },
+  {
+    "name": "Mustafa Hulki CEVİZOĞLU",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=6ed8fd66-3f20-4721-a474-018871c82672",
+    "id": "hulki_cevizoglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/58616518-52e0-488b-a166-01881f4cb184.jpe"
+  },
+  {
+    "name": "Müşerref Pervin Tuba DURGUT",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcc0-037b-e050-007f01005610",
+    "id": "pervin_tuba_durgut",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/6adef754-62a4-4be5-9558-44db89b8f521.jpe"
+  },
+  {
+    "name": "Namık TAN",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=02abfc41-7624-469b-bf2d-01886c91c8ff",
+    "id": "namik_tan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/44f36ca1-c2e8-4f5a-b6de-01881f4cb93f.jpe"
+  },
+  {
+    "name": "Nilhan AYAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=430e022e-884c-46fa-89fe-01887b4d73f2",
+    "id": "nilhan_ayan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/506b018b-d07f-40a3-bd4a-01881f4cb26d.jpe"
+  },
+  {
+    "name": "Nimet ÖZDEMİR",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=88a63a80-1b1b-4d90-84ec-018867449f5c",
+    "id": "nimet_ozdemir",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/f148ba32-10d6-4521-8608-01881f4cbc7d.jpe"
+  },
+  {
+    "name": "Numan KURTULMUŞ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d926-037b-e050-007f01005610",
+    "id": "numan_kurtulmus",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/578abb3a-aaf5-472a-9de5-bdd2e3bc5d81.jpe"
+  },
+  {
+    "name": "Nurettin ALAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=4aa61b78-ba24-40a0-aecf-0188717fb6af",
+    "id": "nurettin_alan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c54323f4-0244-4162-b3d4-01881f4cb1c5.jpe"
+  },
+  {
+    "name": "Oğuz ÜÇÜNCÜ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=6be6a566-3dcf-4861-ad5e-018876185e20",
+    "id": "oguz_ucuncu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c87e8936-144c-4e82-b334-01881f4cb24d.jpe"
+  },
+  {
+    "name": "Oğuz Kaan SALICI",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc71-037b-e050-007f01005610",
+    "id": "oguz_kaan_salici",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/b43da8b9-1b1d-43d3-b7b7-10594410e17c.jpe"
+  },
+  {
+    "name": "Özgül SAKİ",
+    "party": "DEM PARTİ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=9251a43e-f2c1-4f21-9e54-01887acade5e",
+    "id": "ozgul_saki",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/b7d70547-f6a9-438a-a7ab-01881f4cbf93.jpe"
+  },
+  {
+    "name": "Özgür KARABAT",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-da12-037b-e050-007f01005610",
+    "id": "ozgur_karabat",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4eb55725-cef5-460a-a2fc-b84405b587a4.jpe"
+  },
+  {
+    "name": "Özlem ZENGİN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dccb-037b-e050-007f01005610",
+    "id": "ozlem_zengin",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/30f95bd6-21f5-4d84-98db-2b48269ee6c4.jpe"
+  },
+  {
+    "name": "Rabia İLHAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=36eb9984-ca9c-4daa-b406-01887afb517d",
+    "id": "rabia_ilhan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4ee3fe64-9c7d-4285-aaea-01881f4cb1db.jpe"
+  },
+  {
+    "name": "Rümeysa KADAK",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dd1c-037b-e050-007f01005610",
+    "id": "rumeysa_kadak",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/6c6cc1fc-7cd7-463e-9876-9afe398f4aba.jpe"
+  },
+  {
+    "name": "Saliha Sera KADIGİL",
+    "party": "TİP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d959-037b-e050-007f01005610",
+    "id": "sera_kadigil",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/1ecd559e-9799-451f-bb54-37d162e3fe15.jpe"
+  },
+  {
+    "name": "Seda GÖREN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=90f85f96-f89b-4f04-83e1-018870cc2d58",
+    "id": "seda_goren",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/24526d2f-7dd0-4526-9b72-01881f4cb263.jpe"
+  },
+  {
+    "name": "Selim TEMURCİ",
+    "party": "BAĞIMSIZ",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=52c2b58e-17ae-4fbb-9345-01886cecd01c",
+    "id": "selim_temurci",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/5f38049b-b825-477e-b56d-01881f4cb926.jpe"
+  },
+  {
+    "name": "Sena Nur ÇELİK KANAT",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9fb-037b-e050-007f01005610",
+    "id": "sena_nur_celik",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/ccf8ea6a-f426-4310-94ff-d84f559f5df5.jpe"
+  },
+  {
+    "name": "Serkan BAYRAM",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-da0f-037b-e050-007f01005610",
+    "id": "serkan_bayram",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c0d2e4e0-7d06-4e69-ae65-944e306bd284.jpe"
+  },
+  {
+    "name": "Sevan SIVACIOĞLU",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=e7b0c06f-7540-444c-8260-01887af2d476",
+    "id": "sevan_sivacioglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/24a0fd20-e002-4f75-b52d-01881f4cb206.jpe"
+  },
+  {
+    "name": "Seyithan İZSİZ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=28643cef-ae5b-43c7-8323-01887af767eb",
+    "id": "seyithan_izsiz",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4d2fed8d-45fe-4c21-ae2c-01881f4cbca6.jpe"
+  },
+  {
+    "name": "Suat ÖZÇAĞDAŞ",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f356520d-2071-45c1-a304-01887ad4a845",
+    "id": "suat_ozcagdas",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/fccd3ad1-bbe2-426a-aef9-01881f4cb937.jpe"
+  },
+  {
+    "name": "Suat PAMUKÇU",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d2e0-037b-e050-007f01005610",
+    "id": "suat_pamukcu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/821b5d7e-d8ef-4ccd-b243-dadcff83cc88.jpe"
+  },
+  {
+    "name": "Süleyman SOYLU",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d2f5-037b-e050-007f01005610",
+    "id": "suleyman_soylu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/e56cd265-2134-41d2-937c-4513aac72592.jpe"
+  },
+  {
+    "name": "Şamil AYRIM",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc44-037b-e050-007f01005610",
+    "id": "samil_ayrim",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/2afe341f-f684-432d-9c12-422aed54e7e8.jpe"
+  },
+  {
+    "name": "Şengül KARSLI",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=b80cb256-0e95-451f-95e6-01887725bf1e",
+    "id": "sengul_karsli",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/d882f6af-3831-4993-83fe-01881f4cb280.jpe"
+  },
+  {
+    "name": "Tuğba IŞIK ERCAN",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=0036e8c9-e349-4da2-93b5-01887b685766",
+    "id": "tugba_isik_ercan",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/95fa3719-3153-48aa-b32b-01881f4cb18c.jpe"
+  },
+  {
+    "name": "Turan Taşkın ÖZER",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=57a1c419-5a64-4e91-9b78-01886c231d98",
+    "id": "turan_taskin_ozer",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/4af6e8f5-3356-471b-ac5e-01881f4cb9d1.jpe"
+  },
+  {
+    "name": "Türkan ELÇİ",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=a76a163e-3312-4c6b-9f83-018875da722c",
+    "id": "turkan_elci",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/132532e7-58f9-4559-9313-01881f4cb98e.jpe"
+  },
+  {
+    "name": "Ümmügülşen ÖZTÜRK",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=c5d82ae1-18db-49a1-a808-018871134f8c",
+    "id": "ummugulsen_ozturk",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/bb3e9933-a55d-45b2-a330-01881f4cb1b5.jpe"
+  },
+  {
+    "name": "Yahya ÇELİK",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=1396bdc3-a93f-4d38-9bbf-018877237616",
+    "id": "yahya_celik",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/ce7a20b4-e205-404c-a7d5-01881f4cb19d.jpe"
+  },
+  {
+    "name": "Yıldız KONAL SÜSLÜ",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=085c2d12-1d52-40e8-a426-01887b00b7ec",
+    "id": "yildiz_konal_suslu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/72d37094-4a89-45bf-8b9c-01881f4cb276.jpe"
+  },
+  {
+    "name": "Yunus EMRE",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9a4-037b-e050-007f01005610",
+    "id": "yunus_emre",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/3febebc3-76eb-4778-80cc-3973c4322213.jpe"
+  },
+  {
+    "name": "Yücel Arzen HACIOĞULLARI",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=7af06509-bd5c-4ea7-a35f-01887b219868",
+    "id": "yucel_arzen",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/1e6c74af-8f64-4d46-91ca-01881f4cb288.jpe"
+  },
+  {
+    "name": "Yüksel Mansur KILINÇ",
+    "party": "CHP",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dce3-037b-e050-007f01005610",
+    "id": "yuksel_mansur_kilinc",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/c167cd55-0f49-40f8-bb4e-e2d6e8e93e22.jpe"
+  },
+  {
+    "name": "Zafer SIRAKAYA",
+    "party": "AK Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc9b-037b-e050-007f01005610",
+    "id": "zafer_sirakaya",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/74d9b808-1845-4ce4-8e8a-c5e1718c4bd6.jpe"
+  },
+  {
+    "name": "Zekeriya YAPICIOĞLU",
+    "party": "HÜDA PAR",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=2efef575-eadc-4b0c-b743-01886c735649",
+    "id": "zekeriya_yapicioglu",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/17daf77d-2420-4988-b816-01881f4cb236.jpe"
+  },
+  {
+    "name": "Zeynel EMRE",
+    "party": "Yeni Parti",
+    "profile_url": "https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcf8-037b-e050-007f01005610",
+    "id": "zeynel_emre",
+    "img_url": "https://cdn.tbmm.gov.tr/IKBS/Milletvekilleri/Resim/002f08f9-7677-4a12-948c-9ec011e0053f.jpe"
+  }
+]

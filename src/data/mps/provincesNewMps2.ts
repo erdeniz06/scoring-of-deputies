@@ -318,10 +318,11 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Kütahya',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/adil_bicer.jpg',
     term: '28. Dönem',
     title: 'AK Parti Kütahya Milletvekili & TBMM Adalet Komisyonu Üyesi',
     bio: 'Hukukçu, avukat, Simav eski Belediye Başkanı. 28. Dönem TBMM Kütahya Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=4b06d63c-5501-482d-8cfd-01886706aada',
     stances: {}
   },
   {
@@ -330,10 +331,11 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Kütahya',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/ismail_caglar_bayirci.jpg',
     term: '28. Dönem',
     title: 'AK Parti Kütahya Milletvekili',
     bio: 'İnşaat mühendisi, müteahhit. 28. Dönem TBMM Kütahya Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=a3cb7653-78a0-4a2c-a709-01886707ef86',
     stances: {}
   },
   {
@@ -342,22 +344,24 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Kütahya',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/mehmet_demir_kutahya.jpg',
     term: '28. Dönem',
     title: 'AK Parti Kütahya Milletvekili',
     bio: 'İş insanı, sanayici. 28. Dönem TBMM Kütahya Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=306970fa-03b7-42a3-91fd-018867042d9d',
     stances: {}
   },
   {
     id: 'ali_fazil_kasap',
-    fullName: 'Dr. Ali Fazıl Kasap',
-    partyId: 'saadet',
+    fullName: 'Ali Fazıl Kasap',
+    partyId: 'yeni_yol',
     electedPartyId: 'chp',
     province: 'Kütahya',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
-    term: '28. Dönem (CHP’den Saadet Grubu Düşmesin Diye Geçti)',
-    title: 'Saadet Partisi Kütahya Milletvekili & Hekim',
-    bio: 'Çocuk sağlığı ve hastalıkları uzmanı tıp doktoru. 27. ve 28. Dönem TBMM Kütahya Milletvekili. Saadet Partisi TBMM grubunun devamı için CHP’den Saadet Partisi’ne geçmiştir.',
+    photoUrl: '/mps/ali_fazil_kasap.jpg',
+    term: '28. Dönem',
+    title: 'Kütahya Milletvekili & Hekim',
+    bio: 'Çocuk sağlığı ve hastalıkları uzmanı tıp doktoru. 27. ve 28. Dönem TBMM Kütahya Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9c4-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_afk_sokak',
@@ -378,10 +382,11 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
     partyId: 'mhp',
     electedPartyId: 'mhp',
     province: 'Kütahya',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/ahmet_erbas.jpg',
     term: '28. Dönem',
     title: 'MHP Kütahya Milletvekili & TBMM Plan ve Bütçe Komisyonu Üyesi',
     bio: 'İş insanı. 27. ve 28. Dönem TBMM Kütahya Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-da0d-037b-e050-007f01005610',
     stances: {}
   },
 

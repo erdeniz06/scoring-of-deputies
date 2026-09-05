@@ -19,7 +19,7 @@ export const PARTIES: Record<string, Party> = {
     textColor: '#ffffff',
     bgColor: '#ccfbf1',
     borderColor: '#5eead4',
-    seatCount: 92,
+    seatCount: 91,
   },
   dem: {
     id: 'dem',

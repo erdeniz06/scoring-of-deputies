@@ -11,11 +11,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/tugrul_turkes.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM AKPM Türk Delegasyonu Başkanı',
     bio: 'İktisatçı, eski Başbakan Yardımcısı. 23, 24, 25, 26, 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1328',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dbfc-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_tt_kopek',
@@ -59,11 +59,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/julide_sarieroglu.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & Eski Bakan',
     bio: 'Çalışma ekonomisti, eski Çalışma ve Sosyal Güvenlik Bakanı, AK Parti Genel Başkan Yardımcısı.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1329',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dccf-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_js_kopek',
@@ -96,11 +96,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/murat_emir.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & TBMM CHP Grup Başkanvekili',
     bio: 'Tıp doktoru, hukukçu. 25, 26, 27 ve 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1330',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcfa-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_me_adaylik',
@@ -177,11 +177,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/fuat_oktay.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM Dışişleri Komisyonu Başkanı',
     bio: 'Bürokrat, akademisyen, Türkiye Cumhuriyeti’nin ilk Cumhurbaşkanı Yardımcısı. 28. Dönem Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1331',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d996-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_fo_kopek',
@@ -225,11 +225,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/vedat_bilgin.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & Eski Çalışma Bakanı',
     bio: 'Sosyolog, akademisyen, eski Çalışma ve Sosyal Güvenlik Bakanı. EYT ve 3600 ek gösterge reformlarını yürüttü.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1332',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-cd28-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_vb_kopek',
@@ -251,11 +251,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'iyi',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/kursad_zorlu.jpg',
     term: '28. Dönem',
     title: 'İYİ Parti Ankara Milletvekili & Dış Politika ve Güvenlik Uzmanı',
     bio: 'Akademisyen, yazar, İYİ Parti eski Sözcüsü ve Genel Başkan Yardımcısı. 28. Dönem Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1333',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=1449e341-f5b4-49a2-8855-0188573364ca',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_kz_adaylik',
@@ -336,11 +336,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/leyla_sahin_usta.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM AK Parti Grup Başkanvekili',
     bio: 'Tıp doktoru, insan hakları savunucusu, AK Parti Grup Başkanvekili. 25, 26, 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1335',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc91-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_lsu_kopek',
@@ -373,11 +373,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/osman_gokcek.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & Medya Yöneticisi',
     bio: 'İş insanı, medya yöneticisi. 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1336',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=fddbefbc-ef87-4dd6-9009-018857426c9e',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_og_kopek',
@@ -410,11 +410,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'mhp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/yasar_yildirim.jpg',
     term: '28. Dönem',
     title: 'MHP Ankara Milletvekili & MHP Genel Başkan Yardımcısı',
     bio: 'İnşaat mühendisi, eski Kızılcahamam Belediye Başkanı, MHP Genel Başkan Yardımcısı. 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1337',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9f3-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_yy_kopek',
@@ -447,11 +447,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'mhp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/mevlut_karakaya.jpg',
     term: '28. Dönem',
     title: 'MHP Ankara Milletvekili & MHP Genel Başkan Yardımcısı',
     bio: 'İktisatçı, akademisyen, Gazi Üniversitesi eski Öğretim Üyesi, MHP Genel Başkan Yardımcısı. 25, 26, 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1338',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-da02-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_mk_kopek',
@@ -473,11 +473,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'mhp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/sadir_durmaz.jpg',
     term: '28. Dönem',
     title: 'MHP Ankara Milletvekili & MHP Yerel Yönetimlerden Sorumlu Genel Başkan Yardımcısı',
     bio: 'İktisatçı, MHP Genel Başkan Yardımcısı. 24, 25, 26, 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1339',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc2b-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_sd_kopek',
@@ -499,11 +499,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/umut_akdogan.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & TBMM Adalet Komisyonu Üyesi',
     bio: 'Hukukçu, avukat, CHP eski Gençlik Kolları MYK üyesi ve Parti Meclisi üyesi. 28. Dönem Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1340',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f2aeaa4a-a64b-48c3-8c89-0188580783c5',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_ua_adaylik',
@@ -547,11 +547,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/semra_dincer.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & CHP Kadın Politikalarından Sorumlu Genel Başkan Yardımcısı',
     bio: 'İş insanı, CHP Kadın Politikaları Genel Başkan Yardımcısı. 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1341',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=0b267d14-efad-47a5-a937-01885d09b2f3',
     stances: {
       '2023_kk_oo_kurultay': {
         id: 'st_sdi_kurultay',
@@ -573,11 +573,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/aylin_yaman.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & TBMM Sağlık Komisyonu Üyesi',
     bio: 'Tıp doktoru, sağlık yöneticisi, CHP eski Sağlık Politikaları Genel Başkan Yardımcısı. 28. Dönem Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1342',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=090f5a9b-7cb7-4f68-bfb1-01885d4fb9f6',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_ay_kopek',
@@ -599,11 +599,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/deniz_demir.jpg',
     term: '28. Dönem',
     title: 'CHP Ankara Milletvekili & TBMM Çevre Komisyonu Üyesi',
     bio: 'Jeoloji mühendisi, CHP eski Genel Başkan Başdanışmanı. 28. Dönem TBMM Ankara Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1343',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=3dac40d3-b853-46f0-b98b-01886c49e067',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_dd_adaylik',
@@ -625,11 +625,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/sadullah_ergin.jpg',
     term: '28. Dönem',
     title: 'DEVA Partisi Ankara Milletvekili & Eski Adalet Bakanı',
     bio: 'Hukukçu, eski Adalet Bakanı, DEVA Partisi Kurucusu ve Teşkilat İşleri Başkanı. CHP listelerinden seçildi.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1344',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d5a8-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_se_adaylik',
@@ -662,11 +662,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'chp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/idris_sahin.jpg',
     term: '28. Dönem',
     title: 'DEVA Partisi Ankara Milletvekili & DEVA Partisi Sözcüsü',
     bio: 'Hukukçu, eski Çankırı Baro Başkanı, DEVA Partisi Genel Başkan Yardımcısı ve Parti Sözcüsü.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1345',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d655-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_is_adaylik',
@@ -699,11 +699,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'iyi',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/ahmet_esref_fakibaba.jpg',
     term: '28. Dönem',
     title: 'İYİ Parti Ankara Milletvekili & Eski Tarım Bakanı',
     bio: 'Genel cerrah, eski Şanlıurfa Belediye Başkanı, eski Gıda Tarım ve Hayvancılık Bakanı. İYİ Parti Genel Başkan Yardımcısı.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1346',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d061-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_aef_adaylik',
@@ -740,7 +740,7 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     term: '28. Dönem',
     title: 'Bağımsız Ankara Milletvekili & İş İnsanı',
     bio: 'İş insanı, eski Ankara Büyükşehir Belediye Meclisi İYİ Parti Grup Başkanvekili. 28. Dönem Ankara Bağımsız Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1347',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=75919e5d-3f4b-4182-98cd-0188574d4893',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_ab_adaylik',
@@ -766,7 +766,7 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     term: '28. Dönem',
     title: 'Bağımsız Ankara Milletvekili & Eski Bayındırlık ve İskan Bakanı',
     bio: 'Makine mühendisi, siyasetçi, eski Bayındırlık ve İskan Bakanı, eski TBMM Başkanvekili. 21, 24, 25 ve 28. Dönem Milletvekili. Görevini Bağımsız Milletvekili olarak sürdürmektedir.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1349',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-d9bf-037b-e050-007f01005610',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_ka_adaylik',
@@ -803,7 +803,7 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     term: '28. Dönem',
     title: 'Yeni Parti Ankara Milletvekili',
     bio: 'Siyasetçi ve iş insanı, TBMM 28. Dönem Ankara Milletvekili. Meclis çalışmalarını Yeni Parti bünyesinde sürdürmektedir.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1345',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=da2b4534-88b9-4a77-92f2-0188581533ff',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_ate_kopek',
@@ -836,11 +836,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'iyi',
     province: 'Ankara',
     electoralDistrict: '3. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/yuksel_arslan.jpg',
     term: '28. Dönem',
     title: 'Bağımsız Ankara Milletvekili & Bürokrat',
     bio: 'Bürokrat, eski Ankara Büyükşehir Belediyesi İnsan Kaynakları Daire Başkanı ve Mansur Yavaş’ın Özel Kalem Müdürü.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1348',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=538bc042-67fd-4e51-82aa-01885c5b1297',
     stances: {
       '2023_kk_adaylik': {
         id: 'st_ya_adaylik',
@@ -862,11 +862,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '2. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/orhan_yegin.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM İdare Amiri',
     bio: 'Siyaset bilimci, eski Çalışma ve Sosyal Güvenlik Bakan Yardımcısı. 27 ve 28. Dönem TBMM Milletvekili.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1349',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dc39-037b-e050-007f01005610',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_oy_kopek',
@@ -888,11 +888,11 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
     electedPartyId: 'akp',
     province: 'Ankara',
     electoralDistrict: '1. Bölge',
-    photoUrl: '',
+    photoUrl: '/mps/zehranur_aydemir.jpg',
     term: '28. Dönem',
     title: 'AK Parti Ankara Milletvekili & TBMM En Genç Milletvekili',
     bio: 'Endüstri mühendisi, 28. Dönem TBMM’nin en genç kadın milletvekili. AK Parti Genel Merkez Gençlik Kolları MYK üyesi.',
-    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?donem=28&id=1350',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=153c73b0-b5d8-48a7-9dbe-018852d2a007',
     stances: {
       'sokak_kopegi_yasasi': {
         id: 'st_zna_kopek',
@@ -902,6 +902,84 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
         stanceLabel: 'Gençlerin ve Çocukların Güvenliğini Vurguladı',
         overallSummary: 'Üniversite kampüsleri ve sokaklarda öğrencilerin güvenliğini sağlamak için yasa düzenlemesine destek verdi.',
         keyParaphrasedQuote: 'Gençlerimizin sokaklarda korkmadan yürümesi en temel haktır.',
+        lastUpdated: 'Temmuz 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'lutfiye_selva_cam',
+    fullName: 'Lütfiye Selva Çam',
+    partyId: 'akp',
+    electedPartyId: 'akp',
+    province: 'Ankara',
+    electoralDistrict: '3. Bölge',
+    photoUrl: '/mps/lutfiye_selva_cam.jpg',
+    term: '28. Dönem',
+    title: 'AK Parti Ankara Milletvekili & AKPM Türk Delegasyonu Üyesi',
+    bio: 'Kimya mühendisi, eski AK Parti Genel Merkez Kadın Kolları Başkanı. 25, 26, 27 ve 28. Dönem Ankara Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dd08-037b-e050-007f01005610',
+    stances: {
+      'sokak_kopegi_yasasi': {
+        id: 'st_lsc_kopek',
+        mpId: 'lutfiye_selva_cam',
+        topicId: 'sokak_kopegi_yasasi',
+        stanceTag: 'destekledi',
+        stanceLabel: 'Toplum ve Çocuk Güvenliğini Vurguladı',
+        overallSummary: 'Sokak güvenliğinin sağlanması ve sahipsiz hayvanların modern barınaklarda bakımı için yasa düzenlemesine destek verdi.',
+        keyParaphrasedQuote: 'Çocuklarımızın ve kadınlarımızın sokakta güvenle yürümesi en öncelikli konudur.',
+        lastUpdated: 'Temmuz 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'murat_alparslan',
+    fullName: 'Murat Alparslan',
+    partyId: 'akp',
+    electedPartyId: 'akp',
+    province: 'Ankara',
+    electoralDistrict: '1. Bölge',
+    photoUrl: '/mps/murat_alparslan.jpg',
+    term: '28. Dönem',
+    title: 'AK Parti Ankara Milletvekili & Hukukçu',
+    bio: 'Hukukçu, eski AK Parti Ankara İl Başkanı. 25, 26 ve 28. Dönem TBMM Ankara Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-bf8f-037b-e050-007f01005610',
+    stances: {
+      'sokak_kopegi_yasasi': {
+        id: 'st_ma_kopek',
+        mpId: 'murat_alparslan',
+        topicId: 'sokak_kopegi_yasasi',
+        stanceTag: 'destekledi',
+        stanceLabel: 'Kamu Güvenliğini ve Barınak Islahını Savundu',
+        overallSummary: 'Kamu düzeni ve sokak güvenliğinin sağlanması için yasal düzenlemeyi destekledi.',
+        keyParaphrasedQuote: 'Toplumun huzuru ve güvenliği için gerekli adımları atıyoruz.',
+        lastUpdated: 'Temmuz 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'okan_konuralp',
+    fullName: 'Okan Konuralp',
+    partyId: 'yeni_parti',
+    electedPartyId: 'chp',
+    province: 'Ankara',
+    electoralDistrict: '1. Bölge',
+    photoUrl: '/mps/okan_konuralp.jpg',
+    term: '28. Dönem',
+    title: 'Yeni Parti Ankara Milletvekili & Gazeteci',
+    bio: 'Gazeteci, yazar ve eski RTÜK Üyesi. 28. Dönem TBMM Ankara Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=eba52a72-ec15-46d1-a30e-0188772340c8',
+    stances: {
+      'sokak_kopegi_yasasi': {
+        id: 'st_ok_kopek',
+        mpId: 'okan_konuralp',
+        topicId: 'sokak_kopegi_yasasi',
+        stanceTag: 'karsi_cikti',
+        stanceLabel: 'Yaşam Hakkı ve Kısırlaştırma Seferberliğini Savundu',
+        overallSummary: 'Hayvan haklarının korunması ve öldürme içeren düzenlemelere karşı çıkarak yerinde kısırlaştırmayı savundu.',
+        keyParaphrasedQuote: 'Yaşam hakkı kutsaldır, çözüm itlaf değil aşılama ve kısırlaştırmadır.',
         lastUpdated: 'Temmuz 2024',
         sources: []
       }
@@ -1140,6 +1218,31 @@ export const PROVINCES_NEW_MPS_5: MP[] = [
         overallSummary: 'Bölgedeki medrese ve sivil dini vakıfların ahlaki kalkınmadaki rolünü savundu.',
         keyParaphrasedQuote: 'Maneviyatımız ve kardeşlik bağlarımız bizi bir arada tutan en güçlü unsurdur.',
         lastUpdated: 'Şubat 2024',
+        sources: []
+      }
+    }
+  },
+  {
+    id: 'mustafa_sezgin_tanrikulu',
+    fullName: 'Mustafa Sezgin Tanrıkulu',
+    partyId: 'yeni_parti',
+    electedPartyId: 'chp',
+    province: 'Diyarbakır',
+    photoUrl: '/mps/mustafa_sezgin_tanrikulu.jpg',
+    term: '28. Dönem',
+    title: 'Yeni Parti Diyarbakır Milletvekili & İnsan Hakları Hukukçusu',
+    bio: 'Hukukçu, eski Diyarbakır Baro Başkanı, insan hakları savunucusu. 24, 25, 26, 27 ve 28. Dönem TBMM Milletvekili.',
+    tbmmProfileUrl: 'https://www.tbmm.gov.tr/milletvekili/milletvekilidetay?DonemId=134155f0-c3d6-4d24-893b-f3a2ef695ae7&Id=f72877c2-dcc4-037b-e050-007f01005610',
+    stances: {
+      'kurt_sorunu': {
+        id: 'st_mst_kurt',
+        mpId: 'mustafa_sezgin_tanrikulu',
+        topicId: 'kurt_sorunu',
+        stanceTag: 'destekledi',
+        stanceLabel: 'İnsan Hakları ve Barış Zeminini Savundu',
+        overallSummary: 'Kürt sorununun barışçıl ve insan haklarına saygılı şekilde Meclis çatısı altında çözülmesi gerektiğini vurguladı.',
+        keyParaphrasedQuote: 'Türkiye’nin geleceği hukuk devleti, insan hakları ve toplumsal barışın sağlanmasındadır.',
+        lastUpdated: 'Kasım 2024',
         sources: []
       }
     }
