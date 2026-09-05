@@ -489,11 +489,11 @@ export const PROVINCES_NEW_MPS_2: MP[] = [
   // ==========================================
   {
     id: 'bahadir_yenisehirlioglu',
-    fullName: 'Bahadır Yenişehirlioğlu',
+    fullName: 'Bahadır Nahit Yenişehirlioğlu',
     partyId: 'akp',
     electedPartyId: 'akp',
     province: 'Manisa',
-    photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Portrait_Placeholder.png/400px-Portrait_Placeholder.png',
+    photoUrl: '/mps/bahadir_yenisehirlioglu.jpg',
     term: '28. Dönem',
     title: 'AK Parti TBMM Grup Başkanvekili & Manisa Milletvekili',
     bio: 'Hukukçu, avukat, yazar ve oyuncu (Payitaht Abdülhamid Tahsin Paşa). 28. Dönem TBMM AK Parti Grup Başkanvekili.',

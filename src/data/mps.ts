@@ -253,6 +253,30 @@ const VERIFIED_MP_PHOTOS: Record<string, string> = {
   'nimet_ozdemir': '/mps/nimet_ozdemir.jpg',
   'tulay_hatimogullari': '/mps/tulay_hatimogullari.jpg',
   'suat_ozcagdas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Suat_%C3%96z%C3%A7a%C4%9Fda%C5%9F_2023.jpg/600px-Suat_%C3%96z%C3%A7a%C4%9Fda%C5%9F_2023.jpg',
+
+  // 34 Target MPs Verified Photos
+  'adem_yildirim': '/mps/adem_yildirim.jpg',
+  'ahmet_ersagun_yucel': '/mps/ersagun_yucel.jpg',
+  'azmi_ekinci': '/mps/azmi_ekinci.jpg',
+  'bayram_senocak': '/mps/bayram_senocak.jpg',
+  'behiye_eker': '/mps/behiye_eker.jpg',
+  'burak_akburak': '/mps/burak_akburak.jpg',
+  'busra_paker': '/mps/busra_paker.jpg',
+  'celal_firat': '/mps/celal_firat.jpg',
+  'derya_ayaydin': '/mps/derya_ayaydin.jpg',
+  'dogan_demir': '/mps/dogan_demir.jpg',
+  'edip_semih_yalcin': '/mps/semih_yalcin.jpg',
+  'ozgur_ozel': '/mps/ozgur_ozel.jpg',
+  'selma_aliye_kavaf': '/mps/selma_aliye_kavaf.jpg',
+  'senol_sunat': '/mps/senol_sunat.jpg',
+  'tamer_akkal': '/mps/tamer_akkal.jpg',
+  'ahmet_mucahit_arinc': '/mps/ahmet_mucahit_arinc.jpg',
+  'ahmet_vehbi_bakirlioglu': '/mps/ahmet_vehbi_bakirlioglu.jpg',
+  'bahadir_yenisehirlioglu': '/mps/bahadir_yenisehirlioglu.jpg',
+  'bahadir_nahit_yenisehirlioglu': '/mps/bahadir_yenisehirlioglu.jpg',
+  'bekir_basevirgen': '/mps/bekir_basevirgen.jpg',
+  'erkan_akcay': '/mps/erkan_akcay.jpg',
+  'murat_baybatur': '/mps/murat_baybatur.jpg',
 };
 
 const uniqueMpMap = new Map<string, MP>();
